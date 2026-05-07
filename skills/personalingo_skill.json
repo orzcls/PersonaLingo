@@ -1,0 +1,126 @@
+{
+  "skill_name": "PersonaLingo",
+  "version": "1.0.0",
+  "description": "AI-powered personalized IELTS speaking corpus generator",
+  "author": "Xiangbo Cheng",
+  "repository": "https://github.com/username/PersonaLingo",
+  "workflow": {
+    "steps": [
+      {
+        "id": "collect_mbti",
+        "name": "Collect MBTI Profile",
+        "type": "user_input",
+        "description": "Determine the student's MBTI personality type via test or direct input",
+        "input_schema": {
+          "mode": {
+            "type": "string",
+            "enum": ["test", "direct"],
+            "description": "Whether to run the 12-question test or accept a known type"
+          },
+          "answers": {
+            "type": "object",
+            "description": "Map of question_id to 'a'/'b' (required when mode=test)"
+          },
+          "type_code": {
+            "type": "string",
+            "pattern": "^[EI][SN][TF][JP]$",
+            "description": "4-letter MBTI code (required when mode=direct)"
+          }
+        }
+      },
+      {
+        "id": "collect_interests",
+        "name": "Collect Interest Profile",
+        "type": "user_input",
+        "description": "Gather the student's interest tags and personal hobby descriptions",
+        "input_schema": {
+          "tags": {
+            "type": "array",
+            "items": { "type": "string" },
+            "minItems": 3,
+            "maxItems": 8,
+            "description": "Selected interest tags from the predefined list"
+          },
+          "descriptions": {
+            "type": "array",
+            "items": { "type": "string" },
+            "minItems": 1,
+            "maxItems": 3,
+            "description": "2-3 sentence descriptions of top hobbies"
+          }
+        }
+      },
+      {
+        "id": "collect_ielts",
+        "name": "Collect IELTS Preferences",
+        "type": "user_input",
+        "description": "Gather exam-specific preferences including topics, target score, and date",
+        "input_schema": {
+          "topic_types": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": ["People", "Places", "Events", "Objects", "Abstract"]
+            },
+            "description": "Topic categories the student is most concerned about"
+          },
+          "target_score": {
+            "type": "string",
+            "enum": ["6.0", "6.5", "7.0", "7.5+"],
+            "description": "Target IELTS band score"
+          },
+          "exam_date": {
+            "type": "string",
+            "description": "Planned exam date (month/year)"
+          }
+        }
+      },
+      {
+        "id": "generate_corpus",
+        "name": "Generate Personalized Corpus",
+        "type": "llm_generation",
+        "description": "Use all collected data to generate a complete personalized speaking corpus",
+        "depends_on": ["collect_mbti", "collect_interests", "collect_ielts"],
+        "output_schema": {
+          "persona": {
+            "type": "object",
+            "description": "Student profile summary"
+          },
+          "anchors": {
+            "type": "array",
+            "description": "3-4 anchor stories"
+          },
+          "bridges": {
+            "type": "array",
+            "description": "Topic bridge responses"
+          },
+          "vocabulary": {
+            "type": "array",
+            "description": "25-30 vocabulary upgrades"
+          },
+          "patterns": {
+            "type": "array",
+            "description": "8-10 sentence patterns"
+          },
+          "practice": {
+            "type": "array",
+            "description": "5 practice exercises"
+          }
+        }
+      }
+    ]
+  },
+  "prompts": {
+    "anchor_generation": "You are an expert IELTS speaking coach. Based on the student's MBTI type ({mbti_type}) and their personal interests/experiences, create {count} anchor stories. Each anchor should be a vivid personal narrative that can naturally connect to at least 5 different IELTS topics. Include sensory details, emotional elements, and match the student's communication style.",
+    "bridge_generation": "For each IELTS topic below, create a natural bridge response that connects the topic to one of the student's anchor stories. The bridge should feel conversational, be 4-6 sentences (25-35 seconds spoken), and target band {target_score}.",
+    "vocabulary_generation": "Create a personalized vocabulary upgrade list for an IELTS candidate with interests in {interests}. Include: interest-specific advanced vocabulary, general high-frequency replacements, connector upgrades, and emotion/description upgrades. Target band {target_score}.",
+    "pattern_generation": "Create sentence patterns that match the {mbti_type} communication style. Each pattern should include a template, an example using the student's interests, and guidance on when to use it.",
+    "practice_generation": "Create 5 deliberate practice exercises for an IELTS speaking candidate. Each exercise should include a prompt, a thinking guide, and a model answer using the student's anchor stories and vocabulary."
+  },
+  "interest_tags": [
+    "Photography", "Music", "Coding", "Gaming", "Reading",
+    "Travel", "Sports", "Cooking", "Art", "Film",
+    "Nature", "Writing", "Dance", "Fitness", "Technology",
+    "Science", "History", "Philosophy", "Fashion", "Animals"
+  ]
+}
