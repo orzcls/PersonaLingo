@@ -113,24 +113,14 @@ User Query → [Q Layer] Expand into multiple search terms
 
 ## 📸 Screenshots
 
-<table>
-  <tr>
-    <td><img src="docs/screenshots/v3_06_questionnaire_entry.png" width="400"/><br/><sub>User Profiling Questionnaire</sub></td>
-    <td><img src="docs/screenshots/v3_09_mbti_grid_INTJ_selected.png" width="400"/><br/><sub>MBTI Personality Selection</sub></td>
-  </tr>
-  <tr>
-    <td><img src="docs/screenshots/v3_01_settings_overview.png" width="400"/><br/><sub>Settings Overview</sub></td>
-    <td><img src="docs/screenshots/v3_02_settings_targetscore.png" width="400"/><br/><sub>Target Score Configuration</sub></td>
-  </tr>
-  <tr>
-    <td><img src="docs/screenshots/v3_11_topics_filter_P1_active.png" width="400"/><br/><sub>Topic Browser with Filters</sub></td>
-    <td><img src="docs/screenshots/v3_12_topics_filter_upgraded.png" width="400"/><br/><sub>Enhanced Topic Exploration</sub></td>
-  </tr>
-  <tr>
-    <td><img src="docs/screenshots/v3_10_chat_extractor.png" width="400"/><br/><sub>AI Conversation Engine</sub></td>
-    <td><img src="docs/screenshots/v3_03_settings_language.png" width="400"/><br/><sub>Multi-language Support</sub></td>
-  </tr>
-</table>
+<p align="center">
+  <img src="docs/screenshots/v3_06_questionnaire_entry.png" width="260"/>
+  <img src="docs/screenshots/v3_10_chat_extractor.png" width="260"/>
+  <img src="docs/screenshots/v3_11_topics_filter_P1_active.png" width="260"/>
+</p>
+<p align="center">
+  <sub>User Profiling Questionnaire &nbsp;|&nbsp; AI Conversation Engine &nbsp;|&nbsp; Topic Browser</sub>
+</p>
 
 ## 🚀 Quick Start
 
@@ -264,24 +254,38 @@ MIT
 
 ## 🤖 Skills Integration
 
-PersonaLingo exports AI agent skills as portable packages. Each skill bundle contains:
-
-- `Skill.md` — Personalized learning skill document
-- `corpus.json` — Generated corpus data
-- `runtime_protocol.md` — Runtime protocol specification
-- `prompts/` — Prompt templates
+PersonaLingo exports AI agent skills as portable packages for personalized IELTS learning.
 
 ### Quick Install
 
 ```bash
-npx personalingo-skill add <skill-id>
+npx skills add orzcls/personalingo-skill
 ```
 
-Or download via API:
+### Two Usage Modes
+
+| Mode | Description | Use Case |
+|------|-------------|----------|
+| **A: Use Exported Skills** | Load pre-built skill packs with corpus & prompts | Quick deployment for tutoring agents |
+| **B: Full Pipeline** | Run end-to-end: Questionnaire → Conversation → Distill → Generate | Custom corpus creation from scratch |
+
+### Skill Bundle Contents
+
+Each exported skill pack contains:
+- `Skill.md` — Personalized learning skill document
+- `corpus.json` — Topic-specific corpus with QMD-tagged vocabulary
+- `runtime_protocol.md` — Agent runtime protocol
+- `prompts/` — Prompt templates for conversation & assessment
+
+### API Quick Reference
 
 ```bash
-# Get skill bundle
+# Mode A: Download pre-built skill
 curl http://localhost:9849/api/distill/skill/{corpus_id}/runnable/download -o skill.zip
+
+# Mode B: Start full pipeline
+curl -X POST http://localhost:9849/api/distill/diagnose
+curl -X POST http://localhost:9849/api/distill/run?questionnaire_id={id}&include_research=true
 ```
 
 ## 🙏 Acknowledgments

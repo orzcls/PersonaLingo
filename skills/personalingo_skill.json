@@ -1,186 +1,55 @@
 {
-  "skill_name": "PersonaLingo",
-  "version": "2.1",
-  "user_profile": {
-    "mbti_type": "XXXX",
-    "interests": [],
-    "communication_style": ""
+  "name": "personalingo-skill",
+  "version": "2.0.0",
+  "description": "AI-powered personalized IELTS corpus generator and learning assistant. Generates tailored speaking corpus via Three-Stage Distillation (Research → Framework → Generation) and exports portable Skill Packs for AI agent integration.",
+  "author": "orzcls",
+  "license": "MIT",
+  "repository": "https://github.com/orzcls/personalingo-skill",
+  "modes": ["use-exported", "full-pipeline"],
+  "api_base": "http://localhost:9849",
+  "endpoints": {
+    "distill": [
+      {"method": "POST", "path": "/api/distill/diagnose", "description": "Generate diagnostic questionnaire from free-form text"},
+      {"method": "POST", "path": "/api/distill/run", "description": "Trigger 7-step distillation pipeline (background task)", "params": ["questionnaire_id", "include_research"]},
+      {"method": "GET", "path": "/api/distill/skill/{corpus_id}/runnable", "description": "Export runnable skill pack (4 artifacts)"},
+      {"method": "GET", "path": "/api/distill/skill/{corpus_id}/runnable/download", "description": "Download skill pack as zip"},
+      {"method": "GET", "path": "/api/distill/skill/{corpus_id}/runnable/preview", "description": "Preview Skill.md (markdown or HTML)"}
+    ],
+    "conversation": [
+      {"method": "POST", "path": "/api/conversation/{corpus_id}/chat", "description": "Send message, get AI coach reply"},
+      {"method": "GET", "path": "/api/conversation/{corpus_id}/history", "description": "Retrieve conversation history"},
+      {"method": "POST", "path": "/api/conversation/{corpus_id}/extract", "description": "Extract new materials from conversation"},
+      {"method": "POST", "path": "/api/conversation/{corpus_id}/merge", "description": "Merge extracted materials into corpus"},
+      {"method": "GET", "path": "/api/conversation/{corpus_id}/style", "description": "Get learner style statistics"}
+    ],
+    "topics": [
+      {"method": "GET", "path": "/api/topics/meta", "description": "Current season, staleness flag, config status"},
+      {"method": "POST", "path": "/api/topics/scrape", "description": "Run full topic bank sync pipeline"},
+      {"method": "POST", "path": "/api/topics/backfill-p3", "description": "Backfill linked P3 for existing P2 topics", "params": ["limit"]}
+    ]
   },
-  "workflows": [
-    {
-      "name": "corpus_generation",
-      "description": "语料库生成流程",
-      "steps": [
-        {
-          "step": 1,
-          "name": "persona",
-          "description": "用户画像生成",
-          "input": {"mbti_type": "str", "interests": "list", "target_score": "str"},
-          "output": {"persona_profile": "dict", "communication_style": "str"}
-        },
-        {
-          "step": 2,
-          "name": "anchors",
-          "description": "锚点故事生成",
-          "input": {"persona_profile": "dict"},
-          "output": {"anchor_stories": "list[3-4]"}
-        },
-        {
-          "step": 3,
-          "name": "bridges",
-          "description": "题库桥接",
-          "input": {"anchors": "list", "topic_pool": "list"},
-          "output": {"bridge_responses": "list"}
-        },
-        {
-          "step": 4,
-          "name": "vocabulary",
-          "description": "词汇升级",
-          "input": {"target_score": "str", "interests": "list"},
-          "output": {"vocabulary_upgrades": "list[25-30]"}
-        },
-        {
-          "step": 5,
-          "name": "patterns",
-          "description": "句型模板",
-          "input": {"mbti_type": "str", "target_score": "str"},
-          "output": {"sentence_patterns": "list[8-10]"}
-        }
-      ]
-    },
-    {
-      "name": "conversation_maintenance",
-      "description": "对话维护流程",
-      "steps": [
-        {
-          "step": 1,
-          "name": "rag_retrieval",
-          "description": "RAG 检索",
-          "input": {"user_message": "str", "corpus_id": "str"},
-          "output": {"relevant_context": "list"}
-        },
-        {
-          "step": 2,
-          "name": "coach_reply",
-          "description": "对话回复",
-          "input": {"context": "list", "user_message": "str"},
-          "output": {"reply": "str"}
-        },
-        {
-          "step": 3,
-          "name": "content_extraction",
-          "description": "内容提取",
-          "input": {"conversation": "list"},
-          "output": {"new_materials": "list"}
-        },
-        {
-          "step": 4,
-          "name": "style_learning",
-          "description": "风格学习",
-          "input": {"user_messages": "list"},
-          "output": {"style_stats": "dict"}
-        },
-        {
-          "step": 5,
-          "name": "corpus_merge",
-          "description": "语料融合",
-          "input": {"new_materials": "list", "corpus_id": "str"},
-          "output": {"updated_corpus": "dict"}
-        }
-      ]
-    },
-    {
-      "name": "dynamic_topic_bank_update",
-      "description": "动态题库更新：按考试季抓取 IELTS 口语题库并衍生 P3",
-      "audiences": ["end_user", "external_agent"],
-      "protocol_name": "IELTS_TOPIC_SYNC",
-      "prerequisites": {
-        "llm_configured": true,
-        "search_provider_configured": true,
-        "supported_providers": {
-          "api": ["tavily", "exa", "exa_mcp", "bocha", "zhipu", "querit", "searxng"],
-          "local": ["google", "bing", "baidu"]
-        }
-      },
-      "constraints": [
-        "P3 仅由 P2 衍生，不直接网抓",
-        "LLM 抽取必须携带严格约束：不得编造语料未出现的题目",
-        "仅 UPSERT，不清空旧题库"
-      ],
-      "steps": [
-        {
-          "step": 1,
-          "name": "compute_season",
-          "description": "计算当前考试季",
-          "input": {"current_date": "ISO"},
-          "output": {"season": "YYYY-QX"},
-          "formula": "quarter = (month - 1) // 4 + 1"
-        },
-        {
-          "step": 2,
-          "name": "build_queries",
-          "description": "构造多语种搜索 query",
-          "input": {"season": "str", "parts": "list[P1|P2]"},
-          "output": {"queries": "list[str]"}
-        },
-        {
-          "step": 3,
-          "name": "fetch_and_extract",
-          "description": "抓取 SERP + 正文 → 临时 BM25+TF-IDF 索引 → LLM 抽取",
-          "input": {"queries": "list[str]"},
-          "output": {"topics": "list[{title, part, questions[]}]", "source_urls": "list[str]"},
-          "system_prompt": "Only include topics that ACTUALLY APPEAR in the context below. Do NOT invent."
-        },
-        {
-          "step": 4,
-          "name": "derive_p3",
-          "description": "为每道 P2 衍生 3-4 道 linked P3",
-          "input": {"p2_topics": "list"},
-          "output": {"p3_topics": "list[{title, part:'P3', linked_p2_id}]"}
-        },
-        {
-          "step": 5,
-          "name": "upsert",
-          "description": "按 (title, part) 幂等入库；命中则刷新 season/updated_at/source_url",
-          "input": {"topics": "list"},
-          "output": {"imported": "int", "updated": "int"}
-        }
-      ],
-      "fallbacks": {
-        "no_search_key": "fail_fast with search_provider_not_configured",
-        "all_fetch_failed": "keep existing bank, do not clear, do not invent",
-        "llm_extraction_empty": "return by_part.Pn=0 with source_urls for human review"
-      },
-      "api_shortcuts": [
-        {"method": "GET",  "path": "/api/topics/meta",                "desc": "current season, stale flag, config status"},
-        {"method": "POST", "path": "/api/topics/scrape",              "desc": "run full sync pipeline"},
-        {"method": "POST", "path": "/api/topics/backfill-p3?limit=N", "desc": "backfill linked P3 for existing P2"},
-        {"method": "GET",  "path": "/api/settings/search/providers",  "desc": "list 10 providers with group metadata"},
-        {"method": "POST", "path": "/api/settings/search/test",       "desc": "ping a search provider"}
-      ],
-      "output_schema": {
-        "source": "scraped|cached",
-        "current_season": "YYYY-QX",
-        "by_part": {"P1": "int", "P2": "int", "P3": "int"},
-        "derived_p3": "int",
-        "imported": "int",
-        "updated": "int",
-        "source_urls": "list[str]",
-        "errors": "list[str]"
-      }
-    }
+  "skill_pack_contents": [
+    "Skill.md",
+    "corpus.json",
+    "runtime_protocol.md",
+    "prompts/README.md"
   ],
-  "corpus_summary": {
-    "anchors_count": 0,
-    "bridges_count": 0,
-    "vocabulary_count": 0,
-    "patterns_count": 0,
-    "band_target": "7.0"
+  "pipeline": {
+    "name": "three_stage_distill",
+    "stages": [
+      {"id": 1, "name": "research", "description": "Deep research — aggregate questionnaire, materials, conversations into learner_profile"},
+      {"id": 2, "name": "framework", "description": "Capability framework — ability × scenario × goal matrix distillation"},
+      {"id": 3, "name": "persona", "description": "User persona — MBTI dimension analysis + communication style"},
+      {"id": 4, "name": "anchors", "description": "Anchor stories — 3-4 personal core stories"},
+      {"id": 5, "name": "bridges", "description": "Topic bridges — 21-topic bridging method"},
+      {"id": 6, "name": "vocabulary", "description": "Vocabulary upgrade — band-appropriate vocabulary (25-30 items)"},
+      {"id": 7, "name": "patterns", "description": "Sentence patterns — MBTI-matched expression templates (8-10)"}
+    ],
+    "fallback": "Stage 1/2 failures auto-degrade to legacy 5-step flow (backward compatible)"
   },
-  "user_style": {
-    "avg_sentence_length": null,
-    "frequent_connectors": [],
-    "vocabulary_level": null
-  },
-  "export_time": "ISO timestamp"
+  "requirements": {
+    "python": ">=3.11",
+    "llm": "OpenAI or Anthropic API key",
+    "optional": "Search provider key for topic bank sync"
+  }
 }

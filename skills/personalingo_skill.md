@@ -1,152 +1,266 @@
-# PersonaLingo Skill - [MBTI_TYPE]
+# PersonaLingo Skill
 
-## 语料库生成流程（三段式蒸馏 · v3.0）
+> AI-powered personalized IELTS corpus generator and learning assistant
 
-> **v3.0 升级说明**：借鉴 `huashu-nuwa` 的「深度调研→思维框架→可运行 Skill」三段式，对蒸馏链路做前置增强。原 5 步（Persona→Anchors→Bridges→Vocabulary→Patterns）前置两步（Research→Framework）扩展为 **7 步链路**，并新增「可运行 Skill 包」作为第三段交付物。Stage 1/2 失败时自动降级到 5 步流程，向后兼容。
+## Installation
 
-### 输入
-- MBTI 类型 + 兴趣问卷 + 目标分数（+ 可选：上传资料、历史对话、主题信号）
-
-### 流程（7 步）
-0. **深度调研 (Stage 1 · Research)** → 聚合问卷/资料/对话/主题 → 产出 `learner_profile`（background / language_samples / weakness_signals / goal_vector / topic_signals）
-1. **思维框架提炼 (Stage 2 · Framework)** → LLM 对 profile 做三维矩阵蒸馏（ability × scenario × goal）→ 产出 `capability_framework`（含 pain_points / lift_paths），LLM 失败自动规则兜底
-2. **用户画像生成 (Stage 3a · Persona)** → MBTI 维度分析 + 沟通风格推断
-3. **锚点故事生成 (Stage 3b · Anchors)** → 3-4 个个人核心故事
-4. **题库桥接 (Stage 3c · Bridges)** → 21 题桥接法连接锚点与题库
-5. **词汇升级 (Stage 3d · Vocabulary)** → 分数段适配的词汇表
-6. **句型模板 (Stage 3e · Patterns)** → MBTI 匹配的表达模式
-
-### 输出
-- 完整个性化语料库（含 `learner_profile` + `capability_framework`）
-- 可运行 Skill 包（4 件套：`Skill.md` + `corpus.json` + `runtime_protocol.md` + `prompts/README.md`）
-
-### 面向外部 Agent（可运行 Skill 调用协议）
-当 Agent 被要求「加载 PersonaLingo 学习者画像并进行口语陪练」时：
-```
-Input:
-  - corpus_id (str)
-  - optional: out_root (用于落盘的目录)
-
-Step 1. 调用 POST /api/distill/run?questionnaire_id=Q&include_research=true
-        → 后台串联 7 步，learner_profile/capability_framework 落 DB
-Step 2. 调用 GET  /api/distill/skill/{corpus_id}/runnable
-        → 服务侧产出 4 件套到 SKILL_RUNNABLE_OUT_ROOT/{corpus_id}/
-Step 3. （可选）GET /api/distill/skill/{corpus_id}/runnable/download 拉取 zip
-Step 4. Agent 加载 corpus.json.skill_manifest：
-        { name, version, pipeline="three_stage_distill",
-          stages=[research,framework,persona,anchors,bridges,vocabulary,patterns] }
-        按 runtime_protocol.md 指引调用 prompts/ 下模板
-Fallback:
-  - Stage 1/2 失败不阻断 Stage 3；corpus_manifest 标记 stages.*.status=skipped
-  - LLM 均不可用时 capability_framework 走规则兜底（非空）
+```bash
+npx skills add orzcls/personalingo-skill
 ```
 
-### 相关 API 速查（三段式蒸馏）
-| 端点 | 作用 |
-|------|------|
-| `POST /api/distill/diagnose` | 诊断问卷生成（失败用 3 条默认问题兜底） |
-| `POST /api/distill/run?questionnaire_id=&include_research=true` | 后台触发 7 步蒸馏 |
-| `GET  /api/distill/skill/{corpus_id}/runnable` | 产出可运行 Skill 包 4 件套 |
-| `GET  /api/distill/skill/{corpus_id}/runnable/download` | 打包 zip 流式下载 |
+## Overview
 
-## 对话维护流程
+PersonaLingo is a full-stack AI system that generates **personalized IELTS speaking corpus** tailored to each learner's personality (MBTI), interests, background, and target band score. It employs a **Three-Stage Distillation Pipeline** (Research → Framework → Generation) to produce high-quality, export-ready Skill Packs that any AI Agent can consume for tutoring.
 
-### 输入
-- 用户对话 / 上传资料
+### Core Capabilities
 
-### 流程
-1. **RAG 检索** → 从语料库获取相关上下文
-2. **对话回复** → 带教练角色的智能回复
-3. **内容提取** → 识别可加入语料库的新素材
-4. **风格学习** → 更新用户表达风格统计
-5. **语料融合** → 确认后更新语料库
+- Personalized corpus generation via 7-step LLM distillation pipeline
+- QMD RAG engine (Query-Match-Decide) for intelligent corpus retrieval
+- Dynamic IELTS topic bank with seasonal auto-sync
+- Conversational coaching with style learning
+- Portable Skill Pack export (4 artifacts) for agent integration
 
-### 输出
-- 更新后的语料库 + 学习笔记
+## Usage Modes
 
-## 当前语料库摘要
-- 锚点数: N
-- 桥接数: N
-- 词汇数: N
-- 句型数: N
-- 目标分数: X.X
+### Mode A: Use Pre-built Skill Packs
 
-## 用户风格特征
-- MBTI类型: XXXX
-- 平均句长: X words
-- 常用连接词: ...
-- 词汇层级: ...
+For agents that need to quickly start tutoring without running the full pipeline.
 
-## 锚点故事概览
-- **锚点1**: keywords...
-- **锚点2**: keywords...
-- **锚点3**: keywords...
+**When to use**: You already have a generated corpus (corpus_id) and just need the skill artifacts.
 
-## Dynamic Topic Bank Update（动态题库更新）
+#### Steps
 
-> 本章节同时面向【普通用户】与【外部 Agent】，告知如何在考试季切换时刷新 IELTS 口语题库，保证 P1/P2/P3 覆盖最新真题。
+1. **List available skills**
+   ```
+   GET /api/distill/skill/{corpus_id}/runnable
+   ```
+   Response:
+   ```json
+   {
+     "data": {
+       "corpus_id": "abc123",
+       "path": "/path/to/output",
+       "files": ["Skill.md", "corpus.json", "runtime_protocol.md", "prompts/README.md"]
+     },
+     "error": null
+   }
+   ```
 
-### 面向普通用户（PersonaLingo 内使用）
-1. 打开【设置】页 → 配置任一 LLM（OpenAI / Anthropic）并保存。
-2. 在【网络搜索】卡片选择一个 provider：
-   - API 类（需 Key）：Tavily / Exa / ExaMCP / Bocha / Zhipu / Querit / Searxng
-   - 本地类（免 Key，通过 Jina Reader 抓取）：Google / Bing / Baidu
-   - 点【测试搜索】确认连通。
-3. 回到【题库】页：
-   - 顶部显示“当前考试季 YYYY-QX · 上次更新 …”。若显示红点提示“可能不是最新考试季”，说明 DB 中的最新 season 滞后。
-   - 点击【刷新 YYYY-QX 题库】按钮，系统会并行抓取多源 SERP → 构建临时 BM25+TF-IDF 索引 → LLM 严格从正文抽取 P1/P2 真题 → 对每道 P2 自动衍生 3-4 道 linked P3。
-   - 完成后在状态条看到 “P1 新增 X · P2 新增 Y · P3 新增 Z（衍生 N）· 更新 K 条” 及前 3 个来源 URL。
-4. 若想为历史 P2 补全 P3：调用 `POST /api/topics/backfill-p3?limit=20`（或在 DevTools 控制台执行）。
+2. **Download skill pack as zip**
+   ```
+   GET /api/distill/skill/{corpus_id}/runnable/download
+   ```
+   Returns: `personalingo_skill_{corpus_id}.zip`
 
-### 面向外部 Agent（标准执行协议）
-当 Agent 被要求 “fetch latest IELTS season topics” 时，按以下协议执行：
+3. **Preview Skill.md online**
+   ```
+   GET /api/distill/skill/{corpus_id}/runnable/preview?format=markdown
+   ```
 
-#### 协议：IELTS_TOPIC_SYNC
+4. **Load the Skill Pack**
+   - Read `corpus.json` for full corpus data + learner profile + capability framework
+   - Follow `runtime_protocol.md` for RAG retrieval & response generation protocol
+   - Use `prompts/` templates for conversation and assessment scenarios
+
+### Mode B: Full Pipeline (End-to-End)
+
+For agents that need to create a personalized corpus from scratch.
+
+**When to use**: New learner onboarding — no existing corpus.
+
+#### Step 1: Diagnose — Generate Questionnaire
+
 ```
-Input:
-  - current_date (ISO)
-  - optional: parts ⊆ {P1, P2}   # P3 由 P2 衍生，不直接抓
-  - required env: LLM API key, Search provider key
+POST /api/distill/diagnose
+Content-Type: application/json
 
-Step 1. 计算 season：quarter = (month-1)//4 + 1  → `YYYY-Q{1|2|3}`
-Step 2. 为每个 part 构造 2-3 条 query：
-        - "IELTS Speaking Part {n} topics {season} {year} new list"
-        - "雅思口语 Part{n} {season} 新题 题库"
-Step 3. 调用 PersonaLingo `POST /api/topics/scrape`（推荐）；
-        或自行执行：
-          3a. web_search(provider, query, max_results=20)
-          3b. fetch 正文（优先 https://r.jina.ai/{url}，降级 httpx）
-          3c. chunk_text(doc, 800, overlap=120) → 临时 BM25+TF-IDF 索引
-          3d. retrieve_context(query, top_k=6) → LLM 抽取（JSON array of {title, questions[]}）
-             **严格约束：只能从 context 中实际出现的内容抽取，不得编造。**
-Step 4. 对每道新 P2，按 prompt 生成 3-4 道 linked P3（discussion / opinion / comparison / trend）。
-Step 5. UPSERT 入库：按 (title, part) 幂等；命中则刷新 season / updated_at / source_url。
-Step 6. 回退策略：
-        - 无搜索 Key → 直接失败并报 "search_provider_not_configured"
-        - 抓取全部失败 → 保留旧题库，不清空，不编造
-        - LLM 抽取为空 → 返回 by_part.Pn=0 并列出 source_urls 供人工排查
-Output:
-  {
-    "source": "scraped",
-    "current_season": "YYYY-QX",
-    "by_part": {"P1": int, "P2": int, "P3": int},
-    "derived_p3": int,
-    "imported": int, "updated": int,
-    "source_urls": [str], "errors": [str]
-  }
+{
+  "text": "I'm a college student preparing for IELTS, I want to get 7.0 in speaking but I'm not fluent..."
+}
 ```
 
-#### 关键幂等与安全
-- 不清空旧题库；仅 UPSERT。
-- season 字段作为唯一排序锚点：`YYYY-Q{1|2|3}`。
-- P3 仅通过衍生生成，禁止网络抓取“P3 真题”作为事实来源。
-- 所有抽取调用必须携带 system prompt：`Only include topics that ACTUALLY APPEAR in the context below. Do NOT invent.`
+Response:
+```json
+{
+  "data": {
+    "questions": [
+      {"id": "q1", "text": "How soon will you take IELTS?", "type": "single", "options": ["30 days", "3 months", "6 months", "No exam planned"]},
+      {"id": "q2", "text": "Target score?", "type": "single", "options": ["6.0", "6.5", "7.0", "7.5+"]},
+      {"id": "q3", "text": "Weakest area? (multi-select)", "type": "multi", "options": ["Vocabulary", "Fluency", "Pronunciation", "Logic"]}
+    ],
+    "suggested_score": "7.0",
+    "rationale": "Based on self-description fluency concerns"
+  },
+  "error": null
+}
+```
 
-### 相关 API 速查
-| 端点 | 作用 |
-|------|------|
-| `GET /api/topics/meta` | 当前季度、最近更新、是否 stale、Key 配置状态 |
-| `POST /api/topics/scrape` | 触发完整抓取+抽取+P3 衍生流水线 |
-| `POST /api/topics/backfill-p3?limit=N` | 为已有 P2 批量补全 linked P3 |
-| `GET /api/settings/search/providers` | 10 个 provider 元信息（group=api/local） |
-| `POST /api/settings/search/test` | 测试搜索 provider 连通性 |
+#### Step 2: Guided Conversation (Optional)
+
+Use conversation APIs to collect additional context from the learner:
+
+```
+POST /api/conversation/{corpus_id}/chat
+Content-Type: application/json
+
+{
+  "message": "I'm interested in aviation and competitive programming",
+  "context": []
+}
+```
+
+#### Step 3: Trigger Distillation
+
+```
+POST /api/distill/run?questionnaire_id={id}&include_research=true
+```
+
+Response:
+```json
+{
+  "data": {
+    "questionnaire_id": "q_abc123",
+    "include_research": true,
+    "stages": ["research", "framework", "persona", "anchors", "bridges", "vocabulary", "patterns"],
+    "stream_url": "/api/corpus/generate/q_abc123/stream"
+  },
+  "error": null
+}
+```
+
+The 7-step pipeline runs in background:
+1. **Research** — Aggregate questionnaire + materials + conversations → `learner_profile`
+2. **Framework** — Ability × Scenario × Goal matrix distillation → `capability_framework`
+3. **Persona** — MBTI dimension analysis + communication style inference
+4. **Anchors** — 3-4 personal core stories
+5. **Bridges** — 21-topic bridging connecting anchors to IELTS question bank
+6. **Vocabulary** — Band-appropriate vocabulary list (25-30 items)
+7. **Patterns** — MBTI-matched sentence patterns (8-10 templates)
+
+> **Fallback**: Stage 1/2 failures do not block Stage 3. The system auto-degrades to legacy 5-step flow.
+
+#### Step 4: Export Skill Pack
+
+```
+GET /api/distill/skill/{corpus_id}/runnable
+```
+
+#### Step 5: Download & Use
+
+```
+GET /api/distill/skill/{corpus_id}/runnable/download
+```
+
+## API Reference
+
+| Endpoint | Method | Description |
+|----------|--------|-------------|
+| `/api/distill/diagnose` | POST | Generate diagnostic questionnaire from free text |
+| `/api/distill/run` | POST | Trigger 7-step distillation (background task) |
+| `/api/distill/skill/{corpus_id}/runnable` | GET | Export runnable skill pack (4 artifacts) |
+| `/api/distill/skill/{corpus_id}/runnable/download` | GET | Download skill pack as zip |
+| `/api/distill/skill/{corpus_id}/runnable/preview` | GET | Preview Skill.md (markdown or HTML) |
+| `/api/conversation/{corpus_id}/chat` | POST | Send message, get AI coach reply |
+| `/api/conversation/{corpus_id}/history` | GET | Retrieve conversation history |
+| `/api/conversation/{corpus_id}/extract` | POST | Extract new materials from conversation |
+| `/api/conversation/{corpus_id}/merge` | POST | Merge extracted materials into corpus |
+| `/api/conversation/{corpus_id}/style` | GET | Get learner style statistics |
+| `/api/topics/meta` | GET | Current season, staleness flag, config status |
+| `/api/topics/scrape` | POST | Run full topic bank sync pipeline |
+| `/api/topics/backfill-p3?limit=N` | POST | Backfill linked P3 for existing P2 topics |
+
+## Output Format
+
+Each exported skill pack contains 4 artifacts:
+
+```
+{corpus_id}/
+├── Skill.md              # Personalized learning skill document
+├── corpus.json           # Full corpus data with QMD-tagged vocabulary
+│   └── .skill_manifest   # { name, version, pipeline, stages[] }
+├── runtime_protocol.md   # Agent runtime protocol (RAG retrieval, response generation)
+└── prompts/
+    └── README.md         # Prompt templates for conversation & assessment
+```
+
+### corpus.json Structure
+
+```json
+{
+  "skill_manifest": {
+    "name": "personalingo",
+    "version": "3.0",
+    "pipeline": "three_stage_distill",
+    "stages": [
+      {"name": "research", "status": "completed"},
+      {"name": "framework", "status": "completed"},
+      {"name": "persona", "status": "completed"},
+      {"name": "anchors", "status": "completed"},
+      {"name": "bridges", "status": "completed"},
+      {"name": "vocabulary", "status": "completed"},
+      {"name": "patterns", "status": "completed"}
+    ]
+  },
+  "learner_profile": { "background": "...", "language_samples": [], "weakness_signals": [], "goal_vector": {} },
+  "capability_framework": { "pain_points": [], "lift_paths": [] },
+  "anchors": [],
+  "bridges": [],
+  "vocabulary": [],
+  "patterns": []
+}
+```
+
+## Example Workflow
+
+Complete end-to-end example for an AI tutor agent:
+
+```python
+import httpx
+
+BASE = "http://localhost:9849"
+
+# Step 1: Diagnose the learner
+resp = httpx.post(f"{BASE}/api/distill/diagnose", json={
+    "text": "I'm an INTJ aviation student. I want IELTS 7.0 but struggle with fluency and topic variety."
+})
+questionnaire = resp.json()["data"]
+questionnaire_id = "q_new_user"  # assigned by system or from prior step
+
+# Step 2: (Optional) Guided conversation to enrich profile
+httpx.post(f"{BASE}/api/conversation/{corpus_id}/chat", json={
+    "message": "I competed in ICPC and I love system architecture design"
+})
+
+# Step 3: Run full distillation
+resp = httpx.post(f"{BASE}/api/distill/run", params={
+    "questionnaire_id": questionnaire_id,
+    "include_research": True
+})
+stream_url = resp.json()["data"]["stream_url"]
+# Monitor progress via stream_url...
+
+# Step 4: Export skill pack
+resp = httpx.get(f"{BASE}/api/distill/skill/{corpus_id}/runnable")
+files = resp.json()["data"]["files"]
+
+# Step 5: Download zip for offline use
+httpx.get(f"{BASE}/api/distill/skill/{corpus_id}/runnable/download")
+
+# Now load Skill.md + corpus.json + runtime_protocol.md to start tutoring!
+```
+
+## Dynamic Topic Bank Sync
+
+The skill also supports automatic IELTS topic bank refresh:
+
+```
+POST /api/topics/scrape
+```
+
+This fetches latest P1/P2 topics for the current exam season and derives linked P3 questions. See the API Reference above for related endpoints.
+
+## Requirements
+
+- Python 3.11+ backend running at `http://localhost:9849`
+- LLM API key configured (OpenAI or Anthropic)
+- (Optional) Search provider key for topic bank sync
