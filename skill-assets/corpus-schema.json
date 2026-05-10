@@ -46,13 +46,32 @@
         "strengths": { "type": "array", "items": { "type": "string" } },
         "weakness_signals": { "type": "array", "items": { "type": "string" } },
         "language_samples": { "type": "array", "items": { "type": "string" } },
-        "topic_signals": { "type": "array", "items": { "type": "string" } },
+        "topic_signals": {
+          "type": "object",
+          "description": "Mirrors LearnerResearcher._scan_topic_signals() output.",
+          "properties": {
+            "total": { "type": "integer", "minimum": 0 },
+            "matches": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": { "type": "string" },
+                  "part": { "type": "string" },
+                  "title": { "type": "string" },
+                  "category": { "type": "string" }
+                }
+              }
+            }
+          }
+        },
         "source_stats": {
           "type": "object",
+          "description": "Mirrors LearnerResearcher.source_stats: {materials, chats, topics}.",
           "properties": {
-            "from_questionnaire": { "type": "integer", "minimum": 0 },
-            "from_dialogue": { "type": "integer", "minimum": 0 },
-            "from_materials": { "type": "integer", "minimum": 0 }
+            "materials": { "type": "integer", "minimum": 0 },
+            "chats": { "type": "integer", "minimum": 0 },
+            "topics": { "type": "integer", "minimum": 0 }
           }
         },
         "web_enabled": { "type": "boolean", "default": false },
@@ -66,33 +85,69 @@
         "source": { "enum": ["llm", "rule_fallback"] },
         "dimensions": {
           "type": "object",
+          "description": "Mirrors CapabilityFramework dimensions: ability/scenario/goal are arrays of typed objects, not strings.",
           "properties": {
-            "ability":  { "type": "array", "items": { "type": "string" } },
-            "scenario": { "type": "array", "items": { "type": "string" } },
-            "goal":     { "type": "array", "items": { "type": "string" } }
+            "ability": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": ["name", "current", "target"],
+                "properties": {
+                  "name": { "type": "string", "description": "e.g. lexical_range / fluency / grammatical_range" },
+                  "current": { "type": "string" },
+                  "target": { "type": "string" },
+                  "notes": { "type": "string" }
+                }
+              }
+            },
+            "scenario": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": ["part"],
+                "properties": {
+                  "part": { "enum": ["P1", "P2", "P3"] },
+                  "topics": { "type": "array", "items": { "type": "string" } },
+                  "priority": { "enum": ["high", "medium", "low"] }
+                }
+              }
+            },
+            "goal": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": ["key", "value"],
+                "properties": {
+                  "key": { "type": "string", "description": "e.g. target_score / priority_parts / exam_date" },
+                  "value": { "type": "string" }
+                }
+              }
+            }
           }
         },
         "pain_points": {
           "type": "array",
+          "description": "Mirrors CapabilityFramework pain_points: {id, desc, signals}.",
           "items": {
             "type": "object",
-            "required": ["id", "name"],
+            "required": ["id", "desc"],
             "properties": {
-              "id": { "type": "string", "pattern": "^PP-[0-9]{2}$" },
-              "name": { "type": "string" },
-              "evidence": { "type": "string" }
+              "id": { "type": "string", "pattern": "^pp[0-9]+$" },
+              "desc": { "type": "string" },
+              "signals": { "type": "array", "items": { "type": "string" } }
             }
           }
         },
         "lift_paths": {
           "type": "array",
+          "description": "Mirrors CapabilityFramework lift_paths: {from, to, steps[]}.",
           "items": {
             "type": "object",
             "required": ["from", "to"],
             "properties": {
               "from": { "type": "string" },
               "to": { "type": "string" },
-              "band_gap": { "type": "string" }
+              "steps": { "type": "array", "items": { "type": "string" } }
             }
           }
         }
