@@ -129,7 +129,7 @@ PersonaLingo exports AI agent skills as portable packages for personalized IELTS
 ### Quick Install
 
 ```bash
-npx skills add orzcls/personalingo-skill
+npx skills add orzcls/PersonaLingo
 ```
 
 ### Two Usage Modes

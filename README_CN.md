@@ -129,7 +129,7 @@ PersonaLingo 将个性化雅思学习能力导出为可移植的 Agent 技能包
 ### 快速安装
 
 ```bash
-npx skills add orzcls/personalingo-skill
+npx skills add orzcls/PersonaLingo
 ```
 
 ### 两种使用模式
