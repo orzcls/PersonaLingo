@@ -1,0 +1,29 @@
+{
+  "_meta": {
+    "purpose": "Stage 5 Bridges 的降级题库：当 Agent 无法生成或访问真实题库时，用此 20 个经典 IELTS P1/P2 话题作为桥接目标。",
+    "source": "IELTS P1/P2 recurring topics（basis of backend topics_p1.json / topics_p2.json）",
+    "category_mapping": "person/object/place/event/abstract 对应锚点 category"
+  },
+  "topics": [
+    { "id": "T-01", "part": "P1", "title": "Work or study",                         "category": "person",   "question_type": "factual" },
+    { "id": "T-02", "part": "P1", "title": "Hometown",                               "category": "place",    "question_type": "description" },
+    { "id": "T-03", "part": "P1", "title": "Hobbies and free time",                  "category": "abstract", "question_type": "preference" },
+    { "id": "T-04", "part": "P1", "title": "Food and cooking",                       "category": "object",   "question_type": "preference" },
+    { "id": "T-05", "part": "P1", "title": "Technology you use every day",           "category": "object",   "question_type": "opinion" },
+    { "id": "T-06", "part": "P1", "title": "Travel and transport",                   "category": "place",    "question_type": "experience" },
+    { "id": "T-07", "part": "P1", "title": "Reading / books",                        "category": "object",   "question_type": "preference" },
+    { "id": "T-08", "part": "P1", "title": "Friends and relationships",              "category": "person",   "question_type": "description" },
+    { "id": "T-09", "part": "P1", "title": "Weather and seasons",                    "category": "abstract", "question_type": "preference" },
+    { "id": "T-10", "part": "P1", "title": "Music you listen to",                    "category": "abstract", "question_type": "preference" },
+    { "id": "T-11", "part": "P2", "title": "Describe a person who has influenced you","category": "person",  "question_type": "description" },
+    { "id": "T-12", "part": "P2", "title": "Describe a place you have visited",      "category": "place",    "question_type": "description" },
+    { "id": "T-13", "part": "P2", "title": "Describe an object you own and value",   "category": "object",   "question_type": "description" },
+    { "id": "T-14", "part": "P2", "title": "Describe an event you will always remember","category": "event", "question_type": "experience" },
+    { "id": "T-15", "part": "P2", "title": "Describe a skill you want to learn",     "category": "abstract", "question_type": "opinion" },
+    { "id": "T-16", "part": "P2", "title": "Describe a time you overcame a challenge","category": "event",   "question_type": "experience" },
+    { "id": "T-17", "part": "P2", "title": "Describe a piece of advice that helped you","category": "person", "question_type": "experience" },
+    { "id": "T-18", "part": "P2", "title": "Describe a decision you made recently",  "category": "event",    "question_type": "experience" },
+    { "id": "T-19", "part": "P2", "title": "Describe a trip that did not go as planned","category": "event", "question_type": "experience" },
+    { "id": "T-20", "part": "P2", "title": "Describe a project you completed successfully","category": "event","question_type": "experience" }
+  ]
+}

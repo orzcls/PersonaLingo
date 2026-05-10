@@ -23,12 +23,16 @@ npx skills add orzcls/PersonaLingo
 ├── SKILL.md
 ├── skill.json
 └── skill-assets/
-    ├── questionnaire.json
-    ├── conversation-guide.md
-    ├── distill-protocol.md
-    ├── corpus-schema.json
-    ├── profile-template.md
-    └── site-template.html
+    ├── questionnaire.json          # 问卷 Schema
+    ├── conversation-guide.md       # 引导对话规则
+    ├── distill-protocol.md         # 7 步蒸馏 prompt 协议
+    ├── corpus-schema.json          # corpus.json 校验 schema（与后端 models/corpus.py 等价）
+    ├── profile-template.md         # 个人资料模板
+    ├── site-template.html          # 静态网站模板
+    ├── band-strategies.json        # 分数段策略（与后端 band_strategies.json 一致）
+    ├── fallback-topics.json        # Stage 5 降级题库（20 话题）
+    ├── fallback-vocabulary.json    # Stage 6 降级词表（按 band 分档）
+    └── fallback-patterns.json      # Stage 7 降级句型（8 条通用模板）
 ```
 
 不会再复制 `backend/` / `frontend/` / `docs/` 等项目代码。
@@ -83,17 +87,22 @@ corpus/<corpus_id>/
 
 ### Step 3 · 七步蒸馏（Distill）
 
-1. 读取 [skill-assets/distill-protocol.md](skill-assets/distill-protocol.md)。
-2. 串行执行 7 个 Stage 的 LLM Prompt：
-   - `research` → `learner_profile`
-   - `framework` → `capability_framework`
-   - `persona` → `persona`
-   - `anchors` → `anchors[]`
-   - `bridges` → `bridges[]`
+1. 加载 [skill-assets/distill-protocol.md](skill-assets/distill-protocol.md) 与 [skill-assets/band-strategies.json](skill-assets/band-strategies.json)。
+2. 从 `answers.json` 读取 `target_band`，取出对应分数档策略块（若 `8.0+ / 暂不考试` → 兜底用 `7.5`）。
+3. 串行执行 7 个 Stage 的 LLM Prompt，**Stage 3-7 的 system prompt 必须注入 band_strategy 块**（与后端 `corpus_generator.py` 等价）：
+   - `research`   → `learner_profile`（background / goal_vector / weakness_signals / language_samples / topic_signals / source_stats）
+   - `framework`  → `capability_framework`（source / dimensions / pain_points / lift_paths）
+   - `persona`    → `persona`（mbti / dimensions / communication_style）
+   - `anchors`    → `anchors[]`
+   - `bridges`    → `bridges[]`
    - `vocabulary` → `vocabulary[]`
-   - `patterns` → `patterns[]`
-3. 任一 Stage 失败按 protocol 的"降级策略"处理，在 `skill_manifest.stages[i].status` 置 `fallback` 并记录 `note`。
-4. 合并写入 `corpus/<corpus_id>/corpus.json`，**必须通过** [skill-assets/corpus-schema.json](skill-assets/corpus-schema.json) 的 JSON Schema 校验。
+   - `patterns`   → `patterns[]`
+4. 任一 Stage 失败按 protocol 的「降级策略」处理：Agent 必须在 `skill_manifest.stages[i]` 写 `status="fallback"` + `source` + `note`，并依次调用对应 fallback 资产：
+   - Stage 5 降级 → `skill-assets/fallback-topics.json`
+   - Stage 6 降级 → `skill-assets/fallback-vocabulary.json`（按 `target_band ± 0.5` 筛选）
+   - Stage 7 降级 → `skill-assets/fallback-patterns.json`
+5. 合并写入 `corpus/<corpus_id>/corpus.json`，**必须通过** [skill-assets/corpus-schema.json](skill-assets/corpus-schema.json) 的 JSON Schema 校验。
+6. 将实际使用的 band 策略快照写入 `corpus.band_strategy`，供下游追溯。
 
 ### Step 4 · 个人资料（Profile）
 
@@ -111,7 +120,9 @@ corpus/<corpus_id>/
 ## 质量守则
 
 - **真实性优先**：锚点故事、词汇例句必须来自问卷 + 对话的真实素材，禁止虚构。
-- **Schema 严格**：`corpus.json` 必须通过 `corpus-schema.json` 校验；不符字段直接丢弃。
+- **架构等价**：install-only 产出的 `corpus.json` 必须与 runnable-export 同 schema（见 `skill.json.install_only.schema_alignment`），下游 Agent 可用统一逻辑读两种模式的结果。
+- **Schema 严格**：`corpus.json` 必须通过 `corpus-schema.json` 校验；不符字段直接丢弃并在 `stages[i].note` 记录原因。
+- **Band 注入**：Stage 3-7 没有注入 band_strategy 等于没在蒸馏——产物会偏离目标分数档。
 - **本地化**：所有产物写到当前工作目录的 `corpus/<corpus_id>/`，不上传任何远程服务。
 - **可复跑**：每一步都以前序产物为唯一输入；任何一步可单独重跑而不影响其它步骤。
 

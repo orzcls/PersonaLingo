@@ -34,7 +34,21 @@
       "distill_protocol": "skill-assets/distill-protocol.md",
       "corpus_schema": "skill-assets/corpus-schema.json",
       "profile_template": "skill-assets/profile-template.md",
-      "site_template": "skill-assets/site-template.html"
+      "site_template": "skill-assets/site-template.html",
+      "band_strategies": "skill-assets/band-strategies.json",
+      "fallback_topics": "skill-assets/fallback-topics.json",
+      "fallback_vocabulary": "skill-assets/fallback-vocabulary.json",
+      "fallback_patterns": "skill-assets/fallback-patterns.json"
+    },
+    "schema_alignment": {
+      "corpus_schema_version": "3.1",
+      "mirrors_backend": [
+        "backend/app/models/corpus.py",
+        "backend/app/services/corpus_generator.py",
+        "backend/app/services/learner_researcher.py",
+        "backend/app/services/capability_framework.py"
+      ],
+      "band_source": "backend/app/data/band_strategies.json"
     }
   },
   "runnable_export": {
@@ -52,15 +66,16 @@
   "pipeline": {
     "name": "three_stage_distill",
     "stages": [
-      { "id": 1, "name": "research",   "description": "Aggregate questionnaire + dialogue into learner_profile" },
-      { "id": 2, "name": "framework",  "description": "Capability x scenario x goal matrix distillation" },
-      { "id": 3, "name": "persona",    "description": "MBTI dimension analysis + communication style" },
-      { "id": 4, "name": "anchors",    "description": "3-4 personal core stories" },
-      { "id": 5, "name": "bridges",    "description": "Topic bridges connecting anchors to IELTS question bank" },
-      { "id": 6, "name": "vocabulary", "description": "Band-appropriate vocabulary list (25-30 items)" },
-      { "id": 7, "name": "patterns",   "description": "MBTI-matched sentence patterns (8-10 templates)" }
+      { "id": 1, "name": "research",   "backend_ref": "learner_researcher.run",        "description": "Aggregate questionnaire + dialogue into learner_profile (background, goal_vector, weakness_signals, language_samples, topic_signals, source_stats)" },
+      { "id": 2, "name": "framework",  "backend_ref": "capability_framework.run",      "description": "Ability x Scenario x Goal matrix + pain_points + lift_paths" },
+      { "id": 3, "name": "persona",    "backend_ref": "corpus_generator.generate_persona",    "description": "MBTI four-dimension analysis + communication style (injects band_strategy)" },
+      { "id": 4, "name": "anchors",    "backend_ref": "corpus_generator.generate_anchors",    "description": "3-4 personal core stories with keywords and connectable_topics" },
+      { "id": 5, "name": "bridges",    "backend_ref": "corpus_generator.generate_bridges",    "description": "15-28 topic bridges with sample_answer + safe_stop_point + techniques_used" },
+      { "id": 6, "name": "vocabulary", "backend_ref": "corpus_generator.generate_vocabulary", "description": "25-30 band-tiered vocabulary items with basic_word/upgrade pairs" },
+      { "id": 7, "name": "patterns",   "backend_ref": "corpus_generator.generate_patterns",   "description": "8-10 MBTI-matched sentence patterns" }
     ],
-    "fallback": "Any stage failure is recorded in skill_manifest.stages[i].status = 'fallback' and pipeline continues."
+    "band_strategy_injection": "Stages 3-7 MUST inject the target_band block from skill-assets/band-strategies.json into each LLM system prompt.",
+    "fallback": "Any stage failure is recorded in skill_manifest.stages[i] as {status:'fallback', source:'rule_fallback|asset_fallback|user_input', note:'...'} and pipeline continues. Required fields must remain non-empty via fallback assets."
   },
   "requirements": {
     "agent": "Any skill-compatible AI agent (Claude / Qoder / Cursor / Cline / ...)",

@@ -12,13 +12,16 @@
       "questions": [
         {
           "id": "target_band",
+          "backend_alias": "ielts_target_score",
           "type": "single",
           "required": true,
           "prompt": "你的目标雅思口语分数？",
-          "options": ["6.0", "6.5", "7.0", "7.5", "8.0+", "暂不考试"]
+          "options": ["6.0", "6.5", "7.0", "7.5"],
+          "note": "与后端 band_strategies.json 对齐，仅支持 4 档；若用户口头说 '8.0+' 或 '暂不考试'，Agent 在 answers.json 中写入 '7.5' 并在 dialogue.md 注明原始意图。"
         },
         {
           "id": "exam_window",
+          "backend_alias": "ielts_exam_date",
           "type": "single",
           "required": false,
           "prompt": "距离考试还有多久？",
@@ -42,6 +45,13 @@
           "required": false,
           "prompt": "你的 MBTI 类型？（若不清楚可填 unknown）",
           "options": ["INTJ", "INTP", "ENTJ", "ENTP", "INFJ", "INFP", "ENFJ", "ENFP", "ISTJ", "ISFJ", "ESTJ", "ESFJ", "ISTP", "ISFP", "ESTP", "ESFP", "unknown"]
+        },
+        {
+          "id": "mbti_dimensions",
+          "type": "free_text",
+          "required": false,
+          "prompt": "（可选）MBTI 四维度的倾向强度描述，例如 'EI=-2 偏 I，SN=+1 偏 N'",
+          "note": "用于 Stage 3 Persona 的 dimensions.score 推断；留空时由 Agent 从 language_samples 弱推断。"
         },
         {
           "id": "communication_style",
@@ -134,6 +144,14 @@
       "corpus_id": "string",
       "created_at": "ISO-8601",
       "answers": "{ section_id: { question_id: value } }"
-    }
+    },
+    "backend_alias_map": {
+      "goal.target_band": "ielts_target_score",
+      "goal.exam_window": "ielts_exam_date",
+      "experiences.people": "personal_background.people",
+      "experiences.events": "life_experiences.events",
+      "interests.interests": "ielts_topic_types"
+    },
+    "note": "Agent 同时写 install-only 命名与 backend_alias 命名，保证 corpus.json 在两种模式下都能被下游消费。"
   }
 }

@@ -1,0 +1,64 @@
+{
+  "_meta": {
+    "purpose": "Stage 7 Patterns 的降级模板：当 Agent 无法基于 persona 生成 8-10 条 MBTI 匹配句型时，使用此 8 条 MBTI-agnostic 通用句型填充。",
+    "usage": "Agent 应优先生成带 fits_mbti 字段的个性化 patterns；降级时引用本文件并在 skill_manifest.stages[patterns].note 中注明 'fallback-patterns used'。"
+  },
+  "patterns": [
+    {
+      "id": "P-01",
+      "purpose": "opener",
+      "skeleton": "Well, when I think about _____, the first thing that comes to mind is _____.",
+      "fits_mbti": ["ALL"],
+      "example_from_anchor": "A-XX: Well, when I think about ICPC, the first thing that comes to mind is the 12-hour debugging night."
+    },
+    {
+      "id": "P-02",
+      "purpose": "structure",
+      "skeleton": "There are two main reasons: first, _____; and second, _____.",
+      "fits_mbti": ["ALL"],
+      "example_from_anchor": "A-XX: There are two main reasons: first, it's really hands-on; and second, it pays off fast."
+    },
+    {
+      "id": "P-03",
+      "purpose": "contrast",
+      "skeleton": "On one hand, _____, but on the other hand, _____.",
+      "fits_mbti": ["ALL"],
+      "example_from_anchor": "A-XX: On one hand, the course is intense, but on the other hand, you grow the fastest there."
+    },
+    {
+      "id": "P-04",
+      "purpose": "emphasis",
+      "skeleton": "What really stood out to me was _____ because _____.",
+      "fits_mbti": ["ALL"],
+      "example_from_anchor": "A-XX: What really stood out to me was the silence in the cockpit because it meant everyone was fully focused."
+    },
+    {
+      "id": "P-05",
+      "purpose": "closing",
+      "skeleton": "So overall, _____ has shaped the way I _____ .",
+      "fits_mbti": ["ALL"],
+      "example_from_anchor": "A-XX: So overall, that project has shaped the way I approach any open-ended problem."
+    },
+    {
+      "id": "P-06",
+      "purpose": "structure",
+      "skeleton": "To give you a concrete example, _____.",
+      "fits_mbti": ["ALL"],
+      "example_from_anchor": "A-XX: To give you a concrete example, we had to rewrite the whole module in one night."
+    },
+    {
+      "id": "P-07",
+      "purpose": "contrast",
+      "skeleton": "It wasn't so much _____ as it was _____.",
+      "fits_mbti": ["ALL"],
+      "example_from_anchor": "A-XX: It wasn't so much the difficulty as it was the pressure of the deadline."
+    },
+    {
+      "id": "P-08",
+      "purpose": "opener",
+      "skeleton": "Funnily enough, _____ which I hadn't expected at all.",
+      "fits_mbti": ["ALL"],
+      "example_from_anchor": "A-XX: Funnily enough, that trip turned into my biggest learning experience, which I hadn't expected at all."
+    }
+  ]
+}
