@@ -1,0 +1,112 @@
+{
+  "_meta": {
+    "source": "backend/app/data/band_strategies.json",
+    "purpose": "Install-only 模式下 Stage 3-7 蒸馏 prompt 必须注入此文件的对应分数段策略，与后端 runnable-export 产出保持一致。",
+    "bands_supported": ["6.0", "6.5", "7.0", "7.5"],
+    "out_of_range_policy": "若用户 target_band 为 '8.0+' 或 '暂不考试'，使用 7.5 策略作为兜底。"
+  },
+  "6.0": {
+    "label": "Band 6.0 - Competent",
+    "vocabulary": {
+      "level": "basic_plus",
+      "description": "Mostly common vocabulary with occasional less common items",
+      "upgrade_ratio": 0.2,
+      "avoid": ["overly academic words", "rare idioms", "complex collocations"]
+    },
+    "grammar": {
+      "complexity": "simple_compound",
+      "structures": ["simple sentences", "basic compound sentences (and/but/so)", "occasional relative clauses"],
+      "avoid": ["complex subordination", "inversion", "cleft sentences"]
+    },
+    "timing": {
+      "p1_target_seconds": 20,
+      "p1_min_seconds": 15,
+      "p1_max_seconds": 25,
+      "safe_stop_strategy": "After first reason is complete",
+      "interruption_risk": "low"
+    },
+    "fluency": {
+      "pause_tolerance": "some hesitation acceptable",
+      "filler_strategy": "well, you know, I mean (sparingly)",
+      "self_correction": "occasional"
+    }
+  },
+  "6.5": {
+    "label": "Band 6.5 - Competent Plus",
+    "vocabulary": {
+      "level": "intermediate",
+      "description": "Mix of common and less common vocabulary, some topic-specific terms",
+      "upgrade_ratio": 0.35,
+      "avoid": ["overuse of advanced vocabulary that feels unnatural"]
+    },
+    "grammar": {
+      "complexity": "compound_complex",
+      "structures": ["compound sentences", "relative clauses", "conditional sentences", "basic emphasis (It's...that)"],
+      "avoid": ["forced complex structures", "overly long sentences"]
+    },
+    "timing": {
+      "p1_target_seconds": 25,
+      "p1_min_seconds": 20,
+      "p1_max_seconds": 30,
+      "safe_stop_strategy": "After Topic + Reason + Brief example",
+      "interruption_risk": "moderate"
+    },
+    "fluency": {
+      "pause_tolerance": "minimal hesitation",
+      "filler_strategy": "actually, I'd say, to be honest",
+      "self_correction": "natural self-correction shows awareness"
+    }
+  },
+  "7.0": {
+    "label": "Band 7.0 - Good",
+    "vocabulary": {
+      "level": "upper_intermediate",
+      "description": "Wide range including less common and idiomatic items, some domain-specific",
+      "upgrade_ratio": 0.5,
+      "avoid": ["memorized phrases that sound rehearsed"]
+    },
+    "grammar": {
+      "complexity": "complex_varied",
+      "structures": ["emphasis (It's...that)", "apposition (noun, explanation, ...)", "participle clauses", "mixed conditionals", "varied tenses"],
+      "avoid": ["grammatical errors in complex structures"]
+    },
+    "timing": {
+      "p1_target_seconds": 25,
+      "p1_min_seconds": 22,
+      "p1_max_seconds": 30,
+      "safe_stop_strategy": "Natural conclusion with callback to topic",
+      "interruption_risk": "moderate - examiner may cut extended answers"
+    },
+    "fluency": {
+      "pause_tolerance": "rare hesitation",
+      "filler_strategy": "speaking of which, that reminds me, funnily enough",
+      "self_correction": "quick and natural"
+    }
+  },
+  "7.5": {
+    "label": "Band 7.5+ - Very Good",
+    "vocabulary": {
+      "level": "advanced",
+      "description": "Sophisticated vocabulary with natural collocations, idiomatic expressions, precise word choice",
+      "upgrade_ratio": 0.65,
+      "avoid": ["showing off vocabulary unnaturally", "obscure words without context"]
+    },
+    "grammar": {
+      "complexity": "sophisticated_flexible",
+      "structures": ["all complex structures used flexibly", "inversion for emphasis", "subjunctive", "ellipsis", "discourse markers"],
+      "avoid": ["forced complexity over clarity"]
+    },
+    "timing": {
+      "p1_target_seconds": 25,
+      "p1_min_seconds": 23,
+      "p1_max_seconds": 30,
+      "safe_stop_strategy": "Precise 25-second control with natural wrap-up phrase",
+      "interruption_risk": "high - must monitor examiner signals"
+    },
+    "fluency": {
+      "pause_tolerance": "no unnatural pauses",
+      "filler_strategy": "discourse markers as natural connectors, not fillers",
+      "self_correction": "rare, only for precision"
+    }
+  }
+}

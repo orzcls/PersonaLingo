@@ -1,0 +1,233 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "personalingo.corpus.v3-1.schema.json",
+  "title": "PersonaLingo Corpus Schema (install-only & runnable unified)",
+  "description": "Unified corpus schema. Mirrors backend models/corpus.py so install-only produces structurally identical output to runnable-export.",
+  "type": "object",
+  "required": ["skill_manifest", "learner_profile", "persona", "anchors", "bridges", "vocabulary", "patterns"],
+  "properties": {
+    "skill_manifest": {
+      "type": "object",
+      "required": ["name", "version", "mode", "pipeline", "stages"],
+      "properties": {
+        "name": { "const": "personalingo" },
+        "version": { "type": "string" },
+        "mode": { "enum": ["install-only", "runnable-export"] },
+        "pipeline": { "const": "three_stage_distill" },
+        "generated_at": { "type": "string", "format": "date-time" },
+        "stages": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["name", "status"],
+            "properties": {
+              "name": { "enum": ["research", "framework", "persona", "anchors", "bridges", "vocabulary", "patterns", "practices"] },
+              "status": { "enum": ["generating", "completed", "fallback", "skipped", "failed"] },
+              "source": { "enum": ["llm", "rule_fallback", "asset_fallback", "user_input"] },
+              "note": { "type": "string" }
+            }
+          }
+        }
+      }
+    },
+    "learner_profile": {
+      "type": "object",
+      "description": "Mirrors backend LearnerResearcher output. Install-only populates a lightweight subset from questionnaire + dialogue.",
+      "properties": {
+        "background": { "type": "string" },
+        "goal_vector": {
+          "type": "object",
+          "properties": {
+            "target_band": { "enum": ["6.0", "6.5", "7.0", "7.5"] },
+            "exam_window": { "type": "string" },
+            "current_band": { "type": ["string", "null"] }
+          }
+        },
+        "strengths": { "type": "array", "items": { "type": "string" } },
+        "weakness_signals": { "type": "array", "items": { "type": "string" } },
+        "language_samples": { "type": "array", "items": { "type": "string" } },
+        "topic_signals": { "type": "array", "items": { "type": "string" } },
+        "source_stats": {
+          "type": "object",
+          "properties": {
+            "from_questionnaire": { "type": "integer", "minimum": 0 },
+            "from_dialogue": { "type": "integer", "minimum": 0 },
+            "from_materials": { "type": "integer", "minimum": 0 }
+          }
+        },
+        "web_enabled": { "type": "boolean", "default": false },
+        "generated_at": { "type": "string", "format": "date-time" }
+      }
+    },
+    "capability_framework": {
+      "type": "object",
+      "description": "Ability x Scenario x Goal matrix. Mirrors backend CapabilityFramework output including source flag.",
+      "properties": {
+        "source": { "enum": ["llm", "rule_fallback"] },
+        "dimensions": {
+          "type": "object",
+          "properties": {
+            "ability":  { "type": "array", "items": { "type": "string" } },
+            "scenario": { "type": "array", "items": { "type": "string" } },
+            "goal":     { "type": "array", "items": { "type": "string" } }
+          }
+        },
+        "pain_points": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["id", "name"],
+            "properties": {
+              "id": { "type": "string", "pattern": "^PP-[0-9]{2}$" },
+              "name": { "type": "string" },
+              "evidence": { "type": "string" }
+            }
+          }
+        },
+        "lift_paths": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["from", "to"],
+            "properties": {
+              "from": { "type": "string" },
+              "to": { "type": "string" },
+              "band_gap": { "type": "string" }
+            }
+          }
+        }
+      }
+    },
+    "persona": {
+      "type": "object",
+      "properties": {
+        "mbti": { "type": "string" },
+        "dimensions": {
+          "type": "object",
+          "properties": {
+            "EI": { "type": "object" },
+            "SN": { "type": "object" },
+            "TF": { "type": "object" },
+            "JP": { "type": "object" }
+          }
+        },
+        "communication_style": {
+          "type": "object",
+          "properties": {
+            "opener_pattern": { "type": "string" },
+            "structure_pattern": { "type": "string" },
+            "closing_pattern": { "type": "string" },
+            "avoid": { "type": "array", "items": { "type": "string" } }
+          }
+        }
+      }
+    },
+    "anchors": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["id", "title", "category", "one_liner"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^A-[0-9]{2}$" },
+          "title": { "type": "string" },
+          "label": { "type": "string" },
+          "category": { "enum": ["person", "object", "place", "event", "abstract"] },
+          "one_liner": { "type": "string" },
+          "story_beats": { "type": "array", "items": { "type": "string" } },
+          "keywords": { "type": "array", "items": { "type": "string" } },
+          "emotion_tag": { "type": "string" },
+          "reusable_for_topics": { "type": "array", "items": { "type": "string" } },
+          "connectable_topics": { "type": "array", "items": { "type": "string" } }
+        }
+      }
+    },
+    "bridges": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "anchor_id", "topic"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^B-[0-9]{2}$" },
+          "anchor_id": { "type": "string", "pattern": "^A-[0-9]{2}$" },
+          "topic_id": { "type": "string" },
+          "topic": { "type": "string" },
+          "category": { "enum": ["person", "object", "place", "event", "abstract"] },
+          "question_type": { "type": "string" },
+          "hook_sentence": { "type": "string" },
+          "bridge_sentence": { "type": "string" },
+          "sample_answer": { "type": "string" },
+          "safe_stop_point": { "type": "string" },
+          "techniques_used": { "type": "array", "items": { "type": "string" } },
+          "transition_phrase": { "type": "string" }
+        }
+      }
+    },
+    "vocabulary": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["item", "band_tier"],
+        "properties": {
+          "item": { "type": "string" },
+          "basic_word": { "type": "string" },
+          "upgrade": { "type": "string" },
+          "type": { "enum": ["word", "phrase", "collocation", "idiom"] },
+          "band_tier": { "enum": ["6.0", "6.5", "7.0", "7.5"] },
+          "native_equivalent": { "type": "string" },
+          "context": { "type": "string" },
+          "example_from_anchor": { "type": "string" },
+          "category": { "type": "string" },
+          "qmd_tags": { "type": "array", "items": { "type": "string" } }
+        }
+      }
+    },
+    "patterns": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "purpose", "skeleton"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^P-[0-9]{2}$" },
+          "name": { "type": "string" },
+          "purpose": { "enum": ["opener", "structure", "contrast", "emphasis", "closing"] },
+          "skeleton": { "type": "string" },
+          "formula": { "type": "string" },
+          "when_to_use": { "type": "string" },
+          "fits_mbti": { "type": "array", "items": { "type": "string" } },
+          "example_from_anchor": { "type": "string" }
+        }
+      }
+    },
+    "practices": {
+      "type": "array",
+      "description": "Optional. Parallels backend PracticeItem (generate_practices).",
+      "items": {
+        "type": "object",
+        "required": ["topic_title"],
+        "properties": {
+          "topic_title": { "type": "string" },
+          "thinking_guide": { "type": "array", "items": { "type": "string" } },
+          "steps": { "type": "array", "items": { "type": "string" } },
+          "model_answer": { "type": "string" },
+          "checklist": { "type": "array", "items": { "type": "string" } }
+        }
+      }
+    },
+    "band_strategy": {
+      "type": "object",
+      "description": "Snapshot of the band strategy used during distillation (loaded from skill-assets/band-strategies.json). Stored for traceability.",
+      "properties": {
+        "band": { "enum": ["6.0", "6.5", "7.0", "7.5"] },
+        "vocabulary": { "type": "object" },
+        "grammar": { "type": "object" },
+        "timing": { "type": "object" },
+        "fluency": { "type": "object" }
+      }
+    },
+    "user_style": {
+      "type": "object",
+      "description": "Optional. Populated by conversation-engine in runnable-export mode; empty in install-only."
+    }
+  }
+}

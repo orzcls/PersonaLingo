@@ -1,0 +1,55 @@
+{
+  "_meta": {
+    "purpose": "Stage 6 Vocabulary 的降级词表：当 Agent 无法基于用户素材生成 25-30 条词汇时，按 target_band ± 0.5 从此文件筛选，保证产物非空。",
+    "source": "Backend idiomatic_vocabulary.json 精选子集（每档 10 条高频搭配）",
+    "usage": "Agent 应优先从用户 language_samples 生成真实词汇；仅当 LLM 失败或样本极少时使用此 fallback。"
+  },
+  "6.0": [
+    { "item": "a bit",            "type": "phrase",       "native_equivalent": "slightly",           "qmd_tags": ["hedging"] },
+    { "item": "kind of",          "type": "phrase",       "native_equivalent": "somewhat",           "qmd_tags": ["hedging"] },
+    { "item": "pretty good",      "type": "collocation",  "native_equivalent": "quite nice",         "qmd_tags": ["opinion"] },
+    { "item": "hang out with",    "type": "phrase",       "native_equivalent": "spend time with",    "qmd_tags": ["social"] },
+    { "item": "on the weekend",   "type": "phrase",       "native_equivalent": "during the weekend", "qmd_tags": ["time"] },
+    { "item": "get into",         "type": "phrase",       "native_equivalent": "become interested in","qmd_tags": ["hobby"] },
+    { "item": "make sense",       "type": "collocation",  "native_equivalent": "be reasonable",      "qmd_tags": ["reasoning"] },
+    { "item": "end up",           "type": "phrase",       "native_equivalent": "eventually become",  "qmd_tags": ["outcome"] },
+    { "item": "pick up",          "type": "phrase",       "native_equivalent": "learn casually",     "qmd_tags": ["learning"] },
+    { "item": "look up to",       "type": "phrase",       "native_equivalent": "admire",             "qmd_tags": ["person"] }
+  ],
+  "6.5": [
+    { "item": "be into",             "type": "phrase",      "native_equivalent": "be very interested in", "qmd_tags": ["preference"] },
+    { "item": "come across",         "type": "phrase",      "native_equivalent": "encounter by chance",   "qmd_tags": ["event"] },
+    { "item": "deal with",           "type": "phrase",      "native_equivalent": "handle",                "qmd_tags": ["problem"] },
+    { "item": "figure out",          "type": "phrase",      "native_equivalent": "work out / understand", "qmd_tags": ["reasoning"] },
+    { "item": "a game-changer",      "type": "idiom",       "native_equivalent": "something very impactful","qmd_tags": ["impact"] },
+    { "item": "stand out",           "type": "phrase",      "native_equivalent": "be noticeable",         "qmd_tags": ["comparison"] },
+    { "item": "turn out",            "type": "phrase",      "native_equivalent": "eventually prove to be","qmd_tags": ["outcome"] },
+    { "item": "keep up with",        "type": "phrase",      "native_equivalent": "stay informed about",   "qmd_tags": ["learning"] },
+    { "item": "to be honest",        "type": "phrase",      "native_equivalent": "frankly",               "qmd_tags": ["opinion"] },
+    { "item": "for the most part",   "type": "phrase",      "native_equivalent": "generally",             "qmd_tags": ["qualifier"] }
+  ],
+  "7.0": [
+    { "item": "grapple with",        "type": "phrase",      "native_equivalent": "struggle with a problem",   "qmd_tags": ["challenge"] },
+    { "item": "a steep learning curve","type": "idiom",     "native_equivalent": "difficult to learn at first","qmd_tags": ["learning"] },
+    { "item": "speak volumes",       "type": "idiom",       "native_equivalent": "reveal a lot",              "qmd_tags": ["expression"] },
+    { "item": "a blessing in disguise","type": "idiom",     "native_equivalent": "good outcome from bad start","qmd_tags": ["outcome"] },
+    { "item": "hit the ground running","type": "idiom",     "native_equivalent": "start strongly",            "qmd_tags": ["beginning"] },
+    { "item": "draw on",             "type": "phrase",      "native_equivalent": "use as a resource",         "qmd_tags": ["resource"] },
+    { "item": "put into perspective","type": "phrase",      "native_equivalent": "see in a broader context",  "qmd_tags": ["reflection"] },
+    { "item": "an eye-opener",       "type": "idiom",       "native_equivalent": "revealing experience",      "qmd_tags": ["insight"] },
+    { "item": "a turning point",     "type": "collocation", "native_equivalent": "decisive moment",           "qmd_tags": ["event"] },
+    { "item": "take it in stride",   "type": "idiom",       "native_equivalent": "handle calmly",             "qmd_tags": ["attitude"] }
+  ],
+  "7.5": [
+    { "item": "have a knack for",       "type": "idiom",       "native_equivalent": "be naturally skilled at",   "qmd_tags": ["talent"] },
+    { "item": "a double-edged sword",   "type": "idiom",       "native_equivalent": "having both pros and cons", "qmd_tags": ["analysis"] },
+    { "item": "in the grand scheme of things","type": "phrase","native_equivalent": "considering everything",   "qmd_tags": ["perspective"] },
+    { "item": "a stepping stone",       "type": "idiom",       "native_equivalent": "a means to progress",       "qmd_tags": ["growth"] },
+    { "item": "break new ground",       "type": "idiom",       "native_equivalent": "do something innovative",   "qmd_tags": ["innovation"] },
+    { "item": "food for thought",       "type": "idiom",       "native_equivalent": "something to reflect on",   "qmd_tags": ["reflection"] },
+    { "item": "an uphill battle",       "type": "idiom",       "native_equivalent": "a tough ongoing struggle",  "qmd_tags": ["challenge"] },
+    { "item": "pan out",                "type": "phrase",      "native_equivalent": "develop successfully",      "qmd_tags": ["outcome"] },
+    { "item": "a far cry from",         "type": "phrase",      "native_equivalent": "very different from",       "qmd_tags": ["contrast"] },
+    { "item": "at the crossroads",      "type": "idiom",       "native_equivalent": "at a decisive stage",       "qmd_tags": ["decision"] }
+  ]
+}

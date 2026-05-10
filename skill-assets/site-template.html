@@ -1,0 +1,275 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{{ learner_profile.background_title }} · PersonaLingo</title>
+  <style>
+    :root {
+      --bg: #f7f3ec;
+      --ink: #2c2418;
+      --ink-soft: #5c5243;
+      --accent: #8a6a3b;
+      --accent-soft: #c9b38a;
+      --line: #d9cfbf;
+      --card: #fffaf1;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: 'Georgia', 'Source Serif Pro', 'Noto Serif SC', serif;
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.65;
+    }
+    header {
+      padding: 48px 32px 24px;
+      border-bottom: 1px solid var(--line);
+      max-width: 960px;
+      margin: 0 auto;
+    }
+    header h1 {
+      font-size: 2.4rem;
+      margin: 0 0 8px;
+      letter-spacing: -0.01em;
+    }
+    header p.tagline {
+      color: var(--ink-soft);
+      font-style: italic;
+      margin: 0;
+    }
+    nav {
+      max-width: 960px;
+      margin: 16px auto 0;
+      padding: 0 32px;
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      font-size: 0.92rem;
+    }
+    nav a {
+      color: var(--accent);
+      text-decoration: none;
+      border-bottom: 1px dashed transparent;
+    }
+    nav a:hover { border-bottom-color: var(--accent); }
+    main {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 24px 32px 80px;
+    }
+    section {
+      padding: 28px 0;
+      border-bottom: 1px solid var(--line);
+    }
+    section h2 {
+      font-size: 1.4rem;
+      margin: 0 0 16px;
+      color: var(--accent);
+    }
+    .snapshot {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+    }
+    .snapshot .cell {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      padding: 12px 14px;
+    }
+    .snapshot .cell dt {
+      font-size: 0.78rem;
+      color: var(--ink-soft);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin: 0;
+    }
+    .snapshot .cell dd {
+      margin: 4px 0 0;
+      font-size: 1.05rem;
+    }
+    .anchor {
+      background: var(--card);
+      border-left: 3px solid var(--accent-soft);
+      padding: 16px 20px;
+      margin: 12px 0;
+      border-radius: 0 6px 6px 0;
+    }
+    .anchor h3 { margin: 0 0 6px; font-size: 1.1rem; }
+    .anchor .meta {
+      font-size: 0.8rem;
+      color: var(--ink-soft);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+    .anchor ol { padding-left: 22px; }
+    .anchor .topics {
+      margin-top: 8px;
+      font-size: 0.88rem;
+      color: var(--ink-soft);
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.92rem;
+    }
+    th, td {
+      padding: 8px 10px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+    }
+    th {
+      background: var(--card);
+      font-weight: 600;
+      color: var(--ink-soft);
+    }
+    .vocab {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 10px;
+    }
+    .vocab .item {
+      border: 1px solid var(--line);
+      padding: 10px 12px;
+      border-radius: 6px;
+      background: var(--card);
+    }
+    .vocab .item .word {
+      font-weight: 600;
+      font-size: 1.02rem;
+    }
+    .vocab .item .tier {
+      display: inline-block;
+      font-size: 0.72rem;
+      color: var(--accent);
+      border: 1px solid var(--accent-soft);
+      padding: 1px 6px;
+      border-radius: 3px;
+      margin-left: 6px;
+    }
+    .vocab .item .eg {
+      font-style: italic;
+      color: var(--ink-soft);
+      margin-top: 6px;
+    }
+    .patterns li {
+      margin: 6px 0;
+    }
+    code {
+      background: var(--card);
+      border: 1px solid var(--line);
+      padding: 1px 5px;
+      border-radius: 3px;
+      font-size: 0.9em;
+    }
+    footer {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 24px 32px 40px;
+      color: var(--ink-soft);
+      font-size: 0.85rem;
+      text-align: center;
+    }
+    footer a { color: var(--accent); }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>{{ learner_profile.background_title }}</h1>
+    <p class="tagline">{{ learner_profile.one_sentence_tagline }}</p>
+  </header>
+  <nav>
+    <a href="#snapshot">Snapshot</a>
+    <a href="#strengths">Strengths</a>
+    <a href="#weakness">Weakness</a>
+    <a href="#anchors">Anchors</a>
+    <a href="#bridges">Bridges</a>
+    <a href="#vocab">Vocabulary</a>
+    <a href="#patterns">Patterns</a>
+    <a href="#style">Style</a>
+  </nav>
+  <main>
+    <section id="snapshot">
+      <h2>1 · Snapshot</h2>
+      <dl class="snapshot">
+        <div class="cell"><dt>MBTI</dt><dd>{{ persona.mbti }}</dd></div>
+        <div class="cell"><dt>Target Band</dt><dd>{{ learner_profile.goal_vector.target_band }}</dd></div>
+        <div class="cell"><dt>Exam Window</dt><dd>{{ learner_profile.goal_vector.exam_window }}</dd></div>
+        <div class="cell"><dt>Current Band</dt><dd>{{ learner_profile.goal_vector.current_band }}</dd></div>
+        <div class="cell"><dt>Style</dt><dd>{{ persona.communication_style.structure_pattern }}</dd></div>
+      </dl>
+    </section>
+
+    <section id="strengths">
+      <h2>2 · Strengths</h2>
+      <ul>
+        {{#each learner_profile.strengths}}<li>{{ this }}</li>{{/each}}
+      </ul>
+    </section>
+
+    <section id="weakness">
+      <h2>3 · Weakness Signals</h2>
+      <ul>
+        {{#each learner_profile.weakness_signals}}<li>{{ this }}</li>{{/each}}
+      </ul>
+    </section>
+
+    <section id="anchors">
+      <h2>4 · Anchor Stories</h2>
+      {{#each anchors}}
+      <article class="anchor">
+        <div class="meta">{{ id }} · {{ category }} · {{ emotion_tag }}</div>
+        <h3>{{ title }}</h3>
+        <p>{{ one_liner }}</p>
+        <ol>{{#each story_beats}}<li>{{ this }}</li>{{/each}}</ol>
+        <div class="topics">Reusable for: {{ reusable_for_topics | join ", " }}</div>
+      </article>
+      {{/each}}
+    </section>
+
+    <section id="bridges">
+      <h2>5 · Topic Bridges</h2>
+      <table>
+        <thead><tr><th>Bridge</th><th>Topic</th><th>Hook</th></tr></thead>
+        <tbody>
+          {{#each bridges}}<tr><td>{{ id }} &larr; {{ anchor_id }}</td><td>{{ topic }}</td><td>{{ hook_sentence }}</td></tr>{{/each}}
+        </tbody>
+      </table>
+    </section>
+
+    <section id="vocab">
+      <h2>6 · Vocabulary Upgrade</h2>
+      <div class="vocab">
+        {{#each vocabulary}}
+        <div class="item">
+          <span class="word">{{ item }}</span><span class="tier">tier {{ band_tier }}</span>
+          <div class="eg">{{ example_from_anchor }}</div>
+        </div>
+        {{/each}}
+      </div>
+    </section>
+
+    <section id="patterns">
+      <h2>7 · Sentence Patterns</h2>
+      <ul class="patterns">
+        {{#each patterns}}<li><code>[{{ purpose }}]</code> {{ skeleton }}</li>{{/each}}
+      </ul>
+    </section>
+
+    <section id="style">
+      <h2>8 · Communication Style Cheatsheet</h2>
+      <ul>
+        <li><strong>Opener：</strong>{{ persona.communication_style.opener_pattern }}</li>
+        <li><strong>Structure：</strong>{{ persona.communication_style.structure_pattern }}</li>
+        <li><strong>Closing：</strong>{{ persona.communication_style.closing_pattern }}</li>
+        <li><strong>Avoid：</strong>{{ persona.communication_style.avoid | join "; " }}</li>
+      </ul>
+    </section>
+  </main>
+  <footer>
+    Generated by <a href="https://github.com/orzcls/PersonaLingo">PersonaLingo</a> Install-only Skill · schema v3.1
+  </footer>
+</body>
+</html>
