@@ -1,55 +1,70 @@
 {
-  "name": "personalingo-skill",
-  "version": "2.0.0",
-  "description": "AI-powered personalized IELTS corpus generator and learning assistant. Generates tailored speaking corpus via Three-Stage Distillation (Research → Framework → Generation) and exports portable Skill Packs for AI agent integration.",
+  "name": "personalingo",
+  "version": "3.1.0",
+  "description": "Personalized IELTS speaking corpus generator. Install-only (zero backend) by default: questionnaire -> guided conversation -> 7-step distillation -> profile -> static site. Upgradable to runnable-export mode (full project) for topic-bank sync and QMD RAG.",
   "author": "orzcls",
   "license": "MIT",
   "repository": "https://github.com/orzcls/PersonaLingo",
-  "modes": ["use-exported", "full-pipeline"],
-  "api_base": "http://localhost:9849",
-  "endpoints": {
-    "distill": [
-      {"method": "POST", "path": "/api/distill/diagnose", "description": "Generate diagnostic questionnaire from free-form text"},
-      {"method": "POST", "path": "/api/distill/run", "description": "Trigger 7-step distillation pipeline (background task)", "params": ["questionnaire_id", "include_research"]},
-      {"method": "GET", "path": "/api/distill/skill/{corpus_id}/runnable", "description": "Export runnable skill pack (4 artifacts)"},
-      {"method": "GET", "path": "/api/distill/skill/{corpus_id}/runnable/download", "description": "Download skill pack as zip"},
-      {"method": "GET", "path": "/api/distill/skill/{corpus_id}/runnable/preview", "description": "Preview Skill.md (markdown or HTML)"}
-    ],
-    "conversation": [
-      {"method": "POST", "path": "/api/conversation/{corpus_id}/chat", "description": "Send message, get AI coach reply"},
-      {"method": "GET", "path": "/api/conversation/{corpus_id}/history", "description": "Retrieve conversation history"},
-      {"method": "POST", "path": "/api/conversation/{corpus_id}/extract", "description": "Extract new materials from conversation"},
-      {"method": "POST", "path": "/api/conversation/{corpus_id}/merge", "description": "Merge extracted materials into corpus"},
-      {"method": "GET", "path": "/api/conversation/{corpus_id}/style", "description": "Get learner style statistics"}
-    ],
-    "topics": [
-      {"method": "GET", "path": "/api/topics/meta", "description": "Current season, staleness flag, config status"},
-      {"method": "POST", "path": "/api/topics/scrape", "description": "Run full topic bank sync pipeline"},
-      {"method": "POST", "path": "/api/topics/backfill-p3", "description": "Backfill linked P3 for existing P2 topics", "params": ["limit"]}
+  "homepage": "https://github.com/orzcls/PersonaLingo",
+  "entry": "SKILL.md",
+  "modes": ["install-only", "runnable-export"],
+  "default_mode": "install-only",
+  "files": [
+    "SKILL.md",
+    "skill.json",
+    "LICENSE",
+    "skill-assets/**"
+  ],
+  "install_only": {
+    "backend_required": false,
+    "pipeline": ["questionnaire", "conversation", "distill", "profile", "site"],
+    "outputs": {
+      "root": "corpus/<corpus_id>/",
+      "files": [
+        "answers.json",
+        "dialogue.md",
+        "corpus.json",
+        "profile.md",
+        "site/index.html"
+      ]
+    },
+    "assets": {
+      "questionnaire": "skill-assets/questionnaire.json",
+      "conversation_guide": "skill-assets/conversation-guide.md",
+      "distill_protocol": "skill-assets/distill-protocol.md",
+      "corpus_schema": "skill-assets/corpus-schema.json",
+      "profile_template": "skill-assets/profile-template.md",
+      "site_template": "skill-assets/site-template.html"
+    }
+  },
+  "runnable_export": {
+    "backend_required": true,
+    "source": "skills/runnable/{corpus_id}/",
+    "api_base": "http://localhost:9849",
+    "endpoints": [
+      { "method": "POST", "path": "/api/distill/diagnose", "description": "Generate diagnostic questionnaire from free-form text" },
+      { "method": "POST", "path": "/api/distill/run", "description": "Trigger 7-step distillation pipeline", "params": ["questionnaire_id", "include_research"] },
+      { "method": "GET",  "path": "/api/distill/skill/{corpus_id}/runnable", "description": "Export runnable skill pack (4 artifacts)" },
+      { "method": "GET",  "path": "/api/distill/skill/{corpus_id}/runnable/download", "description": "Download skill pack as zip" },
+      { "method": "GET",  "path": "/api/distill/skill/{corpus_id}/runnable/preview", "description": "Preview Skill.md (markdown or HTML)" }
     ]
   },
-  "skill_pack_contents": [
-    "Skill.md",
-    "corpus.json",
-    "runtime_protocol.md",
-    "prompts/README.md"
-  ],
   "pipeline": {
     "name": "three_stage_distill",
     "stages": [
-      {"id": 1, "name": "research", "description": "Deep research — aggregate questionnaire, materials, conversations into learner_profile"},
-      {"id": 2, "name": "framework", "description": "Capability framework — ability × scenario × goal matrix distillation"},
-      {"id": 3, "name": "persona", "description": "User persona — MBTI dimension analysis + communication style"},
-      {"id": 4, "name": "anchors", "description": "Anchor stories — 3-4 personal core stories"},
-      {"id": 5, "name": "bridges", "description": "Topic bridges — 21-topic bridging method"},
-      {"id": 6, "name": "vocabulary", "description": "Vocabulary upgrade — band-appropriate vocabulary (25-30 items)"},
-      {"id": 7, "name": "patterns", "description": "Sentence patterns — MBTI-matched expression templates (8-10)"}
+      { "id": 1, "name": "research",   "description": "Aggregate questionnaire + dialogue into learner_profile" },
+      { "id": 2, "name": "framework",  "description": "Capability x scenario x goal matrix distillation" },
+      { "id": 3, "name": "persona",    "description": "MBTI dimension analysis + communication style" },
+      { "id": 4, "name": "anchors",    "description": "3-4 personal core stories" },
+      { "id": 5, "name": "bridges",    "description": "Topic bridges connecting anchors to IELTS question bank" },
+      { "id": 6, "name": "vocabulary", "description": "Band-appropriate vocabulary list (25-30 items)" },
+      { "id": 7, "name": "patterns",   "description": "MBTI-matched sentence patterns (8-10 templates)" }
     ],
-    "fallback": "Stage 1/2 failures auto-degrade to legacy 5-step flow (backward compatible)"
+    "fallback": "Any stage failure is recorded in skill_manifest.stages[i].status = 'fallback' and pipeline continues."
   },
   "requirements": {
-    "python": ">=3.11",
-    "llm": "OpenAI or Anthropic API key",
-    "optional": "Search provider key for topic bank sync"
+    "agent": "Any skill-compatible AI agent (Claude / Qoder / Cursor / Cline / ...)",
+    "local_fs": "Write access to current working directory",
+    "llm": "Agent's built-in LLM is sufficient; no external API key required for install-only mode"
   }
 }
