@@ -1,0 +1,139 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "id": "personalingo.install-only.questionnaire.v1",
+  "version": "1.0.0",
+  "title": "PersonaLingo Install-only Questionnaire",
+  "description": "结构化问卷：Agent 按顺序向用户提问，答复写入 corpus/<id>/answers.json。所有题目均可跳过（置 null）。",
+  "ask_order": "sequential",
+  "sections": [
+    {
+      "id": "goal",
+      "title": "目标与时间线",
+      "questions": [
+        {
+          "id": "target_band",
+          "type": "single",
+          "required": true,
+          "prompt": "你的目标雅思口语分数？",
+          "options": ["6.0", "6.5", "7.0", "7.5", "8.0+", "暂不考试"]
+        },
+        {
+          "id": "exam_window",
+          "type": "single",
+          "required": false,
+          "prompt": "距离考试还有多久？",
+          "options": ["30 天内", "1-3 个月", "3-6 个月", "半年以上", "暂无计划"]
+        },
+        {
+          "id": "current_band",
+          "type": "free_text",
+          "required": false,
+          "prompt": "当前口语水平（分数或自评：fluent / intermediate / basic）？"
+        }
+      ]
+    },
+    {
+      "id": "persona",
+      "title": "人物维度（MBTI + 个性）",
+      "questions": [
+        {
+          "id": "mbti",
+          "type": "single",
+          "required": false,
+          "prompt": "你的 MBTI 类型？（若不清楚可填 unknown）",
+          "options": ["INTJ", "INTP", "ENTJ", "ENTP", "INFJ", "INFP", "ENFJ", "ENFP", "ISTJ", "ISFJ", "ESTJ", "ESFJ", "ISTP", "ISFP", "ESTP", "ESFP", "unknown"]
+        },
+        {
+          "id": "communication_style",
+          "type": "multi",
+          "required": false,
+          "prompt": "偏好的表达风格（多选）",
+          "options": ["逻辑结构化", "故事化叙述", "数据/实证驱动", "情感共情", "幽默轻松", "简洁直接"]
+        },
+        {
+          "id": "self_description",
+          "type": "free_text",
+          "required": true,
+          "prompt": "用 2-3 句话介绍你自己（学校 / 专业 / 职业 / 身份都可以）。"
+        }
+      ]
+    },
+    {
+      "id": "experiences",
+      "title": "真实经历（人 / 物 / 地 / 事）",
+      "instructions": "每个维度至少填一个；用于后续生成锚点故事。",
+      "questions": [
+        {
+          "id": "people",
+          "type": "list",
+          "required": true,
+          "prompt": "对你影响最大的 1-3 个人（姓名或关系 + 一句话说明）"
+        },
+        {
+          "id": "objects",
+          "type": "list",
+          "required": false,
+          "prompt": "你最珍视的 1-3 件物品（物品名 + 为什么重要）"
+        },
+        {
+          "id": "places",
+          "type": "list",
+          "required": false,
+          "prompt": "对你有特殊意义的 1-3 个地点（地点名 + 关联记忆）"
+        },
+        {
+          "id": "events",
+          "type": "list",
+          "required": true,
+          "prompt": "近 3 年最值得讲的 2-4 个事件（项目 / 竞赛 / 旅行 / 挑战均可）"
+        }
+      ]
+    },
+    {
+      "id": "interests",
+      "title": "兴趣与知识面",
+      "questions": [
+        {
+          "id": "interests",
+          "type": "multi",
+          "required": true,
+          "prompt": "你的主要兴趣领域（多选 + 可补充自定义）",
+          "options": ["科技/编程", "航空/工程", "艺术/设计", "音乐", "电影/剧集", "运动/健身", "旅行", "美食", "阅读", "游戏", "商业/创业", "心理学", "历史/哲学"]
+        },
+        {
+          "id": "expertise",
+          "type": "free_text",
+          "required": false,
+          "prompt": "你能讲得比别人深的 1-2 个细分话题？"
+        }
+      ]
+    },
+    {
+      "id": "weaknesses",
+      "title": "薄弱环节",
+      "questions": [
+        {
+          "id": "weak_areas",
+          "type": "multi",
+          "required": true,
+          "prompt": "你在口语中最薄弱的方面（多选）",
+          "options": ["词汇量不足", "句型单一", "流利度差", "发音/语调", "逻辑结构", "话题迁移", "考试焦虑"]
+        },
+        {
+          "id": "recurring_mistakes",
+          "type": "free_text",
+          "required": false,
+          "prompt": "你知道自己反复出错的地方？（例：时态混用 / 名词单复数 / 连词缺失 等）"
+        }
+      ]
+    }
+  ],
+  "output": {
+    "path": "corpus/<corpus_id>/answers.json",
+    "shape": {
+      "corpus_id": "string",
+      "created_at": "ISO-8601",
+      "answers": "{ section_id: { question_id: value } }"
+    }
+  }
+}

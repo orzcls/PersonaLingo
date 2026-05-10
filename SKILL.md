@@ -1,11 +1,14 @@
 ---
 name: PersonaLingo
-description: AI-powered personalized IELTS corpus generator and learning assistant. Supports two modes - use pre-built skill packs for tutoring, or run full pipeline (questionnaire → conversation → distill → generate) to create personalized corpus from scratch.
+description: 个性化雅思口语语料生成器。纯 Agent 内闭环（问卷 → 引导对话 → 7 步蒸馏 → 个人画像 → 静态语料网站），零后端依赖，一键安装可用。需要题库自动同步 / RAG 检索可升级到 runnable-export 模式。
+version: 3.1.0
+entry: SKILL.md
+mode: install-only
 ---
 
-# PersonaLingo Skill
+# PersonaLingo Skill · Install-only
 
-> AI-powered personalized IELTS corpus generator and learning assistant
+> 一键安装，零后端依赖。Agent 在本地完成「问卷 → 引导对话 → 蒸馏画像 → 个人资料 → 静态语料网站」全链路。
 
 ## Installation
 
@@ -13,259 +16,129 @@ description: AI-powered personalized IELTS corpus generator and learning assista
 npx skills add orzcls/PersonaLingo
 ```
 
-## Overview
+安装产物（由 `skill.json` 的 `files` 白名单约束）：
 
-PersonaLingo is a full-stack AI system that generates **personalized IELTS speaking corpus** tailored to each learner's personality (MBTI), interests, background, and target band score. It employs a **Three-Stage Distillation Pipeline** (Research → Framework → Generation) to produce high-quality, export-ready Skill Packs that any AI Agent can consume for tutoring.
+```
+.agents/skills/personalingo/
+├── SKILL.md
+├── skill.json
+└── skill-assets/
+    ├── questionnaire.json
+    ├── conversation-guide.md
+    ├── distill-protocol.md
+    ├── corpus-schema.json
+    ├── profile-template.md
+    └── site-template.html
+```
 
-### Core Capabilities
+不会再复制 `backend/` / `frontend/` / `docs/` 等项目代码。
 
-- Personalized corpus generation via 7-step LLM distillation pipeline
-- QMD RAG engine (Query-Match-Decide) for intelligent corpus retrieval
-- Dynamic IELTS topic bank with seasonal auto-sync
-- Conversational coaching with style learning
-- Portable Skill Pack export (4 artifacts) for agent integration
+## 运行时目录
 
-## Usage Modes
+Agent 每次为新学习者创建独立工作区：
 
-### Mode A: Use Pre-built Skill Packs
+```
+corpus/<corpus_id>/
+├── answers.json        # Step 1 问卷作答
+├── dialogue.md         # Step 2 引导对话日志
+├── corpus.json         # Step 3 蒸馏产物（符合 corpus-schema.json）
+├── profile.md          # Step 4 个人资料
+└── site/
+    └── index.html      # Step 5 静态语料网站
+```
 
-For agents that need to quickly start tutoring without running the full pipeline.
+`<corpus_id>` 建议用 `p_` + 8 位十六进制随机数（例：`p_0a1b2c3d`）。
 
-**When to use**: You already have a generated corpus (corpus_id) and just need the skill artifacts.
+## Pipeline · 五步闭环
 
-#### Steps
+### Step 1 · 问卷（Questionnaire）
 
-1. **List available skills**
-   ```
-   GET /api/distill/skill/{corpus_id}/runnable
-   ```
-   Response:
+1. 读取 [skill-assets/questionnaire.json](skill-assets/questionnaire.json)。
+2. 按 `ask_order: sequential`、`sections[].questions[]` 的顺序逐题询问用户。
+3. `required: true` 的题目必须得到作答；其它题可由用户跳过（值写 `null`）。
+4. 所有作答合并为：
+
    ```json
    {
-     "data": {
-       "corpus_id": "abc123",
-       "path": "/path/to/output",
-       "files": ["Skill.md", "corpus.json", "runtime_protocol.md", "prompts/README.md"]
-     },
-     "error": null
+     "corpus_id": "p_0a1b2c3d",
+     "created_at": "2026-05-11T10:00:00Z",
+     "answers": {
+       "goal": { "target_band": "7.0", "exam_window": "1-3 个月", "current_band": "6.0" },
+       "persona": { "mbti": "INTJ", "communication_style": ["逻辑结构化"], "self_description": "..." },
+       "experiences": { "people": [...], "objects": [...], "places": [...], "events": [...] },
+       "interests": { "interests": ["科技/编程"], "expertise": "..." },
+       "weaknesses": { "weak_areas": ["句型单一"], "recurring_mistakes": "..." }
+     }
    }
    ```
 
-2. **Download skill pack as zip**
-   ```
-   GET /api/distill/skill/{corpus_id}/runnable/download
-   ```
-   Returns: `personalingo_skill_{corpus_id}.zip`
+5. 写入 `corpus/<corpus_id>/answers.json`。
 
-3. **Preview Skill.md online**
-   ```
-   GET /api/distill/skill/{corpus_id}/runnable/preview?format=markdown
-   ```
+### Step 2 · 引导对话（Guided Conversation）
 
-4. **Load the Skill Pack**
-   - Read `corpus.json` for full corpus data + learner profile + capability framework
-   - Follow `runtime_protocol.md` for RAG retrieval & response generation protocol
-   - Use `prompts/` templates for conversation and assessment scenarios
+1. 读取 [skill-assets/conversation-guide.md](skill-assets/conversation-guide.md)。
+2. 按"追问原则"与"追问模板"发起 3–6 轮对话，每轮仅一个聚焦问题。
+3. 记录每轮对话到 `corpus/<corpus_id>/dialogue.md`（Markdown 格式，含时间戳）。
+4. 达到"结束条件"时在文件末追加 `Summary`（锚点事件 / 语言样本 / 弱项证据）。
 
-### Mode B: Full Pipeline (End-to-End)
+### Step 3 · 七步蒸馏（Distill）
 
-For agents that need to create a personalized corpus from scratch.
+1. 读取 [skill-assets/distill-protocol.md](skill-assets/distill-protocol.md)。
+2. 串行执行 7 个 Stage 的 LLM Prompt：
+   - `research` → `learner_profile`
+   - `framework` → `capability_framework`
+   - `persona` → `persona`
+   - `anchors` → `anchors[]`
+   - `bridges` → `bridges[]`
+   - `vocabulary` → `vocabulary[]`
+   - `patterns` → `patterns[]`
+3. 任一 Stage 失败按 protocol 的"降级策略"处理，在 `skill_manifest.stages[i].status` 置 `fallback` 并记录 `note`。
+4. 合并写入 `corpus/<corpus_id>/corpus.json`，**必须通过** [skill-assets/corpus-schema.json](skill-assets/corpus-schema.json) 的 JSON Schema 校验。
 
-**When to use**: New learner onboarding — no existing corpus.
+### Step 4 · 个人资料（Profile）
 
-#### Step 1: Diagnose — Generate Questionnaire
+1. 读取 [skill-assets/profile-template.md](skill-assets/profile-template.md)。
+2. 用 `corpus.json` 的字段替换 `{{ ... }}` 占位符；数组字段按 `{{#each}}` 循环展开；缺失字段输出 `—`。
+3. 写入 `corpus/<corpus_id>/profile.md`。
 
-```
-POST /api/distill/diagnose
-Content-Type: application/json
+### Step 5 · 静态语料网站（Static Site）
 
-{
-  "text": "I'm a college student preparing for IELTS, I want to get 7.0 in speaking but I'm not fluent..."
-}
-```
+1. 读取 [skill-assets/site-template.html](skill-assets/site-template.html)。
+2. 同样用 `corpus.json` 字段填充模板，生成单文件 HTML（所有样式 inline，无构建依赖）。
+3. 写入 `corpus/<corpus_id>/site/index.html`。
+4. 用户直接 `open site/index.html` 即可浏览个人语料站点。
 
-Response:
-```json
-{
-  "data": {
-    "questions": [
-      {"id": "q1", "text": "How soon will you take IELTS?", "type": "single", "options": ["30 days", "3 months", "6 months", "No exam planned"]},
-      {"id": "q2", "text": "Target score?", "type": "single", "options": ["6.0", "6.5", "7.0", "7.5+"]},
-      {"id": "q3", "text": "Weakest area? (multi-select)", "type": "multi", "options": ["Vocabulary", "Fluency", "Pronunciation", "Logic"]}
-    ],
-    "suggested_score": "7.0",
-    "rationale": "Based on self-description fluency concerns"
-  },
-  "error": null
-}
-```
+## 质量守则
 
-#### Step 2: Guided Conversation (Optional)
+- **真实性优先**：锚点故事、词汇例句必须来自问卷 + 对话的真实素材，禁止虚构。
+- **Schema 严格**：`corpus.json` 必须通过 `corpus-schema.json` 校验；不符字段直接丢弃。
+- **本地化**：所有产物写到当前工作目录的 `corpus/<corpus_id>/`，不上传任何远程服务。
+- **可复跑**：每一步都以前序产物为唯一输入；任何一步可单独重跑而不影响其它步骤。
 
-Use conversation APIs to collect additional context from the learner:
+## 升级路径 — Runnable Export 模式
 
-```
-POST /api/conversation/{corpus_id}/chat
-Content-Type: application/json
+若学习者需要以下能力，建议升级到完整 orzcls/PersonaLingo 项目：
 
-{
-  "message": "I'm interested in aviation and competitive programming",
-  "context": []
-}
-```
+| 能力 | Install-only | Runnable Export |
+|---|---|---|
+| 问卷 / 对话 / 蒸馏 | Agent 内闭环 | 后端 API 驱动 + 前端 UI |
+| 动态 IELTS 题库同步 | 否 | 支持季度自动同步 |
+| QMD RAG 检索引擎 | 否 | BM25+TF-IDF+RRF+LLM 重排 |
+| 对话风格学习持久化 | 否（单次会话） | SQLite 持久化 |
+| 可运行 Skill 包导出 | 否（本地产物可手动打包） | `/api/distill/skill/{id}/runnable/download` |
 
-#### Step 3: Trigger Distillation
+升级方式：
 
-```
-POST /api/distill/run?questionnaire_id={id}&include_research=true
+```bash
+git clone https://github.com/orzcls/PersonaLingo
+cd PersonaLingo && docker-compose up -d
+# 访问 http://localhost:5273 使用完整前端
 ```
 
-Response:
-```json
-{
-  "data": {
-    "questionnaire_id": "q_abc123",
-    "include_research": true,
-    "stages": ["research", "framework", "persona", "anchors", "bridges", "vocabulary", "patterns"],
-    "stream_url": "/api/corpus/generate/q_abc123/stream"
-  },
-  "error": null
-}
-```
-
-The 7-step pipeline runs in background:
-1. **Research** — Aggregate questionnaire + materials + conversations → `learner_profile`
-2. **Framework** — Ability × Scenario × Goal matrix distillation → `capability_framework`
-3. **Persona** — MBTI dimension analysis + communication style inference
-4. **Anchors** — 3-4 personal core stories
-5. **Bridges** — 21-topic bridging connecting anchors to IELTS question bank
-6. **Vocabulary** — Band-appropriate vocabulary list (25-30 items)
-7. **Patterns** — MBTI-matched sentence patterns (8-10 templates)
-
-> **Fallback**: Stage 1/2 failures do not block Stage 3. The system auto-degrades to legacy 5-step flow.
-
-#### Step 4: Export Skill Pack
-
-```
-GET /api/distill/skill/{corpus_id}/runnable
-```
-
-#### Step 5: Download & Use
-
-```
-GET /api/distill/skill/{corpus_id}/runnable/download
-```
-
-## API Reference
-
-| Endpoint | Method | Description |
-|----------|--------|-------------|
-| `/api/distill/diagnose` | POST | Generate diagnostic questionnaire from free text |
-| `/api/distill/run` | POST | Trigger 7-step distillation (background task) |
-| `/api/distill/skill/{corpus_id}/runnable` | GET | Export runnable skill pack (4 artifacts) |
-| `/api/distill/skill/{corpus_id}/runnable/download` | GET | Download skill pack as zip |
-| `/api/distill/skill/{corpus_id}/runnable/preview` | GET | Preview Skill.md (markdown or HTML) |
-| `/api/conversation/{corpus_id}/chat` | POST | Send message, get AI coach reply |
-| `/api/conversation/{corpus_id}/history` | GET | Retrieve conversation history |
-| `/api/conversation/{corpus_id}/extract` | POST | Extract new materials from conversation |
-| `/api/conversation/{corpus_id}/merge` | POST | Merge extracted materials into corpus |
-| `/api/conversation/{corpus_id}/style` | GET | Get learner style statistics |
-| `/api/topics/meta` | GET | Current season, staleness flag, config status |
-| `/api/topics/scrape` | POST | Run full topic bank sync pipeline |
-| `/api/topics/backfill-p3?limit=N` | POST | Backfill linked P3 for existing P2 topics |
-
-## Output Format
-
-Each exported skill pack contains 4 artifacts:
-
-```
-{corpus_id}/
-├── Skill.md              # Personalized learning skill document
-├── corpus.json           # Full corpus data with QMD-tagged vocabulary
-│   └── .skill_manifest   # { name, version, pipeline, stages[] }
-├── runtime_protocol.md   # Agent runtime protocol (RAG retrieval, response generation)
-└── prompts/
-    └── README.md         # Prompt templates for conversation & assessment
-```
-
-### corpus.json Structure
-
-```json
-{
-  "skill_manifest": {
-    "name": "personalingo",
-    "version": "3.0",
-    "pipeline": "three_stage_distill",
-    "stages": [
-      {"name": "research", "status": "completed"},
-      {"name": "framework", "status": "completed"},
-      {"name": "persona", "status": "completed"},
-      {"name": "anchors", "status": "completed"},
-      {"name": "bridges", "status": "completed"},
-      {"name": "vocabulary", "status": "completed"},
-      {"name": "patterns", "status": "completed"}
-    ]
-  },
-  "learner_profile": { "background": "...", "language_samples": [], "weakness_signals": [], "goal_vector": {} },
-  "capability_framework": { "pain_points": [], "lift_paths": [] },
-  "anchors": [],
-  "bridges": [],
-  "vocabulary": [],
-  "patterns": []
-}
-```
-
-## Example Workflow
-
-Complete end-to-end example for an AI tutor agent:
-
-```python
-import httpx
-
-BASE = "http://localhost:9849"
-
-# Step 1: Diagnose the learner
-resp = httpx.post(f"{BASE}/api/distill/diagnose", json={
-    "text": "I'm an INTJ aviation student. I want IELTS 7.0 but struggle with fluency and topic variety."
-})
-questionnaire = resp.json()["data"]
-questionnaire_id = "q_new_user"  # assigned by system or from prior step
-
-# Step 2: (Optional) Guided conversation to enrich profile
-httpx.post(f"{BASE}/api/conversation/{corpus_id}/chat", json={
-    "message": "I competed in ICPC and I love system architecture design"
-})
-
-# Step 3: Run full distillation
-resp = httpx.post(f"{BASE}/api/distill/run", params={
-    "questionnaire_id": questionnaire_id,
-    "include_research": True
-})
-stream_url = resp.json()["data"]["stream_url"]
-# Monitor progress via stream_url...
-
-# Step 4: Export skill pack
-resp = httpx.get(f"{BASE}/api/distill/skill/{corpus_id}/runnable")
-files = resp.json()["data"]["files"]
-
-# Step 5: Download zip for offline use
-httpx.get(f"{BASE}/api/distill/skill/{corpus_id}/runnable/download")
-
-# Now load Skill.md + corpus.json + runtime_protocol.md to start tutoring!
-```
-
-## Dynamic Topic Bank Sync
-
-The skill also supports automatic IELTS topic bank refresh:
-
-```
-POST /api/topics/scrape
-```
-
-This fetches latest P1/P2 topics for the current exam season and derives linked P3 questions. See the API Reference above for related endpoints.
+详见项目 [README.md](https://github.com/orzcls/PersonaLingo/blob/main/README.md)。
 
 ## Requirements
 
-- Python 3.11+ backend running at `http://localhost:9849`
-- LLM API key configured (OpenAI or Anthropic)
-- (Optional) Search provider key for topic bank sync
+- 任意支持该 skill 协议的 AI Agent（Claude / Qoder / Cursor / Cline 等）。
+- Agent 运行环境中可写本地文件的工具（用于产出 `corpus/<corpus_id>/`）。
+- 无需 Python / Node.js / 任何外部服务。

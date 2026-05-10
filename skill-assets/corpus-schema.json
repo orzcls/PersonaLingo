@@ -1,0 +1,153 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "personalingo.corpus.v3-1.schema.json",
+  "title": "PersonaLingo Corpus Schema (install-only & runnable unified)",
+  "type": "object",
+  "required": ["skill_manifest", "learner_profile", "anchors", "vocabulary", "patterns"],
+  "properties": {
+    "skill_manifest": {
+      "type": "object",
+      "required": ["name", "version", "pipeline", "stages"],
+      "properties": {
+        "name": { "const": "personalingo" },
+        "version": { "type": "string" },
+        "mode": { "enum": ["install-only", "runnable-export"] },
+        "pipeline": { "const": "three_stage_distill" },
+        "stages": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["name", "status"],
+            "properties": {
+              "name": { "enum": ["research", "framework", "persona", "anchors", "bridges", "vocabulary", "patterns"] },
+              "status": { "enum": ["completed", "fallback", "skipped", "failed"] },
+              "note": { "type": "string" }
+            }
+          }
+        }
+      }
+    },
+    "learner_profile": {
+      "type": "object",
+      "properties": {
+        "background": { "type": "string" },
+        "goal_vector": {
+          "type": "object",
+          "properties": {
+            "target_band": { "type": "string" },
+            "exam_window": { "type": "string" },
+            "current_band": { "type": ["string", "null"] }
+          }
+        },
+        "strengths": { "type": "array", "items": { "type": "string" } },
+        "weakness_signals": { "type": "array", "items": { "type": "string" } },
+        "language_samples": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "capability_framework": {
+      "type": "object",
+      "properties": {
+        "pain_points": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["id", "name"],
+            "properties": {
+              "id": { "type": "string", "pattern": "^PP-[0-9]{2}$" },
+              "name": { "type": "string" },
+              "evidence": { "type": "string" }
+            }
+          }
+        },
+        "lift_paths": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["from", "to"],
+            "properties": {
+              "from": { "type": "string" },
+              "to": { "type": "string" },
+              "band_gap": { "type": "string" }
+            }
+          }
+        }
+      }
+    },
+    "persona": {
+      "type": "object",
+      "properties": {
+        "mbti": { "type": "string" },
+        "dimensions": { "type": "object" },
+        "communication_style": {
+          "type": "object",
+          "properties": {
+            "opener_pattern": { "type": "string" },
+            "structure_pattern": { "type": "string" },
+            "closing_pattern": { "type": "string" },
+            "avoid": { "type": "array", "items": { "type": "string" } }
+          }
+        }
+      }
+    },
+    "anchors": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["id", "title", "category", "one_liner"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^A-[0-9]{2}$" },
+          "title": { "type": "string" },
+          "category": { "enum": ["person", "object", "place", "event"] },
+          "one_liner": { "type": "string" },
+          "story_beats": { "type": "array", "items": { "type": "string" } },
+          "emotion_tag": { "type": "string" },
+          "reusable_for_topics": { "type": "array", "items": { "type": "string" } }
+        }
+      }
+    },
+    "bridges": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "anchor_id", "topic"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^B-[0-9]{2}$" },
+          "anchor_id": { "type": "string" },
+          "topic": { "type": "string" },
+          "hook_sentence": { "type": "string" },
+          "transition_phrase": { "type": "string" }
+        }
+      }
+    },
+    "vocabulary": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["item", "band_tier"],
+        "properties": {
+          "item": { "type": "string" },
+          "type": { "enum": ["word", "phrase", "collocation", "idiom"] },
+          "band_tier": { "enum": ["6.0", "6.5", "7.0", "7.5", "8.0+"] },
+          "native_equivalent": { "type": "string" },
+          "example_from_anchor": { "type": "string" },
+          "qmd_tags": { "type": "array", "items": { "type": "string" } }
+        }
+      }
+    },
+    "patterns": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "purpose", "skeleton"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^P-[0-9]{2}$" },
+          "purpose": { "enum": ["opener", "structure", "contrast", "emphasis", "closing"] },
+          "skeleton": { "type": "string" },
+          "fits_mbti": { "type": "array", "items": { "type": "string" } },
+          "example_from_anchor": { "type": "string" }
+        }
+      }
+    }
+  }
+}
