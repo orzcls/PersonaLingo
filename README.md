@@ -122,6 +122,42 @@ User Query → [Q Layer] Expand into multiple search terms
   <sub>User Profiling Questionnaire &nbsp;|&nbsp; AI Conversation Engine &nbsp;|&nbsp; Topic Browser</sub>
 </p>
 
+## 🤖 Skills Integration
+
+PersonaLingo exports AI agent skills as portable packages for personalized IELTS learning.
+
+### Quick Install
+
+```bash
+npx skills add orzcls/personalingo-skill
+```
+
+### Two Usage Modes
+
+| Mode | Description | Use Case |
+|------|-------------|----------|
+| **A: Use Exported Skills** | Load pre-built skill packs with corpus & prompts | Quick deployment for tutoring agents |
+| **B: Full Pipeline** | Run end-to-end: Questionnaire → Conversation → Distill → Generate | Custom corpus creation from scratch |
+
+### Skill Bundle Contents
+
+Each exported skill pack contains:
+- `Skill.md` — Personalized learning skill document
+- `corpus.json` — Topic-specific corpus with QMD-tagged vocabulary
+- `runtime_protocol.md` — Agent runtime protocol
+- `prompts/` — Prompt templates for conversation & assessment
+
+### API Quick Reference
+
+```bash
+# Mode A: Download pre-built skill
+curl http://localhost:9849/api/distill/skill/{corpus_id}/runnable/download -o skill.zip
+
+# Mode B: Start full pipeline
+curl -X POST http://localhost:9849/api/distill/diagnose
+curl -X POST http://localhost:9849/api/distill/run?questionnaire_id={id}&include_research=true
+```
+
 ## 🚀 Quick Start
 
 ### Prerequisites
@@ -251,42 +287,6 @@ Corpus Data → Workflow Documentation → MD/JSON Export → AI Agent Integrati
 ## 📄 License
 
 MIT
-
-## 🤖 Skills Integration
-
-PersonaLingo exports AI agent skills as portable packages for personalized IELTS learning.
-
-### Quick Install
-
-```bash
-npx skills add orzcls/personalingo-skill
-```
-
-### Two Usage Modes
-
-| Mode | Description | Use Case |
-|------|-------------|----------|
-| **A: Use Exported Skills** | Load pre-built skill packs with corpus & prompts | Quick deployment for tutoring agents |
-| **B: Full Pipeline** | Run end-to-end: Questionnaire → Conversation → Distill → Generate | Custom corpus creation from scratch |
-
-### Skill Bundle Contents
-
-Each exported skill pack contains:
-- `Skill.md` — Personalized learning skill document
-- `corpus.json` — Topic-specific corpus with QMD-tagged vocabulary
-- `runtime_protocol.md` — Agent runtime protocol
-- `prompts/` — Prompt templates for conversation & assessment
-
-### API Quick Reference
-
-```bash
-# Mode A: Download pre-built skill
-curl http://localhost:9849/api/distill/skill/{corpus_id}/runnable/download -o skill.zip
-
-# Mode B: Start full pipeline
-curl -X POST http://localhost:9849/api/distill/diagnose
-curl -X POST http://localhost:9849/api/distill/run?questionnaire_id={id}&include_research=true
-```
 
 ## 🙏 Acknowledgments
 
