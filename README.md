@@ -158,7 +158,6 @@ Double-click `start.bat` or run in PowerShell:
 This will install dependencies and start both services:
 - Backend: http://localhost:9849
 - Frontend: http://localhost:5273
-```
 
 ## 📁 Project Structure
 

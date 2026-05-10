@@ -158,7 +158,6 @@ docker-compose up -d
 自动安装依赖并启动服务：
 - 后端: http://localhost:9849
 - 前端: http://localhost:5273
-```
 
 ## 📁 项目结构
 
