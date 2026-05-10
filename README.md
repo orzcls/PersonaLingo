@@ -124,39 +124,68 @@ User Query → [Q Layer] Expand into multiple search terms
 
 ## 🤖 Skills Integration
 
-PersonaLingo exports AI agent skills as portable packages for personalized IELTS learning.
+PersonaLingo ships two independent skill delivery modes. Pick the one that matches your agent setup.
 
-### Quick Install
+### Mode 1 · Install-only (recommended, zero backend)
+
+One-line install to any skill-compatible agent (Claude / Qoder / Cursor / Cline / ...). No project code, no server. The agent itself drives **questionnaire → guided conversation → 7-step distillation → personal profile → static corpus site** using only the shipped prompt assets.
 
 ```bash
 npx skills add orzcls/PersonaLingo
 ```
 
-### Two Usage Modes
+What actually lands in `.agents/skills/personalingo/` (constrained by [skill.json](skill.json) `files` whitelist + [.skillignore](.skillignore)):
 
-| Mode | Description | Use Case |
-|------|-------------|----------|
-| **A: Use Exported Skills** | Load pre-built skill packs with corpus & prompts | Quick deployment for tutoring agents |
-| **B: Full Pipeline** | Run end-to-end: Questionnaire → Conversation → Distill → Generate | Custom corpus creation from scratch |
+```
+SKILL.md
+skill.json
+skill-assets/
+  ├── questionnaire.json
+  ├── conversation-guide.md
+  ├── distill-protocol.md
+  ├── corpus-schema.json
+  ├── profile-template.md
+  └── site-template.html
+```
 
-### Skill Bundle Contents
+Per-learner outputs are written to the agent's working directory:
 
-Each exported skill pack contains:
-- `Skill.md` — Personalized learning skill document
-- `corpus.json` — Topic-specific corpus with QMD-tagged vocabulary
-- `runtime_protocol.md` — Agent runtime protocol
-- `prompts/` — Prompt templates for conversation & assessment
+```
+corpus/<corpus_id>/
+  ├── answers.json
+  ├── dialogue.md
+  ├── corpus.json      # validated against skill-assets/corpus-schema.json
+  ├── profile.md
+  └── site/index.html  # open directly in browser
+```
 
-### API Quick Reference
+Full runtime spec: [SKILL.md](SKILL.md).
+
+### Mode 2 · Runnable Export (requires running this project)
+
+Use the full backend + frontend to generate a persistent, QMD-RAG-powered skill pack backed by SQLite, then export a zip that a downstream agent consumes.
 
 ```bash
-# Mode A: Download pre-built skill
-curl http://localhost:9849/api/distill/skill/{corpus_id}/runnable/download -o skill.zip
-
-# Mode B: Start full pipeline
+# Start backend (see Quick Start below), then:
 curl -X POST http://localhost:9849/api/distill/diagnose
-curl -X POST http://localhost:9849/api/distill/run?questionnaire_id={id}&include_research=true
+curl -X POST "http://localhost:9849/api/distill/run?questionnaire_id={id}&include_research=true"
+curl  http://localhost:9849/api/distill/skill/{corpus_id}/runnable/download -o skill.zip
 ```
+
+Exported pack contents: `Skill.md` · `corpus.json` · `runtime_protocol.md` · `prompts/`. See [skills/RUNNABLE_MODE.md](skills/RUNNABLE_MODE.md).
+
+### Mode comparison
+
+| Capability | Install-only | Runnable Export |
+|---|---|---|
+| Backend dependency | None | Python 3.11+ backend at `:9849` |
+| Install command | `npx skills add orzcls/PersonaLingo` | `git clone` + `docker-compose up` |
+| Questionnaire / dialogue / distill | Agent-internal loop | Backend API + Vue UI |
+| Dynamic IELTS topic bank sync | No | Yes (seasonal auto-sync) |
+| QMD RAG retrieval | No | BM25 + TF-IDF + RRF + LLM rerank |
+| Style learning persistence | Session-only | SQLite persisted |
+| Static corpus site output | Yes (`site/index.html`) | No (use frontend pages) |
+| Best for | Drop-in agent install | Tutoring platforms / long-running learners |
 
 ## 🚀 Quick Start
 
