@@ -143,10 +143,16 @@ skill-assets/
   ├── questionnaire.json
   ├── conversation-guide.md
   ├── distill-protocol.md
-  ├── corpus-schema.json
+  ├── corpus-schema.json        # 镜像后端 models/corpus.py 字段结构
+  ├── band-strategies.json      # 与 backend/app/data/band_strategies.json 1:1 同步
+  ├── fallback-topics.json      # Stage 5 可执行降级话题库
+  ├── fallback-vocabulary.json  # Stage 6 可执行降级词表（4 档 × 10 条）
+  ├── fallback-patterns.json    # Stage 7 可执行降级句型（MBTI-无关 8 条）
   ├── profile-template.md
   └── site-template.html
 ```
+
+> **架构等价保证**：install-only 产出的 `corpus.json` 能被与 runnable-export 完全相同的下游逻辑消费。`learner_profile` / `capability_framework` / `anchors` / `bridges` / `vocabulary` / `patterns` / `practices` / `band_strategy` 八块字段 shape 与后端 [`models/corpus.py`](backend/app/models/corpus.py) 、[`services/{learner_researcher,capability_framework,corpus_generator}.py`](backend/app/services) 逐字对齐。Stage 3–7 的 system prompt **必须**从 `band-strategies.json` 注入 `band_strategy` 块。
 
 每个学习者的产物写入 Agent 当前工作目录：
 

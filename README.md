@@ -143,10 +143,16 @@ skill-assets/
   ├── questionnaire.json
   ├── conversation-guide.md
   ├── distill-protocol.md
-  ├── corpus-schema.json
+  ├── corpus-schema.json        # mirrors backend models/corpus.py field shapes
+  ├── band-strategies.json      # 1:1 copy of backend/app/data/band_strategies.json
+  ├── fallback-topics.json      # executable Stage 5 fallback
+  ├── fallback-vocabulary.json  # executable Stage 6 fallback (4 bands × 10 items)
+  ├── fallback-patterns.json    # executable Stage 7 fallback (8 MBTI-agnostic patterns)
   ├── profile-template.md
   └── site-template.html
 ```
+
+> **Backend architecture equivalence**: install-only `corpus.json` is consumable by the same downstream logic as runnable-export output. `learner_profile` / `capability_framework` / `anchors` / `bridges` / `vocabulary` / `patterns` / `practices` / `band_strategy` all mirror backend [`models/corpus.py`](backend/app/models/corpus.py) & [`services/{learner_researcher,capability_framework,corpus_generator}.py`](backend/app/services) exact field shapes. Stage 3–7 prompts **must** inject `band_strategy` from `band-strategies.json`.
 
 Per-learner outputs are written to the agent's working directory:
 
