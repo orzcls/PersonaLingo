@@ -111,6 +111,27 @@ User Query → [Q Layer] Expand into multiple search terms
 | File Parsing | python-docx, PyPDF2 |
 | Deployment | Docker, nginx |
 
+## 📸 Screenshots
+
+<table>
+  <tr>
+    <td><img src="docs/screenshots/v3_06_questionnaire_entry.png" width="400"/><br/><sub>User Profiling Questionnaire</sub></td>
+    <td><img src="docs/screenshots/v3_09_mbti_grid_INTJ_selected.png" width="400"/><br/><sub>MBTI Personality Selection</sub></td>
+  </tr>
+  <tr>
+    <td><img src="docs/screenshots/v3_01_settings_overview.png" width="400"/><br/><sub>Settings Overview</sub></td>
+    <td><img src="docs/screenshots/v3_02_settings_targetscore.png" width="400"/><br/><sub>Target Score Configuration</sub></td>
+  </tr>
+  <tr>
+    <td><img src="docs/screenshots/v3_11_topics_filter_P1_active.png" width="400"/><br/><sub>Topic Browser with Filters</sub></td>
+    <td><img src="docs/screenshots/v3_12_topics_filter_upgraded.png" width="400"/><br/><sub>Enhanced Topic Exploration</sub></td>
+  </tr>
+  <tr>
+    <td><img src="docs/screenshots/v3_10_chat_extractor.png" width="400"/><br/><sub>AI Conversation Engine</sub></td>
+    <td><img src="docs/screenshots/v3_03_settings_language.png" width="400"/><br/><sub>Multi-language Support</sub></td>
+  </tr>
+</table>
+
 ## 🚀 Quick Start
 
 ### Prerequisites
@@ -240,3 +261,29 @@ Corpus Data → Workflow Documentation → MD/JSON Export → AI Agent Integrati
 ## 📄 License
 
 MIT
+
+## 🤖 Skills Integration
+
+PersonaLingo exports AI agent skills as portable packages. Each skill bundle contains:
+
+- `Skill.md` — Personalized learning skill document
+- `corpus.json` — Generated corpus data
+- `runtime_protocol.md` — Runtime protocol specification
+- `prompts/` — Prompt templates
+
+### Quick Install
+
+```bash
+npx personalingo-skill add <skill-id>
+```
+
+Or download via API:
+
+```bash
+# Get skill bundle
+curl http://localhost:9849/api/distill/skill/{corpus_id}/runnable/download -o skill.zip
+```
+
+## 🙏 Acknowledgments
+
+- Distillation pipeline architecture inspired by [nuwa-skill](https://github.com/alchaincyf/nuwa-skill) — the "Deep Research → Mental Framework → Runnable Skill" paradigm for distilling human expertise into AI-native skill packages.
