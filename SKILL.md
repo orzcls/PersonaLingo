@@ -1,3 +1,8 @@
+---
+name: PersonaLingo
+description: AI-powered personalized IELTS corpus generator and learning assistant. Supports two modes - use pre-built skill packs for tutoring, or run full pipeline (questionnaire → conversation → distill → generate) to create personalized corpus from scratch.
+---
+
 # PersonaLingo Skill
 
 > AI-powered personalized IELTS corpus generator and learning assistant
