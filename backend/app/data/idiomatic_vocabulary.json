@@ -1,0 +1,4382 @@
+{
+  "version": "1.1",
+  "source": "PPChu冲鸭小分队—地道单词 + 程同学 课堂精练",
+  "categories": [
+    {
+      "category": "视觉描述 Sight",
+      "words": [
+        {
+          "word": "gorgeous",
+          "meaning": "特别漂亮的",
+          "example": "The sunset was absolutely gorgeous.",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "scenery",
+            "people",
+            "places"
+          ]
+        },
+        {
+          "word": "breathtaking",
+          "meaning": "令人叹为观止的",
+          "example": "The mountain view was breathtaking.",
+          "band_level": "7.0+",
+          "usage_topics": [
+            "scenery",
+            "travel",
+            "places"
+          ]
+        },
+        {
+          "word": "spectacular",
+          "meaning": "壮观的",
+          "example": "The fireworks display was spectacular.",
+          "band_level": "7.0+",
+          "usage_topics": [
+            "events",
+            "scenery",
+            "architecture"
+          ]
+        },
+        {
+          "word": "magnificent",
+          "meaning": "壮丽的",
+          "example": "The palace has a magnificent exterior.",
+          "band_level": "7.0+",
+          "usage_topics": [
+            "architecture",
+            "scenery",
+            "history"
+          ]
+        },
+        {
+          "word": "exquisite",
+          "meaning": "精美的",
+          "example": "The craftsmanship of this watch is exquisite.",
+          "band_level": "7.5+",
+          "usage_topics": [
+            "objects",
+            "art",
+            "food"
+          ]
+        },
+        {
+          "word": "glossy",
+          "meaning": "光亮的",
+          "example": "The car has a glossy finish.",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "objects",
+            "appearance"
+          ]
+        },
+        {
+          "word": "sleek",
+          "meaning": "光滑时尚的",
+          "example": "The smartphone has a sleek design.",
+          "band_level": "7.0+",
+          "usage_topics": [
+            "technology",
+            "objects",
+            "design"
+          ]
+        },
+        {
+          "word": "cosmopolitan",
+          "meaning": "国际化的",
+          "example": "Shanghai is a cosmopolitan city.",
+          "band_level": "7.0+",
+          "usage_topics": [
+            "cities",
+            "culture",
+            "travel"
+          ]
+        },
+        {
+          "word": "lush",
+          "meaning": "茂盛的",
+          "example": "The garden was full of lush greenery.",
+          "band_level": "7.0+",
+          "usage_topics": [
+            "nature",
+            "gardens",
+            "scenery"
+          ]
+        },
+        {
+          "word": "spotless",
+          "meaning": "一尘不染的",
+          "example": "Her apartment is always spotless.",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "home",
+            "cleanliness",
+            "places"
+          ]
+        }
+      ]
+    },
+    {
+      "category": "感官描述 Senses",
+      "words": [
+        {
+          "word": "soothing",
+          "meaning": "让人放松的",
+          "example": "The soothing music helped me fall asleep.",
+          "band_level": "7.0+",
+          "usage_topics": [
+            "music",
+            "relaxation",
+            "nature"
+          ]
+        },
+        {
+          "word": "aromatic",
+          "meaning": "香喷喷的",
+          "example": "The kitchen was filled with aromatic dishes.",
+          "band_level": "7.0+",
+          "usage_topics": [
+            "food",
+            "cooking"
+          ]
+        },
+        {
+          "word": "fragrance",
+          "meaning": "芳香",
+          "example": "I love the fragrance of flowers in spring.",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "nature",
+            "flowers",
+            "seasons"
+          ]
+        },
+        {
+          "word": "scrumptious",
+          "meaning": "非常好吃的",
+          "example": "My grandmother makes scrumptious dumplings.",
+          "band_level": "7.0+",
+          "usage_topics": [
+            "food",
+            "cooking",
+            "family"
+          ]
+        },
+        {
+          "word": "tranquil",
+          "meaning": "宁静的",
+          "example": "The lake was tranquil and serene.",
+          "band_level": "7.0+",
+          "usage_topics": [
+            "nature",
+            "places",
+            "relaxation"
+          ]
+        },
+        {
+          "word": "shimmering",
+          "meaning": "闪亮的",
+          "example": "The shimmering water reflected the sunlight.",
+          "band_level": "7.0+",
+          "usage_topics": [
+            "nature",
+            "scenery",
+            "water"
+          ]
+        }
+      ]
+    },
+    {
+      "category": "人物性格 Personality",
+      "words": [
+        {
+          "word": "down-to-earth",
+          "meaning": "脚踏实地的",
+          "example": "She's very down-to-earth despite being famous.",
+          "band_level": "7.0+",
+          "usage_topics": [
+            "people",
+            "personality"
+          ]
+        },
+        {
+          "word": "well-mannered",
+          "meaning": "有礼貌的",
+          "example": "He is one of the most well-mannered people I know.",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "people",
+            "personality",
+            "education"
+          ]
+        },
+        {
+          "word": "open-minded",
+          "meaning": "开明的",
+          "example": "My parents are very open-minded about my career choices.",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "people",
+            "personality",
+            "culture"
+          ]
+        },
+        {
+          "word": "compassionate",
+          "meaning": "有爱心的",
+          "example": "She is compassionate towards everyone around her.",
+          "band_level": "7.0+",
+          "usage_topics": [
+            "people",
+            "personality",
+            "relationships"
+          ]
+        },
+        {
+          "word": "industrious",
+          "meaning": "勤奋敬业的",
+          "example": "Chinese people are generally very industrious.",
+          "band_level": "7.0+",
+          "usage_topics": [
+            "people",
+            "work",
+            "culture"
+          ]
+        },
+        {
+          "word": "conscientious",
+          "meaning": "认真负责的",
+          "example": "He's a conscientious worker who never misses deadlines.",
+          "band_level": "7.5+",
+          "usage_topics": [
+            "people",
+            "work",
+            "personality"
+          ]
+        },
+        {
+          "word": "versatile",
+          "meaning": "多才多艺的",
+          "example": "She's a versatile musician who plays multiple instruments.",
+          "band_level": "7.0+",
+          "usage_topics": [
+            "people",
+            "talent",
+            "hobby"
+          ]
+        },
+        {
+          "word": "level-headed",
+          "meaning": "遇事冷静的",
+          "example": "He stays level-headed even under pressure.",
+          "band_level": "7.0+",
+          "usage_topics": [
+            "people",
+            "personality",
+            "work"
+          ]
+        },
+        {
+          "word": "quick-witted",
+          "meaning": "反应快的",
+          "example": "She's quick-witted and always has clever responses.",
+          "band_level": "7.0+",
+          "usage_topics": [
+            "people",
+            "personality",
+            "humor"
+          ]
+        },
+        {
+          "word": "forward-looking",
+          "meaning": "有远见的",
+          "example": "He's a forward-looking leader who plans ahead.",
+          "band_level": "7.0+",
+          "usage_topics": [
+            "people",
+            "leadership",
+            "planning"
+          ]
+        },
+        {
+          "word": "approachable",
+          "meaning": "好接近的",
+          "example": "Despite being a professor, she's very approachable.",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "people",
+            "personality",
+            "teachers"
+          ]
+        },
+        {
+          "word": "considerate",
+          "meaning": "体贴的",
+          "example": "He's always considerate of other people's feelings.",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "people",
+            "personality",
+            "relationships"
+          ]
+        },
+        {
+          "word": "frugal",
+          "meaning": "节俭的",
+          "example": "My grandmother is quite frugal but very generous with family.",
+          "band_level": "7.0+",
+          "usage_topics": [
+            "people",
+            "money",
+            "lifestyle"
+          ]
+        },
+        {
+          "word": "ambitious",
+          "meaning": "志向远大的",
+          "example": "She's an ambitious young entrepreneur.",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "people",
+            "career",
+            "goals"
+          ]
+        },
+        {
+          "word": "articulate",
+          "meaning": "口才好的",
+          "example": "He's very articulate and expresses ideas clearly.",
+          "band_level": "7.0+",
+          "usage_topics": [
+            "people",
+            "communication",
+            "public speaking"
+          ]
+        },
+        {
+          "word": "hospitable",
+          "meaning": "热情好客的",
+          "example": "The locals are incredibly hospitable to visitors.",
+          "band_level": "7.0+",
+          "usage_topics": [
+            "people",
+            "culture",
+            "travel"
+          ]
+        }
+      ]
+    },
+    {
+      "category": "人物外貌 Appearance",
+      "words": [
+        {
+          "word": "chubby",
+          "meaning": "胖乎乎的",
+          "example": "The baby has chubby cheeks.",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "people",
+            "appearance",
+            "children"
+          ]
+        },
+        {
+          "word": "slim",
+          "meaning": "苗条的",
+          "example": "She has a slim figure.",
+          "band_level": "6.0+",
+          "usage_topics": [
+            "people",
+            "appearance"
+          ]
+        },
+        {
+          "word": "well-built",
+          "meaning": "身材健美的",
+          "example": "He's well-built from years of training.",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "people",
+            "appearance",
+            "sports"
+          ]
+        },
+        {
+          "word": "graceful",
+          "meaning": "优雅的",
+          "example": "The dancer moved in a graceful manner.",
+          "band_level": "7.0+",
+          "usage_topics": [
+            "people",
+            "appearance",
+            "performance"
+          ]
+        },
+        {
+          "word": "salt-and-pepper hair",
+          "meaning": "花白的头发",
+          "example": "My grandfather has salt-and-pepper hair.",
+          "band_level": "7.0+",
+          "usage_topics": [
+            "people",
+            "appearance",
+            "elderly"
+          ]
+        },
+        {
+          "word": "sparkling eyes",
+          "meaning": "有神的眼睛",
+          "example": "She has sparkling eyes full of curiosity.",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "people",
+            "appearance"
+          ]
+        },
+        {
+          "word": "rosy cheeks",
+          "meaning": "红红的脸庞",
+          "example": "The child came in from the cold with rosy cheeks.",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "people",
+            "appearance",
+            "children"
+          ]
+        }
+      ]
+    },
+    {
+      "category": "城市与建筑 Cities & Architecture",
+      "words": [
+        {
+          "word": "metropolis",
+          "meaning": "大都市",
+          "example": "Beijing is a bustling metropolis.",
+          "band_level": "7.0+",
+          "usage_topics": [
+            "cities",
+            "urbanization",
+            "travel"
+          ]
+        },
+        {
+          "word": "infrastructure",
+          "meaning": "基础设施",
+          "example": "The city has invested heavily in infrastructure.",
+          "band_level": "7.0+",
+          "usage_topics": [
+            "cities",
+            "development",
+            "government"
+          ]
+        },
+        {
+          "word": "vibrant",
+          "meaning": "充满活力的",
+          "example": "The nightlife here is vibrant and exciting.",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "cities",
+            "culture",
+            "entertainment"
+          ]
+        },
+        {
+          "word": "enchanting",
+          "meaning": "迷人的",
+          "example": "The old town is enchanting with its narrow streets.",
+          "band_level": "7.0+",
+          "usage_topics": [
+            "places",
+            "travel",
+            "scenery"
+          ]
+        },
+        {
+          "word": "high-rise",
+          "meaning": "高楼",
+          "example": "The city skyline is full of high-rise buildings.",
+          "band_level": "6.0+",
+          "usage_topics": [
+            "cities",
+            "architecture",
+            "housing"
+          ]
+        },
+        {
+          "word": "spacious",
+          "meaning": "宽敞的",
+          "example": "The apartment is spacious and well-lit.",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "housing",
+            "architecture",
+            "interior"
+          ]
+        },
+        {
+          "word": "cramped",
+          "meaning": "狭窄拥挤的",
+          "example": "My old dormitory room was quite cramped.",
+          "band_level": "7.0+",
+          "usage_topics": [
+            "housing",
+            "cities",
+            "living conditions"
+          ]
+        },
+        {
+          "word": "time-honored",
+          "meaning": "历史悠久的",
+          "example": "We visited a time-honored temple.",
+          "band_level": "7.0+",
+          "usage_topics": [
+            "history",
+            "architecture",
+            "culture"
+          ]
+        },
+        {
+          "word": "interior décor",
+          "meaning": "室内装饰",
+          "example": "The restaurant has elegant interior décor.",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "architecture",
+            "design",
+            "shopping"
+          ]
+        },
+        {
+          "word": "glass curtain walls",
+          "meaning": "玻璃幕墙",
+          "example": "The modern office has glass curtain walls.",
+          "band_level": "7.0+",
+          "usage_topics": [
+            "architecture",
+            "buildings",
+            "design"
+          ]
+        }
+      ]
+    },
+    {
+      "category": "自然与公园 Nature & Parks",
+      "words": [
+        {
+          "word": "winding paths",
+          "meaning": "弯弯曲曲的小路",
+          "example": "We walked along the winding paths in the park.",
+          "band_level": "7.0+",
+          "usage_topics": [
+            "nature",
+            "parks",
+            "walking"
+          ]
+        },
+        {
+          "word": "flowerbeds",
+          "meaning": "花坛",
+          "example": "The garden has beautiful flowerbeds.",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "parks",
+            "gardens",
+            "nature"
+          ]
+        },
+        {
+          "word": "pavilions",
+          "meaning": "亭子",
+          "example": "There are traditional pavilions by the lake.",
+          "band_level": "7.0+",
+          "usage_topics": [
+            "parks",
+            "architecture",
+            "culture"
+          ]
+        },
+        {
+          "word": "ambience",
+          "meaning": "氛围",
+          "example": "The park has a peaceful ambience.",
+          "band_level": "7.0+",
+          "usage_topics": [
+            "places",
+            "restaurants",
+            "atmosphere"
+          ]
+        },
+        {
+          "word": "feel refreshed and invigorated",
+          "meaning": "感觉焕然一新",
+          "example": "After the hike, I felt refreshed and invigorated.",
+          "band_level": "7.0+",
+          "usage_topics": [
+            "nature",
+            "exercise",
+            "relaxation"
+          ]
+        }
+      ]
+    },
+    {
+      "category": "休闲活动 Leisure",
+      "words": [
+        {
+          "word": "hang out",
+          "meaning": "出去玩儿",
+          "example": "I often hang out with my friends on weekends.",
+          "band_level": "6.0+",
+          "usage_topics": [
+            "socializing",
+            "friendship",
+            "leisure"
+          ]
+        },
+        {
+          "word": "have a barbecue",
+          "meaning": "烧烤",
+          "example": "We like to have a barbecue in the park.",
+          "band_level": "6.0+",
+          "usage_topics": [
+            "food",
+            "socializing",
+            "outdoor"
+          ]
+        },
+        {
+          "word": "go hiking",
+          "meaning": "远足",
+          "example": "We go hiking during holidays.",
+          "band_level": "6.0+",
+          "usage_topics": [
+            "exercise",
+            "nature",
+            "holidays"
+          ]
+        },
+        {
+          "word": "roller-skating",
+          "meaning": "滑旱冰",
+          "example": "I used to go roller-skating every weekend.",
+          "band_level": "6.0+",
+          "usage_topics": [
+            "sports",
+            "hobbies",
+            "childhood"
+          ]
+        },
+        {
+          "word": "recreational activities",
+          "meaning": "休闲活动",
+          "example": "The park offers various recreational activities.",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "leisure",
+            "parks",
+            "lifestyle"
+          ]
+        }
+      ]
+    },
+    {
+      "category": "动物描述 Animals",
+      "words": [
+        {
+          "word": "fierce",
+          "meaning": "凶猛的",
+          "example": "Lions are fierce predators.",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "animals",
+            "nature",
+            "wildlife"
+          ]
+        },
+        {
+          "word": "fluffy",
+          "meaning": "毛绒绒的",
+          "example": "The kitten is so fluffy and adorable.",
+          "band_level": "6.0+",
+          "usage_topics": [
+            "animals",
+            "pets"
+          ]
+        },
+        {
+          "word": "adorable",
+          "meaning": "可爱的",
+          "example": "Pandas are absolutely adorable creatures.",
+          "band_level": "6.0+",
+          "usage_topics": [
+            "animals",
+            "pets",
+            "children"
+          ]
+        },
+        {
+          "word": "cuddly",
+          "meaning": "让人特想抱的",
+          "example": "Koalas look so cuddly.",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "animals",
+            "pets"
+          ]
+        },
+        {
+          "word": "endangered animals",
+          "meaning": "濒危动物",
+          "example": "We should protect endangered animals.",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "animals",
+            "environment",
+            "conservation"
+          ]
+        }
+      ]
+    },
+    {
+      "category": "物品描述 Objects",
+      "words": [
+        {
+          "word": "durable",
+          "meaning": "耐用的",
+          "example": "This backpack is very durable.",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "objects",
+            "shopping",
+            "quality"
+          ]
+        },
+        {
+          "word": "handy",
+          "meaning": "小巧便携的",
+          "example": "This handy gadget fits right in my pocket.",
+          "band_level": "6.0+",
+          "usage_topics": [
+            "objects",
+            "technology"
+          ]
+        },
+        {
+          "word": "funky",
+          "meaning": "新奇有趣的",
+          "example": "She wore a funky hat to the party.",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "fashion",
+            "objects",
+            "style"
+          ]
+        },
+        {
+          "word": "beat-up",
+          "meaning": "破旧的",
+          "example": "He still drives his beat-up old car.",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "objects",
+            "vehicles"
+          ]
+        },
+        {
+          "word": "brand-new",
+          "meaning": "全新的",
+          "example": "I just bought a brand-new laptop.",
+          "band_level": "6.0+",
+          "usage_topics": [
+            "objects",
+            "shopping",
+            "technology"
+          ]
+        },
+        {
+          "word": "affordable",
+          "meaning": "价格实惠的",
+          "example": "This restaurant is affordable and tasty.",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "shopping",
+            "food",
+            "lifestyle"
+          ]
+        },
+        {
+          "word": "performance-price ratio",
+          "meaning": "性价比",
+          "example": "This phone has an excellent performance-price ratio.",
+          "band_level": "7.0+",
+          "usage_topics": [
+            "shopping",
+            "technology",
+            "consumer"
+          ]
+        }
+      ]
+    },
+    {
+      "category": "地道口语表达 Idiomatic Expressions",
+      "words": [
+        {
+          "word": "stuff",
+          "meaning": "东西(=things，不可加s)",
+          "example": "The stuff in that store is very pricey.",
+          "band_level": "6.0+",
+          "usage_topics": [
+            "daily life",
+            "shopping"
+          ]
+        },
+        {
+          "word": "folks",
+          "meaning": "人们(=people)",
+          "example": "Average folks can't possibly afford cars like that.",
+          "band_level": "6.0+",
+          "usage_topics": [
+            "people",
+            "society"
+          ]
+        },
+        {
+          "word": "pretty (adv.)",
+          "meaning": "相当(=very)",
+          "example": "My iPad is pretty fun to use.",
+          "band_level": "6.0+",
+          "usage_topics": [
+            "daily life",
+            "opinions"
+          ]
+        },
+        {
+          "word": "adore",
+          "meaning": "非常喜欢",
+          "example": "I adore that singer.",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "preferences",
+            "entertainment"
+          ]
+        },
+        {
+          "word": "spot",
+          "meaning": "看见/地方",
+          "example": "I spotted some squirrels in the park. It's a nice spot for a picnic.",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "places",
+            "nature",
+            "daily life"
+          ]
+        },
+        {
+          "word": "eye-opening",
+          "meaning": "大开眼界的",
+          "example": "Trips to other countries can be really eye-opening.",
+          "band_level": "7.0+",
+          "usage_topics": [
+            "travel",
+            "experience",
+            "learning"
+          ]
+        },
+        {
+          "word": "decent",
+          "meaning": "不错的(=quite good)",
+          "example": "This job offers a decent salary.",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "work",
+            "quality",
+            "opinions"
+          ]
+        },
+        {
+          "word": "kind of / sort of",
+          "meaning": "有点儿(=somewhat)",
+          "example": "My boss is kind of hard to get along with.",
+          "band_level": "6.0+",
+          "usage_topics": [
+            "opinions",
+            "descriptions"
+          ]
+        },
+        {
+          "word": "a piece of cake",
+          "meaning": "小菜一碟",
+          "example": "The speaking test is just a piece of cake if you prepare well.",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "difficulty",
+            "exams"
+          ]
+        },
+        {
+          "word": "get on my nerves",
+          "meaning": "让我很烦",
+          "example": "The noise has been getting on my nerves lately.",
+          "band_level": "7.0+",
+          "usage_topics": [
+            "emotions",
+            "annoyance",
+            "noise"
+          ]
+        },
+        {
+          "word": "kick back and relax",
+          "meaning": "放松休息",
+          "example": "At parties, we just kick back and relax.",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "relaxation",
+            "leisure",
+            "socializing"
+          ]
+        },
+        {
+          "word": "loads of / tons of",
+          "meaning": "很多(=lots of)",
+          "example": "I've got loads of work to get through before tomorrow.",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "quantity",
+            "daily life"
+          ]
+        },
+        {
+          "word": "make sense",
+          "meaning": "合理",
+          "example": "The plot of that movie didn't make any sense.",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "opinions",
+            "logic",
+            "movies"
+          ]
+        },
+        {
+          "word": "you name it",
+          "meaning": "应有尽有",
+          "example": "Beijing has traditions, modern lifestyles, tasty food... you name it.",
+          "band_level": "7.0+",
+          "usage_topics": [
+            "cities",
+            "variety",
+            "descriptions"
+          ]
+        },
+        {
+          "word": "kill two birds with one stone",
+          "meaning": "一举两得",
+          "example": "By cycling to work, I kill two birds with one stone — exercise and commute.",
+          "band_level": "7.0+",
+          "usage_topics": [
+            "efficiency",
+            "lifestyle"
+          ]
+        },
+        {
+          "word": "hands down",
+          "meaning": "绝对是",
+          "example": "This is the best movie I've ever seen, hands down.",
+          "band_level": "7.0+",
+          "usage_topics": [
+            "opinions",
+            "superlatives"
+          ]
+        },
+        {
+          "word": "get the hang of",
+          "meaning": "基本了解怎样做",
+          "example": "You'll get the hang of it shortly.",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "learning",
+            "skills"
+          ]
+        },
+        {
+          "word": "What a shame!",
+          "meaning": "太可惜了",
+          "example": "They lost that match. What a shame!",
+          "band_level": "6.0+",
+          "usage_topics": [
+            "emotions",
+            "disappointment",
+            "sports"
+          ]
+        }
+      ]
+    },
+    {
+      "category": "俚语表达 Slang & Colloquial",
+      "words": [
+        {
+          "word": "buff / nut",
+          "meaning": "……迷",
+          "example": "I am a movie buff. I go to the movies whenever I can.",
+          "band_level": "7.0+",
+          "usage_topics": [
+            "hobbies",
+            "entertainment"
+          ]
+        },
+        {
+          "word": "freak out",
+          "meaning": "很吃惊/很激动",
+          "example": "I totally freaked out when I heard the news.",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "emotions",
+            "reactions"
+          ]
+        },
+        {
+          "word": "let off steam",
+          "meaning": "释放压力",
+          "example": "I often go to the gym to let off steam.",
+          "band_level": "7.0+",
+          "usage_topics": [
+            "stress",
+            "relaxation",
+            "exercise"
+          ]
+        },
+        {
+          "word": "feel under the weather",
+          "meaning": "身体不舒服",
+          "example": "I felt under the weather so I stayed home.",
+          "band_level": "7.0+",
+          "usage_topics": [
+            "health",
+            "daily life"
+          ]
+        },
+        {
+          "word": "pricey",
+          "meaning": "很贵的",
+          "example": "That restaurant was a bit pricey.",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "shopping",
+            "food",
+            "money"
+          ]
+        },
+        {
+          "word": "lousy",
+          "meaning": "差劲的",
+          "example": "That director makes lousy movies.",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "quality",
+            "opinions"
+          ]
+        },
+        {
+          "word": "is a drag",
+          "meaning": "单调烦人的",
+          "example": "A nine-to-five job can really be a drag.",
+          "band_level": "7.0+",
+          "usage_topics": [
+            "work",
+            "boring",
+            "opinions"
+          ]
+        },
+        {
+          "word": "hilarious",
+          "meaning": "非常搞笑的",
+          "example": "The comedy show was hilarious.",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "entertainment",
+            "humor"
+          ]
+        },
+        {
+          "word": "wiped-out",
+          "meaning": "精疲力竭的",
+          "example": "After the exam, I was completely wiped-out.",
+          "band_level": "7.0+",
+          "usage_topics": [
+            "tiredness",
+            "work",
+            "exams"
+          ]
+        },
+        {
+          "word": "starving",
+          "meaning": "非常饿的",
+          "example": "I'm starving — let's grab some food.",
+          "band_level": "6.0+",
+          "usage_topics": [
+            "food",
+            "daily life"
+          ]
+        }
+      ]
+    },
+    {
+      "category": "词汇升级替换 Vocabulary Upgrades",
+      "words": [
+        {
+          "word": "stimulating",
+          "meaning": "有趣的(替代interesting)",
+          "example": "The lecture was really stimulating.",
+          "band_level": "7.0+",
+          "usage_topics": [
+            "education",
+            "experiences"
+          ]
+        },
+        {
+          "word": "humdrum / mundane",
+          "meaning": "枯燥的(替代boring)",
+          "example": "I wanted to escape the humdrum routine.",
+          "band_level": "7.0+",
+          "usage_topics": [
+            "daily life",
+            "work"
+          ]
+        },
+        {
+          "word": "grueling",
+          "meaning": "痛苦的(替代painful/hard)",
+          "example": "The training session was grueling.",
+          "band_level": "7.0+",
+          "usage_topics": [
+            "exercise",
+            "work",
+            "challenges"
+          ]
+        },
+        {
+          "word": "have a blast",
+          "meaning": "玩得非常开心(替代enjoy)",
+          "example": "We had a blast at the concert.",
+          "band_level": "7.0+",
+          "usage_topics": [
+            "entertainment",
+            "socializing"
+          ]
+        },
+        {
+          "word": "wrap it up",
+          "meaning": "结束(替代finish)",
+          "example": "Let's wrap it up and go home.",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "work",
+            "activities"
+          ]
+        },
+        {
+          "word": "do someone a favor",
+          "meaning": "帮助某人(替代help)",
+          "example": "Could you do me a favor?",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "socializing",
+            "requests"
+          ]
+        },
+        {
+          "word": "give it my best shot",
+          "meaning": "尽最大努力(替代try my best)",
+          "example": "I'll give it my best shot in the exam.",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "effort",
+            "exams",
+            "challenges"
+          ]
+        },
+        {
+          "word": "tough",
+          "meaning": "困难的(替代difficult)",
+          "example": "The interview was pretty tough.",
+          "band_level": "6.0+",
+          "usage_topics": [
+            "difficulty",
+            "challenges"
+          ]
+        },
+        {
+          "word": "hit the sack",
+          "meaning": "去睡觉(替代go to bed)",
+          "example": "I'm exhausted. Time to hit the sack.",
+          "band_level": "7.0+",
+          "usage_topics": [
+            "daily life",
+            "sleep"
+          ]
+        },
+        {
+          "word": "catch some rays",
+          "meaning": "晒太阳(替代sit in the sun)",
+          "example": "Let's go to the beach and catch some rays.",
+          "band_level": "7.0+",
+          "usage_topics": [
+            "leisure",
+            "weather",
+            "beach"
+          ]
+        },
+        {
+          "word": "economize",
+          "meaning": "省钱(替代save money)",
+          "example": "I need to economize this month.",
+          "band_level": "7.0+",
+          "usage_topics": [
+            "money",
+            "lifestyle"
+          ]
+        },
+        {
+          "word": "precious",
+          "meaning": "贵重的(替代valuable)",
+          "example": "Time is precious to me.",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "values",
+            "objects"
+          ]
+        },
+        {
+          "word": "trendy / stylish",
+          "meaning": "时尚的(替代fashionable)",
+          "example": "She always wears trendy outfits.",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "fashion",
+            "lifestyle"
+          ]
+        },
+        {
+          "word": "chic / classy",
+          "meaning": "有品位的(替代good taste)",
+          "example": "That restaurant has a really classy vibe.",
+          "band_level": "7.0+",
+          "usage_topics": [
+            "fashion",
+            "places",
+            "lifestyle"
+          ]
+        },
+        {
+          "word": "cluttered",
+          "meaning": "杂乱的(替代messy)",
+          "example": "My desk is always cluttered with papers.",
+          "band_level": "7.0+",
+          "usage_topics": [
+            "home",
+            "organization"
+          ]
+        }
+      ]
+    },
+    {
+      "category": "情感与偏好表达 Emotions & Preferences",
+      "words": [
+        {
+          "word": "be fascinated by",
+          "meaning": "着迷于(替代like)",
+          "example": "I'm fascinated by ancient history.",
+          "band_level": "7.0+",
+          "usage_topics": [
+            "preferences",
+            "hobbies"
+          ]
+        },
+        {
+          "word": "be into",
+          "meaning": "喜欢(替代like)",
+          "example": "I'm really into photography these days.",
+          "band_level": "6.0+",
+          "usage_topics": [
+            "preferences",
+            "hobbies"
+          ]
+        },
+        {
+          "word": "not my cup of tea",
+          "meaning": "不是我喜欢的",
+          "example": "Horror movies are not my cup of tea.",
+          "band_level": "7.0+",
+          "usage_topics": [
+            "preferences",
+            "dislikes"
+          ]
+        },
+        {
+          "word": "have mixed feelings about",
+          "meaning": "又爱又恨",
+          "example": "I have mixed feelings about living in a big city.",
+          "band_level": "7.0+",
+          "usage_topics": [
+            "opinions",
+            "emotions"
+          ]
+        },
+        {
+          "word": "in low spirits / feeling blue",
+          "meaning": "情绪低落的",
+          "example": "I was in low spirits after failing the exam.",
+          "band_level": "7.0+",
+          "usage_topics": [
+            "emotions",
+            "sadness"
+          ]
+        },
+        {
+          "word": "makes my blood boil",
+          "meaning": "让我生气",
+          "example": "Littering in public places makes my blood boil.",
+          "band_level": "7.0+",
+          "usage_topics": [
+            "emotions",
+            "anger",
+            "opinions"
+          ]
+        },
+        {
+          "word": "get cold feet",
+          "meaning": "害怕退缩",
+          "example": "I got cold feet before my first public speech.",
+          "band_level": "7.0+",
+          "usage_topics": [
+            "emotions",
+            "fear",
+            "experiences"
+          ]
+        },
+        {
+          "word": "be torn between",
+          "meaning": "在…之间左右为难",
+          "example": "I was torn between studying abroad and staying home.",
+          "band_level": "7.0+",
+          "usage_topics": [
+            "decisions",
+            "emotions"
+          ]
+        }
+      ]
+    },
+    {
+      "category": "频率表达 Frequency Expressions",
+      "words": [
+        {
+          "word": "constantly",
+          "meaning": "不断地(替代always)",
+          "example": "Technology is constantly evolving.",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "frequency",
+            "technology",
+            "change"
+          ]
+        },
+        {
+          "word": "every now and then",
+          "meaning": "时常",
+          "example": "I visit my grandparents every now and then.",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "frequency",
+            "family"
+          ]
+        },
+        {
+          "word": "once in a blue moon",
+          "meaning": "极少",
+          "example": "I go to the cinema once in a blue moon.",
+          "band_level": "7.0+",
+          "usage_topics": [
+            "frequency",
+            "habits"
+          ]
+        },
+        {
+          "word": "on a weekly basis",
+          "meaning": "每周",
+          "example": "I exercise on a weekly basis.",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "frequency",
+            "habits",
+            "routine"
+          ]
+        },
+        {
+          "word": "hardly ever",
+          "meaning": "几乎不",
+          "example": "I hardly ever eat fast food.",
+          "band_level": "6.0+",
+          "usage_topics": [
+            "frequency",
+            "habits"
+          ]
+        }
+      ]
+    },
+    {
+      "category": "天气与环境 Weather & Environment",
+      "words": [
+        {
+          "word": "scorching",
+          "meaning": "酷热的(替代hot)",
+          "example": "The summer here is scorching.",
+          "band_level": "7.0+",
+          "usage_topics": [
+            "weather",
+            "seasons",
+            "climate"
+          ]
+        },
+        {
+          "word": "chilly",
+          "meaning": "有点冷的",
+          "example": "It gets chilly in the evenings.",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "weather",
+            "seasons"
+          ]
+        },
+        {
+          "word": "freezing",
+          "meaning": "非常冷的",
+          "example": "It was freezing cold outside.",
+          "band_level": "6.0+",
+          "usage_topics": [
+            "weather",
+            "seasons"
+          ]
+        },
+        {
+          "word": "overcast",
+          "meaning": "阴天的(替代cloudy)",
+          "example": "The sky was overcast all day.",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "weather",
+            "seasons"
+          ]
+        },
+        {
+          "word": "filthy",
+          "meaning": "非常脏的(替代dirty)",
+          "example": "The streets were filthy after the storm.",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "environment",
+            "cleanliness"
+          ]
+        }
+      ]
+    },
+    {
+      "category": "视觉词汇  Sight (demo)",
+      "words": [
+        {
+          "word": "vast",
+          "meaning": "巨大的",
+          "example": "",
+          "band_level": "6.0+",
+          "usage_topics": [
+            "视觉词汇"
+          ]
+        },
+        {
+          "word": "furry",
+          "meaning": "毛绒绒的",
+          "example": "",
+          "band_level": "6.0+",
+          "usage_topics": [
+            "视觉词汇"
+          ]
+        },
+        {
+          "word": "tidy",
+          "meaning": "干净整洁的",
+          "example": "",
+          "band_level": "6.0+",
+          "usage_topics": [
+            "视觉词汇"
+          ]
+        },
+        {
+          "word": "（人）clumsy",
+          "meaning": "笨重的",
+          "example": "",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "视觉词汇"
+          ]
+        },
+        {
+          "word": "agile",
+          "meaning": "敏捷的",
+          "example": "",
+          "band_level": "6.0+",
+          "usage_topics": [
+            "视觉词汇"
+          ]
+        },
+        {
+          "word": "organized",
+          "meaning": "整齐有秩序的",
+          "example": "",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "视觉词汇"
+          ]
+        },
+        {
+          "word": "exterior",
+          "meaning": "建筑的外观",
+          "example": "",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "视觉词汇"
+          ]
+        },
+        {
+          "word": "entrance",
+          "meaning": "建筑的入口",
+          "example": "",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "视觉词汇"
+          ]
+        },
+        {
+          "word": "hall",
+          "meaning": "入口大厅",
+          "example": "",
+          "band_level": "6.0+",
+          "usage_topics": [
+            "视觉词汇"
+          ]
+        },
+        {
+          "word": "pillars",
+          "meaning": "柱子",
+          "example": "",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "视觉词汇"
+          ]
+        },
+        {
+          "word": "steps",
+          "meaning": "台阶",
+          "example": "",
+          "band_level": "6.0+",
+          "usage_topics": [
+            "视觉词汇"
+          ]
+        },
+        {
+          "word": "fountain",
+          "meaning": "喷泉",
+          "example": "",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "视觉词汇"
+          ]
+        },
+        {
+          "word": "waterfall",
+          "meaning": "瀑布",
+          "example": "",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "视觉词汇"
+          ]
+        },
+        {
+          "word": "brush",
+          "meaning": "灌木",
+          "example": "",
+          "band_level": "6.0+",
+          "usage_topics": [
+            "视觉词汇"
+          ]
+        },
+        {
+          "word": "wrinkles",
+          "meaning": "皱纹",
+          "example": "",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "视觉词汇"
+          ]
+        },
+        {
+          "word": "thick eyebrows",
+          "meaning": "浓眉",
+          "example": "",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "视觉词汇"
+          ]
+        },
+        {
+          "word": "shimmering water",
+          "meaning": "闪亮的湖水",
+          "example": "",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "视觉词汇"
+          ]
+        },
+        {
+          "word": "a medium build",
+          "meaning": "中等身材",
+          "example": "",
+          "band_level": "7.0+",
+          "usage_topics": [
+            "视觉词汇"
+          ]
+        },
+        {
+          "word": "an inquiring mind",
+          "meaning": "强烈的好奇心",
+          "example": "",
+          "band_level": "7.0+",
+          "usage_topics": [
+            "视觉词汇"
+          ]
+        },
+        {
+          "word": "layout",
+          "meaning": "布局",
+          "example": "",
+          "band_level": "6.0+",
+          "usage_topics": [
+            "视觉词汇"
+          ]
+        },
+        {
+          "word": "pattern",
+          "meaning": "花纹",
+          "example": "",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "视觉词汇"
+          ]
+        },
+        {
+          "word": "shop assistant",
+          "meaning": "售货员",
+          "example": "",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "视觉词汇"
+          ]
+        },
+        {
+          "word": "librarian",
+          "meaning": "图书管理员",
+          "example": "",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "视觉词汇"
+          ]
+        },
+        {
+          "word": "shopaholic",
+          "meaning": "购物狂",
+          "example": "",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "视觉词汇"
+          ]
+        }
+      ]
+    },
+    {
+      "category": "听觉词汇  Hearing (demo)",
+      "words": [
+        {
+          "word": "birds chirping in the trees",
+          "meaning": "鸟叫",
+          "example": "",
+          "band_level": "7.0+",
+          "usage_topics": [
+            "听觉词汇"
+          ]
+        },
+        {
+          "word": "disturbing noise",
+          "meaning": "烦人的噪声",
+          "example": "",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "听觉词汇"
+          ]
+        },
+        {
+          "word": "please to the ear",
+          "meaning": "悦耳的",
+          "example": "",
+          "band_level": "7.0+",
+          "usage_topics": [
+            "听觉词汇"
+          ]
+        },
+        {
+          "word": "soothing music",
+          "meaning": "轻松的音乐",
+          "example": "",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "听觉词汇"
+          ]
+        },
+        {
+          "word": "嗅觉词汇 Smell",
+          "meaning": "嗅觉词汇 Smell",
+          "example": "",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "听觉词汇"
+          ]
+        },
+        {
+          "word": "the fragrance of flowers",
+          "meaning": "花香",
+          "example": "",
+          "band_level": "7.0+",
+          "usage_topics": [
+            "听觉词汇"
+          ]
+        },
+        {
+          "word": "aromatic dishes",
+          "meaning": "香喷喷的饭菜",
+          "example": "",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "听觉词汇"
+          ]
+        },
+        {
+          "word": "味觉词汇 Taste",
+          "meaning": "味觉词汇 Taste",
+          "example": "",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "听觉词汇"
+          ]
+        },
+        {
+          "word": "tasty",
+          "meaning": "非常好吃的",
+          "example": "",
+          "band_level": "6.0+",
+          "usage_topics": [
+            "听觉词汇"
+          ]
+        },
+        {
+          "word": "感觉词汇 Emotional Perception",
+          "meaning": "感觉词汇 Emotional Perception",
+          "example": "",
+          "band_level": "7.0+",
+          "usage_topics": [
+            "听觉词汇"
+          ]
+        },
+        {
+          "word": "holy",
+          "meaning": "神圣的",
+          "example": "",
+          "band_level": "6.0+",
+          "usage_topics": [
+            "听觉词汇"
+          ]
+        },
+        {
+          "word": "vital",
+          "meaning": "重要的",
+          "example": "",
+          "band_level": "6.0+",
+          "usage_topics": [
+            "听觉词汇"
+          ]
+        },
+        {
+          "word": "superb",
+          "meaning": "特别棒的",
+          "example": "",
+          "band_level": "6.0+",
+          "usage_topics": [
+            "听觉词汇"
+          ]
+        },
+        {
+          "word": "dynamic",
+          "meaning": "有活力的",
+          "example": "",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "听觉词汇"
+          ]
+        },
+        {
+          "word": "generous",
+          "meaning": "慷慨的",
+          "example": "",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "听觉词汇"
+          ]
+        },
+        {
+          "word": "frank",
+          "meaning": "直率的",
+          "example": "",
+          "band_level": "6.0+",
+          "usage_topics": [
+            "听觉词汇"
+          ]
+        },
+        {
+          "word": "delighted",
+          "meaning": "高兴的",
+          "example": "",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "听觉词汇"
+          ]
+        },
+        {
+          "word": "carefree",
+          "meaning": "无忧无虑的",
+          "example": "",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "听觉词汇"
+          ]
+        },
+        {
+          "word": "optimistic",
+          "meaning": "乐观的",
+          "example": "",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "听觉词汇"
+          ]
+        },
+        {
+          "word": "appealing",
+          "meaning": "有吸引力的",
+          "example": "",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "听觉词汇"
+          ]
+        },
+        {
+          "word": "amusing",
+          "meaning": "幽默的",
+          "example": "",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "听觉词汇"
+          ]
+        },
+        {
+          "word": "passionate",
+          "meaning": "有热情的",
+          "example": "",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "听觉词汇"
+          ]
+        },
+        {
+          "word": "world-renowned",
+          "meaning": "举世闻名的",
+          "example": "",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "听觉词汇"
+          ]
+        },
+        {
+          "word": "aspiring",
+          "meaning": "志向远大的",
+          "example": "",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "听觉词汇"
+          ]
+        },
+        {
+          "word": "confident",
+          "meaning": "自信的",
+          "example": "",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "听觉词汇"
+          ]
+        },
+        {
+          "word": "modest",
+          "meaning": "谦虚的",
+          "example": "",
+          "band_level": "6.0+",
+          "usage_topics": [
+            "听觉词汇"
+          ]
+        },
+        {
+          "word": "low-key",
+          "meaning": "低调的",
+          "example": "",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "听觉词汇"
+          ]
+        },
+        {
+          "word": "sociable",
+          "meaning": "喜欢社交的",
+          "example": "",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "听觉词汇"
+          ]
+        },
+        {
+          "word": "（指作家或歌手）prolific",
+          "meaning": "多产的",
+          "example": "",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "听觉词汇"
+          ]
+        },
+        {
+          "word": "gifted",
+          "meaning": "有才华的",
+          "example": "",
+          "band_level": "6.0+",
+          "usage_topics": [
+            "听觉词汇"
+          ]
+        },
+        {
+          "word": "snobbish",
+          "meaning": "势力的",
+          "example": "",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "听觉词汇"
+          ]
+        },
+        {
+          "word": "materialistic",
+          "meaning": "过于现实的",
+          "example": "",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "听觉词汇"
+          ]
+        },
+        {
+          "word": "diverse",
+          "meaning": "多样的",
+          "example": "",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "听觉词汇"
+          ]
+        },
+        {
+          "word": "rewarding",
+          "meaning": "有回报的",
+          "example": "",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "听觉词汇"
+          ]
+        },
+        {
+          "word": "trendy",
+          "meaning": "时尚的",
+          "example": "",
+          "band_level": "6.0+",
+          "usage_topics": [
+            "听觉词汇"
+          ]
+        },
+        {
+          "word": "chic",
+          "meaning": "高贵的",
+          "example": "",
+          "band_level": "6.0+",
+          "usage_topics": [
+            "听觉词汇"
+          ]
+        }
+      ]
+    },
+    {
+      "category": "休闲词汇 Leisure Activities (demo)",
+      "words": [
+        {
+          "word": "sing karaoke",
+          "meaning": "唱卡拉ok",
+          "example": "",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "休闲词汇"
+          ]
+        },
+        {
+          "word": "do taekwondo",
+          "meaning": "练跆拳道",
+          "example": "",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "休闲词汇"
+          ]
+        },
+        {
+          "word": "scuba-diving",
+          "meaning": "潜水",
+          "example": "",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "休闲词汇"
+          ]
+        },
+        {
+          "word": "go skateboarding",
+          "meaning": "滑滑板",
+          "example": "",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "休闲词汇"
+          ]
+        },
+        {
+          "word": "do taichi",
+          "meaning": "打太极",
+          "example": "",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "休闲词汇"
+          ]
+        },
+        {
+          "word": "do sunbathing",
+          "meaning": "做日光浴",
+          "example": "",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "休闲词汇"
+          ]
+        },
+        {
+          "word": "walk one's dog",
+          "meaning": "遛狗",
+          "example": "",
+          "band_level": "7.0+",
+          "usage_topics": [
+            "休闲词汇"
+          ]
+        },
+        {
+          "word": "jog",
+          "meaning": "慢跑",
+          "example": "",
+          "band_level": "6.0+",
+          "usage_topics": [
+            "休闲词汇"
+          ]
+        },
+        {
+          "word": "camping",
+          "meaning": "宿营",
+          "example": "",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "休闲词汇"
+          ]
+        },
+        {
+          "word": "城市  Cities",
+          "meaning": "城市  Cities",
+          "example": "",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "休闲词汇"
+          ]
+        },
+        {
+          "word": "lawns",
+          "meaning": "绿地",
+          "example": "",
+          "band_level": "6.0+",
+          "usage_topics": [
+            "休闲词汇"
+          ]
+        },
+        {
+          "word": "skyscrapers",
+          "meaning": "摩天楼",
+          "example": "",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "休闲词汇"
+          ]
+        },
+        {
+          "word": "sculptures",
+          "meaning": "雕塑",
+          "example": "",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "休闲词汇"
+          ]
+        },
+        {
+          "word": "cuisine",
+          "meaning": "某个地方的菜",
+          "example": "",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "休闲词汇"
+          ]
+        },
+        {
+          "word": "traffic-congestion",
+          "meaning": "交通堵塞",
+          "example": "",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "休闲词汇"
+          ]
+        },
+        {
+          "word": "courtyard-houses",
+          "meaning": "四合院",
+          "example": "",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "休闲词汇"
+          ]
+        },
+        {
+          "word": "colony",
+          "meaning": "殖民地",
+          "example": "",
+          "band_level": "6.0+",
+          "usage_topics": [
+            "休闲词汇"
+          ]
+        },
+        {
+          "word": "snacks",
+          "meaning": "小吃",
+          "example": "",
+          "band_level": "6.0+",
+          "usage_topics": [
+            "休闲词汇"
+          ]
+        },
+        {
+          "word": "the music scene",
+          "meaning": "乐坛",
+          "example": "",
+          "band_level": "7.0+",
+          "usage_topics": [
+            "休闲词汇"
+          ]
+        },
+        {
+          "word": "a holy place",
+          "meaning": "一个圣地",
+          "example": "",
+          "band_level": "7.0+",
+          "usage_topics": [
+            "休闲词汇"
+          ]
+        },
+        {
+          "word": "tenacious",
+          "meaning": "顽强的",
+          "example": "",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "休闲词汇"
+          ]
+        },
+        {
+          "word": "the layout of a city",
+          "meaning": "城市布局",
+          "example": "",
+          "band_level": "7.0+",
+          "usage_topics": [
+            "休闲词汇"
+          ]
+        },
+        {
+          "word": "a celebrity's former residence",
+          "meaning": "一座名人故居",
+          "example": "",
+          "band_level": "7.0+",
+          "usage_topics": [
+            "休闲词汇"
+          ]
+        },
+        {
+          "word": "经济",
+          "meaning": "中国的政治、经济、文化的中心    the political，economic and cultural center of China",
+          "example": "",
+          "band_level": "6.0+",
+          "usage_topics": [
+            "休闲词汇"
+          ]
+        },
+        {
+          "word": "自然风光 Gardens and Parks",
+          "meaning": "自然风光 Gardens and Parks",
+          "example": "",
+          "band_level": "7.0+",
+          "usage_topics": [
+            "休闲词汇"
+          ]
+        },
+        {
+          "word": "facilities",
+          "meaning": "设施",
+          "example": "",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "休闲词汇"
+          ]
+        },
+        {
+          "word": "fountains",
+          "meaning": "喷泉",
+          "example": "",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "休闲词汇"
+          ]
+        },
+        {
+          "word": "pools",
+          "meaning": "水池",
+          "example": "",
+          "band_level": "6.0+",
+          "usage_topics": [
+            "休闲词汇"
+          ]
+        },
+        {
+          "word": "ponds",
+          "meaning": "池塘",
+          "example": "",
+          "band_level": "6.0+",
+          "usage_topics": [
+            "休闲词汇"
+          ]
+        },
+        {
+          "word": "picket fence",
+          "meaning": "栅栏",
+          "example": "",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "休闲词汇"
+          ]
+        },
+        {
+          "word": "trellises",
+          "meaning": "花架",
+          "example": "",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "休闲词汇"
+          ]
+        },
+        {
+          "word": "hedge",
+          "meaning": "灌木丛",
+          "example": "",
+          "band_level": "6.0+",
+          "usage_topics": [
+            "休闲词汇"
+          ]
+        },
+        {
+          "word": "tranquil and serene",
+          "meaning": "宁静的",
+          "example": "",
+          "band_level": "7.0+",
+          "usage_topics": [
+            "休闲词汇"
+          ]
+        },
+        {
+          "word": "limpid water",
+          "meaning": "清澈的水",
+          "example": "",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "休闲词汇"
+          ]
+        },
+        {
+          "word": "birds chirp in the trees",
+          "meaning": "树上鸟叫",
+          "example": "",
+          "band_level": "7.0+",
+          "usage_topics": [
+            "休闲词汇"
+          ]
+        },
+        {
+          "word": "practice taichi",
+          "meaning": "打太极",
+          "example": "",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "休闲词汇"
+          ]
+        },
+        {
+          "word": "play chess",
+          "meaning": "下象棋",
+          "example": "",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "休闲词汇"
+          ]
+        },
+        {
+          "word": "go on a date",
+          "meaning": "约会",
+          "example": "",
+          "band_level": "7.0+",
+          "usage_topics": [
+            "休闲词汇"
+          ]
+        }
+      ]
+    },
+    {
+      "category": "建筑物  Architecture (demo)",
+      "words": [
+        {
+          "word": "main entrance",
+          "meaning": "主要入口",
+          "example": "",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "建筑物"
+          ]
+        },
+        {
+          "word": "lobby",
+          "meaning": "大厅",
+          "example": "",
+          "band_level": "6.0+",
+          "usage_topics": [
+            "建筑物"
+          ]
+        },
+        {
+          "word": "escalators",
+          "meaning": "自动扶梯",
+          "example": "",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "建筑物"
+          ]
+        },
+        {
+          "word": "link",
+          "meaning": "连接",
+          "example": "",
+          "band_level": "6.0+",
+          "usage_topics": [
+            "建筑物"
+          ]
+        },
+        {
+          "word": "cosmetics stores",
+          "meaning": "化妆品店",
+          "example": "",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "建筑物"
+          ]
+        },
+        {
+          "word": "boutiques",
+          "meaning": "服装店",
+          "example": "",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "建筑物"
+          ]
+        },
+        {
+          "word": "after-sale service",
+          "meaning": "售后服务",
+          "example": "",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "建筑物"
+          ]
+        },
+        {
+          "word": "audio-visual room",
+          "meaning": "多媒体室",
+          "example": "",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "建筑物"
+          ]
+        },
+        {
+          "word": "人物 Men and women",
+          "meaning": "人物 Men and women",
+          "example": "",
+          "band_level": "7.0+",
+          "usage_topics": [
+            "建筑物"
+          ]
+        },
+        {
+          "word": "good-looking",
+          "meaning": "好看的",
+          "example": "",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "建筑物"
+          ]
+        },
+        {
+          "word": "urbane",
+          "meaning": "斯文的",
+          "example": "",
+          "band_level": "6.0+",
+          "usage_topics": [
+            "建筑物"
+          ]
+        },
+        {
+          "word": "athletic",
+          "meaning": "体育好的",
+          "example": "",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "建筑物"
+          ]
+        },
+        {
+          "word": "has an inquiring mind",
+          "meaning": "好奇心强的",
+          "example": "",
+          "band_level": "7.0+",
+          "usage_topics": [
+            "建筑物"
+          ]
+        },
+        {
+          "word": "collect antiques",
+          "meaning": "收藏古董",
+          "example": "",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "建筑物"
+          ]
+        },
+        {
+          "word": "skateboard",
+          "meaning": "滑板",
+          "example": "",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "建筑物"
+          ]
+        }
+      ]
+    },
+    {
+      "category": "动物 Predators ANDS prey (demo)",
+      "words": [
+        {
+          "word": "gentle",
+          "meaning": "温顺的",
+          "example": "",
+          "band_level": "6.0+",
+          "usage_topics": [
+            "动物"
+          ]
+        },
+        {
+          "word": "enigmatic",
+          "meaning": "神秘的",
+          "example": "",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "动物"
+          ]
+        },
+        {
+          "word": "are",
+          "meaning": "珍惜的",
+          "example": "",
+          "band_level": "6.0+",
+          "usage_topics": [
+            "动物"
+          ]
+        },
+        {
+          "word": "staple food",
+          "meaning": "主食",
+          "example": "",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "动物"
+          ]
+        },
+        {
+          "word": "national treasures",
+          "meaning": "国宝",
+          "example": "",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "动物"
+          ]
+        },
+        {
+          "word": "affable",
+          "meaning": "友好的",
+          "example": "",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "动物"
+          ]
+        },
+        {
+          "word": "物品 objects",
+          "meaning": "物品 objects",
+          "example": "",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "动物"
+          ]
+        },
+        {
+          "word": "entertaining",
+          "meaning": "娱乐性强的",
+          "example": "",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "动物"
+          ]
+        },
+        {
+          "word": "informative",
+          "meaning": "信息量大的",
+          "example": "",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "动物"
+          ]
+        },
+        {
+          "word": "knowledgeable",
+          "meaning": "知识丰富的",
+          "example": "",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "动物"
+          ]
+        },
+        {
+          "word": "prolific",
+          "meaning": "多产的（作家/歌手）",
+          "example": "",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "动物"
+          ]
+        },
+        {
+          "word": "nut",
+          "meaning": "电影迷",
+          "example": "",
+          "band_level": "6.0+",
+          "usage_topics": [
+            "动物"
+          ]
+        },
+        {
+          "word": "play mahjong",
+          "meaning": "打麻将",
+          "example": "",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "动物"
+          ]
+        },
+        {
+          "word": "hike",
+          "meaning": "远足",
+          "example": "",
+          "band_level": "6.0+",
+          "usage_topics": [
+            "动物"
+          ]
+        }
+      ]
+    },
+    {
+      "category": "PPChu冲鸭小分队—地道单词 · 杂项 5 (demo)",
+      "words": [
+        {
+          "word": "The stuff in that store is very pricey",
+          "meaning": "东西，口语里面等于things，但请国内同学们牢记stuff永远不能加复数",
+          "example": "",
+          "band_level": "7.0+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "My iPad 2 is pretty fun",
+          "meaning": "= 副词 very",
+          "example": "",
+          "band_level": "7.0+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "There're lots of fun things to do in the classroom",
+          "meaning": "= interesting （请朋友们注意fun作形容词是其实并不是funny “搞笑的”意思，但他在日常生活里出现的频率一点也不比funny低）",
+          "example": "",
+          "band_level": "7.0+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "I adore that singer",
+          "meaning": "非常喜欢",
+          "example": "",
+          "band_level": "7.0+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "离我家很近",
+          "meaning": "（1）看见=see\n（2）地方=place",
+          "example": "",
+          "band_level": "6.0+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "此处系口语用法。本书中的“sooooooo”也是同一种用法",
+          "meaning": "是很地道的英文，“让人大开眼界的”，他的名词eye-opener在《剑8》P.140也出现了",
+          "example": "",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "This job offers a decent salary and an impressive set of benefits（工作的“福利”在地道英文里就直接用benefits）",
+          "meaning": "上大学英语课时老师可能会告诉你这个词是“体面的”，但在国外真实生活里这个词更多的时候表示的是“不错的，挺好的”意思=quite good",
+          "example": "",
+          "band_level": "7.0+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "I often hang out in bars at weekends",
+          "meaning": "玩儿。很多时候可以代替play，注意这个词组后面不能跟宾语",
+          "example": "",
+          "band_level": "7.0+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "My boss is kind of hard to get along with.",
+          "meaning": "有点……，= somewhat",
+          "example": "",
+          "band_level": "7.0+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "…boring.",
+          "meaning": "like作为连词在口语中极度常用，可以表示“比如说”、“像是……”、“差不多是”",
+          "example": "",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "Beijing is exciting for its nightlife. And it's culturally attractive as well",
+          "meaning": "也……=… too",
+          "example": "",
+          "band_level": "7.0+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "you know",
+          "meaning": "在你思考的时候可以表示自然地停顿，两个词不要发音太清楚，含含糊糊地哼出来就行了",
+          "example": "",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "The IELTS speaking test is just a breeze if you know all the tricks about it.",
+          "meaning": "小菜一碟",
+          "example": "",
+          "band_level": "7.0+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "We go hiking and camping during holidays.",
+          "meaning": "表示“在……时候”，极度常用，但可惜国内考生普遍不用",
+          "example": "",
+          "band_level": "7.0+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "He knows computers backwards and forwards",
+          "meaning": "精通……",
+          "example": "",
+          "band_level": "7.0+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "Getting the homework done everyday is no picnic",
+          "meaning": "很折磨人",
+          "example": "",
+          "band_level": "7.0+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "The noise has been getting on my nerves lately",
+          "meaning": "让我很烦",
+          "example": "",
+          "band_level": "7.0+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "At parties, we just kick back and relax",
+          "meaning": "放松",
+          "example": "",
+          "band_level": "7.0+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "I stayed if France for a couple of weeks.",
+          "meaning": "几个",
+          "example": "",
+          "band_level": "7.0+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "I went there with a bunch of new friends",
+          "meaning": "= some 一些",
+          "example": "",
+          "band_level": "7.0+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "I just bought dozens of gifts online",
+          "meaning": "几十",
+          "example": "",
+          "band_level": "7.0+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "The plot of that movie didn't make any sense",
+          "meaning": "= be reasonable 合理",
+          "example": "",
+          "band_level": "7.0+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "tasty food",
+          "meaning": "应有尽有",
+          "example": "",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "When I travel around",
+          "meaning": "一举两得",
+          "example": "",
+          "band_level": "7.0+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "hands down.",
+          "meaning": "绝对是最……的",
+          "example": "",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "Doing the dishes would be the last thing I want to do.",
+          "meaning": "是我在人生里最不想做的事",
+          "example": "",
+          "band_level": "7.0+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "Lots of people got fired. Too bad. But that's the way the ball bounces in recession(经济衰退）",
+          "meaning": "命中注定就这样了（无奈），一般说这句话的时候，人们还要耸耸肩膀（shrug their shoulders）",
+          "example": "",
+          "band_level": "7.0+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "I've never used a word processor before. Don't worry you'll get the hang of it shortly.",
+          "meaning": "基本上了解了怎样做某事",
+          "example": "",
+          "band_level": "7.0+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "If you just memorize all the answers, even if you get all the answers down pat, there may still be questions you haven't though of during the test. So,…",
+          "meaning": "完全掌握了（请注意这里的pat不是我，是小写的）",
+          "example": "",
+          "band_level": "7.0+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "They lost that match. What a shame!",
+          "meaning": "太可惜了（在这里shame跟羞耻无关）",
+          "example": "",
+          "band_level": "7.0+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        }
+      ]
+    },
+    {
+      "category": "PPChu冲鸭小分队—地道单词 · 杂项 6 (demo)",
+      "words": [
+        {
+          "word": "I am a movie buff. I got to the movies whenever I can find some free time.",
+          "meaning": "“迷”，语气一个比一个强，最后的mania基本上就是痴了",
+          "example": "",
+          "band_level": "7.0+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "Nerds are often laughed at",
+          "meaning": "书呆子",
+          "example": "",
+          "band_level": "7.0+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "I totally freaked out when I heard the news.",
+          "meaning": "很吃惊",
+          "example": "",
+          "band_level": "7.0+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "I often go to the gym to let off steam",
+          "meaning": "释放压力",
+          "example": "",
+          "band_level": "7.0+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "When I feel under the weather, I just take a shower, which makes me feel less uncomfortable",
+          "meaning": "身体不舒服",
+          "example": "",
+          "band_level": "7.0+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "That car was pricey. But he bought it without batting an eyelash（想都没想）.",
+          "meaning": "很贵的",
+          "example": "",
+          "band_level": "7.0+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "right？",
+          "meaning": "比……强",
+          "example": "",
+          "band_level": "6.0+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "That director makes lousy movies.",
+          "meaning": "差劲的",
+          "example": "",
+          "band_level": "7.0+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "A nine-to-five job can really be a drag.",
+          "meaning": "单调的，烦人的",
+          "example": "",
+          "band_level": "7.0+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        }
+      ]
+    },
+    {
+      "category": "PPChu冲鸭小分队—地道单词 · 杂项 7 (demo)",
+      "words": [
+        {
+          "word": "lots of",
+          "meaning": "关于activities",
+          "example": "",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "tons of",
+          "meaning": "大量的",
+          "example": "",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "play",
+          "meaning": "关于activities",
+          "example": "",
+          "band_level": "6.0+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "meet",
+          "meaning": "关于activities",
+          "example": "",
+          "band_level": "6.0+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "encounter",
+          "meaning": "遇见",
+          "example": "",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "finish",
+          "meaning": "关于activities",
+          "example": "",
+          "band_level": "6.0+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "help someone",
+          "meaning": "关于activities",
+          "example": "",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "protect",
+          "meaning": "关于activities",
+          "example": "",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "preserve（但如果保护一个人还是用protect",
+          "meaning": "保护（某种资源，resources/old buildings/wild animals等）",
+          "example": "",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "destroy",
+          "meaning": "关于activities",
+          "example": "",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "ruin",
+          "meaning": "破坏",
+          "example": "",
+          "band_level": "6.0+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "do sth.",
+          "meaning": "关于activities",
+          "example": "",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "go about sth.",
+          "meaning": "从事",
+          "example": "",
+          "band_level": "7.0+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "relax",
+          "meaning": "关于activities",
+          "example": "",
+          "band_level": "6.0+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "relaxation",
+          "meaning": "关于activities",
+          "example": "",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "leisure",
+          "meaning": "休闲",
+          "example": "",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "try my best",
+          "meaning": "关于activities",
+          "example": "",
+          "band_level": "7.0+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "easy",
+          "meaning": "关于activities",
+          "example": "",
+          "band_level": "6.0+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "it's a piece of cake = it's a snap = it's a breeze",
+          "meaning": "简单的",
+          "example": "",
+          "band_level": "7.0+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "difficult",
+          "meaning": "关于activities",
+          "example": "",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "interesting",
+          "meaning": "关于activities",
+          "example": "",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "boring",
+          "meaning": "关于activities",
+          "example": "",
+          "band_level": "6.0+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "humdrum",
+          "meaning": "没劲的",
+          "example": "",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "enjoy ourselves",
+          "meaning": "关于activities",
+          "example": "",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "painful",
+          "meaning": "关于activities",
+          "example": "",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "shout",
+          "meaning": "关于activities",
+          "example": "",
+          "band_level": "6.0+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "yell",
+          "meaning": "喊",
+          "example": "",
+          "band_level": "6.0+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "cheat",
+          "meaning": "关于activities",
+          "example": "",
+          "band_level": "6.0+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "con",
+          "meaning": "骗人",
+          "example": "",
+          "band_level": "6.0+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "go to bed",
+          "meaning": "关于activities",
+          "example": "",
+          "band_level": "7.0+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "turn in",
+          "meaning": "去睡觉",
+          "example": "",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "make trouble",
+          "meaning": "关于activities",
+          "example": "",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "make waves",
+          "meaning": "制造麻烦",
+          "example": "",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "waste time",
+          "meaning": "关于activities",
+          "example": "",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "idle one's time away",
+          "meaning": "制造时间",
+          "example": "",
+          "band_level": "7.0+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "sit in  the sun",
+          "meaning": "关于activities",
+          "example": "",
+          "band_level": "7.0+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "save money",
+          "meaning": "关于activities",
+          "example": "",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "valuable",
+          "meaning": "关于things",
+          "example": "",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "strange",
+          "meaning": "关于things",
+          "example": "",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "weird",
+          "meaning": "奇怪的",
+          "example": "",
+          "band_level": "6.0+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "expensive",
+          "meaning": "关于things",
+          "example": "",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "cheap",
+          "meaning": "关于things",
+          "example": "",
+          "band_level": "6.0+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "dirt-cheap",
+          "meaning": "便宜的",
+          "example": "",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "fashionable",
+          "meaning": "关于things",
+          "example": "",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "trendy= stylish = “in”",
+          "meaning": "时尚的",
+          "example": "",
+          "band_level": "7.0+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "popular",
+          "meaning": "关于things",
+          "example": "",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "big",
+          "meaning": "流行的",
+          "example": "",
+          "band_level": "6.0+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "good taste",
+          "meaning": "关于things",
+          "example": "",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "a nice thing",
+          "meaning": "关于things",
+          "example": "",
+          "band_level": "7.0+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "a knockout",
+          "meaning": "好东西",
+          "example": "",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "bad product",
+          "meaning": "关于things",
+          "example": "",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "trash",
+          "meaning": "劣质产品",
+          "example": "",
+          "band_level": "6.0+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "old",
+          "meaning": "关于things",
+          "example": "",
+          "band_level": "6.0+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "new",
+          "meaning": "关于things",
+          "example": "",
+          "band_level": "6.0+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "huge",
+          "meaning": "关于things",
+          "example": "",
+          "band_level": "6.0+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "enormous",
+          "meaning": "巨大的",
+          "example": "",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "my parents",
+          "meaning": "关于people",
+          "example": "",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "fat",
+          "meaning": "关于people",
+          "example": "",
+          "band_level": "6.0+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "overweight",
+          "meaning": "胖的",
+          "example": "",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "thin",
+          "meaning": "关于people",
+          "example": "",
+          "band_level": "6.0+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "honest",
+          "meaning": "关于people",
+          "example": "",
+          "band_level": "6.0+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "strong",
+          "meaning": "关于people",
+          "example": "",
+          "band_level": "6.0+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "kind",
+          "meaning": "关于people",
+          "example": "",
+          "band_level": "6.0+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "caring",
+          "meaning": "善良的",
+          "example": "",
+          "band_level": "6.0+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "cute",
+          "meaning": "关于people",
+          "example": "",
+          "band_level": "6.0+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "polite",
+          "meaning": "关于people",
+          "example": "",
+          "band_level": "6.0+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "funny",
+          "meaning": "关于people",
+          "example": "",
+          "band_level": "6.0+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "humorous",
+          "meaning": "关于people",
+          "example": "",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "busy",
+          "meaning": "关于people",
+          "example": "",
+          "band_level": "6.0+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "tied-up",
+          "meaning": "忙的",
+          "example": "",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "relaxed",
+          "meaning": "关于people",
+          "example": "",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "refreshed",
+          "meaning": "放松的",
+          "example": "",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "tired",
+          "meaning": "关于people",
+          "example": "",
+          "band_level": "6.0+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "bushed",
+          "meaning": "疲劳的",
+          "example": "",
+          "band_level": "6.0+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "hungry",
+          "meaning": "关于people",
+          "example": "",
+          "band_level": "6.0+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "rich",
+          "meaning": "关于people",
+          "example": "",
+          "band_level": "6.0+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "wealthy",
+          "meaning": "有钱的",
+          "example": "",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "expert",
+          "meaning": "关于people",
+          "example": "",
+          "band_level": "6.0+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "pro",
+          "meaning": "高手",
+          "example": "",
+          "band_level": "6.0+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "high-quality",
+          "meaning": "关于people",
+          "example": "",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "high-caliber",
+          "meaning": "高素质的（说人一般不能用）",
+          "example": "",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "become successful",
+          "meaning": "关于people",
+          "example": "",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "make it big",
+          "meaning": "成功",
+          "example": "",
+          "band_level": "7.0+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "people",
+          "meaning": "关于people",
+          "example": "",
+          "band_level": "6.0+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "folks（不正式）",
+          "meaning": "人们",
+          "example": "",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "like",
+          "meaning": "关于hobby",
+          "example": "",
+          "band_level": "6.0+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "hate",
+          "meaning": "关于hobby",
+          "example": "",
+          "band_level": "6.0+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "dislike",
+          "meaning": "讨厌",
+          "example": "",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "like and dislike",
+          "meaning": "关于hobby",
+          "example": "",
+          "band_level": "7.0+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "don't know anything about it",
+          "meaning": "关于hobby",
+          "example": "",
+          "band_level": "7.0+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "don't even have a clue about it",
+          "meaning": "不了解",
+          "example": "",
+          "band_level": "7.0+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "depend on",
+          "meaning": "关于hobby",
+          "example": "",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "count on",
+          "meaning": "依赖",
+          "example": "",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "happy",
+          "meaning": "关于hobby",
+          "example": "",
+          "band_level": "6.0+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "not happy",
+          "meaning": "关于hobby",
+          "example": "",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "upset",
+          "meaning": "不高兴的",
+          "example": "",
+          "band_level": "6.0+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "decide",
+          "meaning": "关于hobby",
+          "example": "",
+          "band_level": "6.0+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "determine",
+          "meaning": "决定",
+          "example": "",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "can't decide",
+          "meaning": "关于hobby",
+          "example": "",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "be torn between A and B",
+          "meaning": "无法决定",
+          "example": "",
+          "band_level": "7.0+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "sad",
+          "meaning": "关于hobby",
+          "example": "",
+          "band_level": "6.0+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "blue",
+          "meaning": "悲伤地",
+          "example": "",
+          "band_level": "6.0+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "it's a drag",
+          "meaning": "枯燥的",
+          "example": "",
+          "band_level": "7.0+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "moving",
+          "meaning": "关于hobby",
+          "example": "",
+          "band_level": "6.0+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "touching",
+          "meaning": "感人的",
+          "example": "",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "understand",
+          "meaning": "关于hobby",
+          "example": "",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "figure out",
+          "meaning": "理解",
+          "example": "",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "make me angry",
+          "meaning": "关于hobby",
+          "example": "",
+          "band_level": "7.0+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "it makes my blood boil",
+          "meaning": "生气",
+          "example": "",
+          "band_level": "7.0+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "be surprised",
+          "meaning": "关于hobby",
+          "example": "",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "feel afraid",
+          "meaning": "关于hobby",
+          "example": "",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "cold",
+          "meaning": "关于weather",
+          "example": "",
+          "band_level": "6.0+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "chilly（有点冷）",
+          "meaning": "冷的",
+          "example": "",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "cloudy",
+          "meaning": "关于weather",
+          "example": "",
+          "band_level": "6.0+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "hot",
+          "meaning": "关于weather",
+          "example": "",
+          "band_level": "6.0+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "tall buildings",
+          "meaning": "关于buildings",
+          "example": "",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "high-rise buildings",
+          "meaning": "高楼",
+          "example": "",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "narrow",
+          "meaning": "关于buildings",
+          "example": "",
+          "band_level": "6.0+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "messy",
+          "meaning": "关于buildings",
+          "example": "",
+          "band_level": "6.0+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "quiet",
+          "meaning": "关于buildings",
+          "example": "",
+          "band_level": "6.0+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "serene",
+          "meaning": "安静的",
+          "example": "",
+          "band_level": "6.0+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "clean",
+          "meaning": "关于buildings",
+          "example": "",
+          "band_level": "6.0+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "ugly",
+          "meaning": "关于buildings",
+          "example": "",
+          "band_level": "6.0+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "hideous",
+          "meaning": "丑陋的",
+          "example": "",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "dirty",
+          "meaning": "关于buildings",
+          "example": "",
+          "band_level": "6.0+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "important",
+          "meaning": "关于buildings",
+          "example": "",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "essential",
+          "meaning": "不可缺少的",
+          "example": "",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "delicious",
+          "meaning": "关于food",
+          "example": "",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "smells good",
+          "meaning": "关于food",
+          "example": "",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "plant",
+          "meaning": "香喷喷的",
+          "example": "",
+          "band_level": "6.0+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "for a long time",
+          "meaning": "关于time",
+          "example": "",
+          "band_level": "7.0+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "for ages",
+          "meaning": "很长时间",
+          "example": "",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "always",
+          "meaning": "关于time",
+          "example": "",
+          "band_level": "6.0+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        }
+      ]
+    },
+    {
+      "category": "PPChu冲鸭小分队—地道单词 · 杂项 8 (demo)",
+      "words": [
+        {
+          "word": "I'm not keen on…",
+          "meaning": "",
+          "example": "",
+          "band_level": "7.0+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "I'm enchanted by…",
+          "meaning": "",
+          "example": "",
+          "band_level": "7.0+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "I'm not very fond of…",
+          "meaning": "",
+          "example": "",
+          "band_level": "7.0+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "I'm fascinated by…",
+          "meaning": "",
+          "example": "",
+          "band_level": "7.0+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "I don't care for",
+          "meaning": "",
+          "example": "",
+          "band_level": "7.0+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "I'm crazy about",
+          "meaning": "",
+          "example": "",
+          "band_level": "7.0+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "…is not my cup of tea",
+          "meaning": "",
+          "example": "",
+          "band_level": "7.0+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "I adore…",
+          "meaning": "",
+          "example": "",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "I dislike",
+          "meaning": "",
+          "example": "",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "I love",
+          "meaning": "",
+          "example": "",
+          "band_level": "6.0+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "I thoroughly dislike",
+          "meaning": "",
+          "example": "",
+          "band_level": "7.0+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "I'm into",
+          "meaning": "",
+          "example": "",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "I hate",
+          "meaning": "",
+          "example": "",
+          "band_level": "6.0+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "I'm fond of",
+          "meaning": "",
+          "example": "",
+          "band_level": "7.0+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "I can't stand",
+          "meaning": "",
+          "example": "",
+          "band_level": "7.0+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "…appeals to me",
+          "meaning": "",
+          "example": "",
+          "band_level": "7.0+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "I detest",
+          "meaning": "",
+          "example": "",
+          "band_level": "6.5+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        },
+        {
+          "word": "I kind of like",
+          "meaning": "",
+          "example": "",
+          "band_level": "7.0+",
+          "usage_topics": [
+            "PPChu冲鸭小分队—地道单词"
+          ]
+        }
+      ]
+    }
+  ]
+}

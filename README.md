@@ -1,120 +1,243 @@
-# PersonaLingo
+# PersonaLingo v2
 
-> AI-Powered Personalized IELTS Speaking Corpus Generator with Agent Skill Export
+> AI-Powered Personalized IELTS Speaking Corpus Generator with RAG & Memory System
 
-PersonaLingo transforms your personality (MBTI), interests, and IELTS goals into a tailored speaking corpus — complete with anchor stories, topic bridges, vocabulary upgrades, and sentence patterns. Export the entire workflow as an AI Agent Skill for any platform.
+## ✨ Features
 
-## Features
+- **Smart Corpus Generation** — 5-step LLM-driven pipeline (Persona → Anchors → Bridges → Vocabulary → Patterns)
+- **Dual LLM Support** — OpenAI & Anthropic with seamless switching
+- **QMD RAG Engine** — Query-Match-Decide 3-layer retrieval (Query Expansion + BM25/TF-IDF dual-channel + LLM Reranking)
+- **Dynamic Topic Bank** — P1/P2 IELTS topics with season/category filtering
+- **NotebookLM-style Chat** — Conversational corpus maintenance with style learning
+- **Material Upload** — Parse .txt/.md/.docx/.pdf to enrich your corpus
+- **Smart Notes** — Auto-generated learning notes & Mermaid mind maps
+- **Band Score Strategies** — Differentiated output for 6.0/6.5/7.0/7.5+ targets
+- **Skill Export** — Export as Markdown or JSON for AI agent integration
 
-- **MBTI-Driven Personalization** — 12-question assessment or direct type selection shapes your communication style
-- **Smart Anchor Strategy** — Generates 3-4 personal stories that bridge to 20+ IELTS topics
-- **Vocabulary & Pattern Engine** — Upgrades basic words with interest-specific advanced alternatives
-- **AI Agent Skill Export** — Package the entire workflow as a reusable skill for Trae, Cursor, GPTs, Coze, Dify, or any LLM agent
-- **Multiple Export Formats** — Markdown, JSON Schema, OpenAPI specification
+## 🏗️ Architecture
 
-## Architecture
+```mermaid
+graph TB
+    subgraph Frontend["Frontend (Vue 3 + Vite + Tailwind)"]
+        UI[User Interface]
+        Router[Vue Router]
+        Store[Pinia Store]
+        I18N[i18n Internationalization]
+    end
+
+    subgraph Backend["Backend (FastAPI + Python)"]
+        API[REST API Layer]
+
+        subgraph CoreServices["Core Services"]
+            CG["Corpus Generator<br/>5-step Pipeline"]
+            CE["Conversation Engine<br/>NotebookLM-style"]
+            TM["Topic Manager<br/>P1+P2+P3"]
+            NE["Note Generator<br/>Mermaid Mindmap"]
+            SE["Skill Exporter<br/>MD+JSON"]
+        end
+
+        subgraph RAGLayer["QMD RAG Engine"]
+            QE["Query Expansion<br/>Semantic Expansion"]
+            MS["Multi-signal Match<br/>BM25 + TF-IDF + RRF"]
+            RR["Reranker<br/>LLM Reranking"]
+        end
+
+        subgraph LLMLayer["LLM Adapter Layer"]
+            OA[OpenAI Compatible]
+            AN[Anthropic Claude]
+        end
+
+        TK["Token Manager<br/>Threshold Alert + Auto Compression"]
+        SL["Style Learner<br/>Style Learning"]
+    end
+
+    subgraph Data["Data Layer"]
+        DB[(SQLite)]
+        Topics["Topic Bank JSON<br/>86 topics"]
+        Vocab["Idiomatic Vocab<br/>132 words"]
+        QTypes["Question Types<br/>7 categories"]
+    end
+
+    UI --> Router --> API
+    Store --> API
+    API --> CoreServices
+    CG --> RAGLayer
+    CE --> RAGLayer
+    CE --> TK
+    CE --> SL
+    RAGLayer --> LLMLayer
+    CG --> LLMLayer
+    CoreServices --> DB
+    TM --> Topics
+    CG --> Vocab
+    CG --> QTypes
+```
+
+## 🔍 QMD RAG Engine
+
+PersonaLingo features a custom-built **QMD (Query-Match-Decide)** 3-layer retrieval-augmented architecture, achieving high-quality corpus retrieval with zero external model dependencies:
+
+### Three-Layer Architecture
+
+| Layer | Function | Implementation |
+|-------|----------|----------------|
+| **Q - Query Expansion** | Query expansion | LLM semantic expansion + synonym rule fallback |
+| **M - Multi-signal Match** | Multi-signal matching | BM25 (term frequency) + TF-IDF (semantic) + RRF fusion ranking |
+| **D - Decide/Rerank** | Intelligent reranking | LLM relevance scoring + rule fallback |
+
+### Workflow
 
 ```
-Frontend (Vue 3 + Tailwind)  ←→  Backend (FastAPI)  ←→  LLM API (OpenAI/GLM-4)
-     │                                │
-     └── Questionnaire Flow           ├── MBTI Analysis
-     └── Corpus Visualization         ├── Corpus Generation (5 modules)
-     └── Skill Export UI              └── Skill Export (3 formats)
+User Query → [Q Layer] Expand into multiple search terms
+           → [M Layer] BM25 + TF-IDF dual-channel retrieval → RRF fusion
+           → [D Layer] LLM reranking → Top-K results
 ```
 
-## Tech Stack
+### Design Philosophy
+
+- **Lightweight**: No dependency on embedding models or vector databases — pure algorithms + LLM API
+- **Graceful Degradation**: Each layer has fallback mechanisms; degrades to pure rule-based retrieval without LLM
+- **Fast Mode**: Provides `search_fast()` for conversation scenarios, skipping Q/D layers for rapid retrieval
+
+## 🛠️ Tech Stack
 
 | Layer | Technology |
 |-------|-----------|
-| Frontend | Vue 3, Vite, Tailwind CSS, Pinia, Vue Router |
-| Backend | FastAPI, Pydantic, OpenAI SDK |
-| LLM | GPT-4o / GLM-4 (configurable) |
-| Export | Markdown, JSON Schema, OpenAPI 3.0 |
+| Frontend | Vue 3, Vite, Tailwind CSS, Pinia, Mermaid.js |
+| Backend | FastAPI, Python 3.11+, aiosqlite |
+| LLM | OpenAI API, Anthropic Claude API |
+| Database | SQLite (async) |
+| Search | QMD RAG (BM25 + TF-IDF + RRF fusion, pure Python) |
+| File Parsing | python-docx, PyPDF2 |
+| Deployment | Docker, nginx |
 
-## Quick Start
+## 🚀 Quick Start
 
 ### Prerequisites
-- Python 3.10+
-- Node.js 18+
-- OpenAI API key (or compatible endpoint)
 
-### Backend Setup
+- Python 3.11+
+- Node.js 18+
+- OpenAI or Anthropic API key
+
+### Backend
+
 ```bash
 cd backend
 pip install -r requirements.txt
 cp .env.example .env
-# Edit .env with your API key
+# Edit .env with your API keys
 python run.py
+# Server runs at http://localhost:9849
 ```
 
-### Frontend Setup
+### Frontend
+
 ```bash
 cd frontend
 npm install
 npm run dev
+# Opens at http://localhost:5273
 ```
 
-Visit `http://localhost:5173` to start generating your personalized corpus.
+### Docker
 
-### Docker (One-command)
 ```bash
-docker-compose up --build
+docker-compose up -d
+# Frontend: http://localhost:5273
+# Backend API: http://localhost:9849
 ```
 
-## How It Works
+### Windows (No Docker)
 
-1. **Questionnaire** — Complete MBTI assessment + interest profiling + IELTS preferences
-2. **AI Generation** — LLM creates personalized anchors, bridges, vocabulary, and patterns
-3. **Visualization** — Interactive dark-theme corpus display with filtering and practice mode
-4. **Export** — Download corpus as HTML/JSON, or export workflow as an Agent Skill
+Double-click `start.bat` or run in PowerShell:
 
-## Agent Skill Export
+```powershell
+.\start.ps1
+```
 
-The unique feature of PersonaLingo is the ability to export the entire corpus generation workflow as a reusable AI Agent Skill:
+This will install dependencies and start both services:
+- Backend: http://localhost:9849
+- Frontend: http://localhost:5273
+```
 
-- **Markdown Skill** — Drop into Trae, Cursor, or any IDE with agent support
-- **JSON Schema** — Import into GPTs, Coze, Dify as a structured workflow
-- **OpenAPI Spec** — Enable any agent with HTTP capabilities to call the API directly
-
-See `skills/` directory for example exports.
-
-## Project Structure
+## 📁 Project Structure
 
 ```
 PersonaLingo/
-├── backend/           # FastAPI backend
+├── backend/
 │   ├── app/
-│   │   ├── main.py
-│   │   ├── config.py
-│   │   ├── models/
-│   │   ├── routers/
-│   │   ├── services/
-│   │   └── templates/
+│   │   ├── data/              # SQLite DB & JSON data files
+│   │   ├── db/                # Database CRUD & schemas
+│   │   ├── models/            # Pydantic models
+│   │   ├── routers/           # API route handlers
+│   │   ├── services/          # Core business logic
+│   │   │   ├── llm_adapter.py        # Multi-provider LLM interface
+│   │   │   ├── corpus_generator.py   # 5-step generation pipeline
+│   │   │   ├── corpus_rag.py         # QMD RAG engine (BM25+TF-IDF+RRF)
+│   │   │   ├── qmd_engine.py         # QMD 3-layer engine (Q/M/D)
+│   │   │   ├── conversation_engine.py # Chat with style learning
+│   │   │   ├── note_generator.py     # Notes & mindmap generation
+│   │   │   ├── material_parser.py    # File upload processing
+│   │   │   ├── topic_manager.py      # Topic bank management
+│   │   │   ├── skill_exporter.py     # Export to MD/JSON
+│   │   │   └── token_manager.py      # Token counting & limits
+│   │   ├── config.py          # App configuration
+│   │   ├── database.py        # Async DB setup
+│   │   └── main.py            # FastAPI app entry
+│   ├── .env.example
+│   ├── Dockerfile
 │   ├── requirements.txt
-│   └── .env.example
-├── frontend/          # Vue 3 frontend
+│   └── run.py
+├── frontend/
 │   ├── src/
-│   │   ├── views/
-│   │   ├── components/
-│   │   ├── stores/
-│   │   ├── api/
-│   │   └── router/
+│   │   ├── api/               # API client
+│   │   ├── components/        # Vue components
+│   │   │   ├── chat/          # Chat interface
+│   │   │   ├── corpus/        # Corpus management
+│   │   │   ├── notes/         # Notes viewer
+│   │   │   ├── questionnaire/ # User profiling
+│   │   │   └── topics/        # Topic browser
+│   │   ├── router/            # Vue Router
+│   │   ├── stores/            # Pinia state management
+│   │   └── views/             # Page views
+│   ├── Dockerfile
+│   ├── nginx.conf
 │   └── package.json
-├── skills/            # Example skill exports
-├── docs/              # Documentation & screenshots
+├── skills/                    # Exported AI agent skills
 ├── docker-compose.yml
-├── README.md
-└── LICENSE
+└── README.md
 ```
 
-## Screenshots
+## 🎯 Core Workflows
 
-_Coming soon_
+### 1. Corpus Generation (Three-Stage Distill · v3.0)
 
-## Author
+> **v3.0 Upgrade**: Inspired by `huashu-nuwa`'s three-stage pattern (Deep Research → Thinking Framework → Runnable Skill), the distill pipeline is front-loaded with two extra stages. The original 5 steps expand into **7 steps**, and a new "Runnable Skill Pack" is produced as the third-stage artifact. Stage 1/2 failures gracefully fall back to the legacy 5-step path (backward compatible).
 
-**Xiangbo Cheng** — CS graduate with competitive programming background (ICPC, National contests) and hands-on experience in AI systems, recommendation engines, and platform engineering.
+```
+Questionnaire + Materials + Conversations + Topics
+  → [Stage 1] Deep Research (learner_profile)
+  → [Stage 2] Capability Framework distillation
+  → [Stage 3] User Persona → Anchor Stories → Topic Bridges
+             → Vocabulary Upgrade → Pattern Templates
+  → [Delivery] Corpus + Runnable Skill Pack (4 artifacts)
+```
 
-## License
+**Three-Stage API**: `POST /api/distill/diagnose` · `POST /api/distill/run` · `GET /api/distill/skill/{id}/runnable[/download]`
 
-MIT License - see [LICENSE](LICENSE) for details.
+### 2. Conversation Maintenance
+
+```
+User Message → RAG Context Retrieval → LLM Response
+→ Corpus Extraction → Style Learning → Corpus Update
+```
+
+### 3. Skill Export
+
+```
+Corpus Data → Workflow Documentation → MD/JSON Export → AI Agent Integration
+```
+
+## 📄 License
+
+MIT

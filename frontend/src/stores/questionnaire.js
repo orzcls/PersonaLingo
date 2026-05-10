@@ -3,22 +3,43 @@ import { defineStore } from 'pinia'
 export const useQuestionnaireStore = defineStore('questionnaire', {
   state: () => ({
     currentStep: 1,
-    totalSteps: 3,
-    // MBTI: stores answer for each of the 12 questions { questionId: 'a' | 'b' }
+    totalSteps: 5,
+
+    // Step 1: MBTI
     mbtiAnswers: {},
-    // Computed MBTI type string e.g. 'INFP'
     mbtiResult: null,
-    // Interest data
+
+    // Step 2: Personal Background (新增)
+    personalBackground: {
+      age: null,
+      gender: '',
+      zodiac: '',
+      profession: '',
+      city: '',
+      selfDescription: ''
+    },
+
+    // Step 3: Interests (增强 - 支持自定义)
     interests: {
-      tags: [],
+      tags: [],        // [{name: 'Photography', isCustom: false}, ...]
+      customInput: '',
       descriptions: ['', '', '']
     },
-    // IELTS preferences
+
+    // Step 4: Life Experiences (新增)
+    lifeExperiences: {
+      people: [],   // [{relationship, nickname, description, memorableExperience}]
+      objects: [],  // [{category, name, significance}]
+      places: []    // [{category, name, experience}]
+    },
+
+    // Step 5: IELTS Preference
     ieltsPreference: {
       targetBand: null,
       topicTypes: [],
       examMonth: null
     },
+
     // IDs
     questionnaireId: null,
     corpusId: null
@@ -59,6 +80,38 @@ export const useQuestionnaireStore = defineStore('questionnaire', {
       this.interests.descriptions[index] = text
     },
 
+    setPersonalBackground(data) {
+      this.personalBackground = { ...this.personalBackground, ...data }
+    },
+
+    setLifeExperiences(data) {
+      this.lifeExperiences = { ...this.lifeExperiences, ...data }
+    },
+
+    addPerson(person) {
+      this.lifeExperiences.people.push(person)
+    },
+
+    removePerson(index) {
+      this.lifeExperiences.people.splice(index, 1)
+    },
+
+    addObject(obj) {
+      this.lifeExperiences.objects.push(obj)
+    },
+
+    removeObject(index) {
+      this.lifeExperiences.objects.splice(index, 1)
+    },
+
+    addPlace(place) {
+      this.lifeExperiences.places.push(place)
+    },
+
+    removePlace(index) {
+      this.lifeExperiences.places.splice(index, 1)
+    },
+
     setIELTSPreference(preference) {
       this.ieltsPreference = { ...this.ieltsPreference, ...preference }
     },
@@ -75,7 +128,9 @@ export const useQuestionnaireStore = defineStore('questionnaire', {
       this.currentStep = 1
       this.mbtiAnswers = {}
       this.mbtiResult = null
-      this.interests = { tags: [], descriptions: ['', '', ''] }
+      this.personalBackground = { age: null, gender: '', zodiac: '', profession: '', city: '', selfDescription: '' }
+      this.interests = { tags: [], customInput: '', descriptions: ['', '', ''] }
+      this.lifeExperiences = { people: [], objects: [], places: [] }
       this.ieltsPreference = { targetBand: null, topicTypes: [], examMonth: null }
       this.questionnaireId = null
       this.corpusId = null

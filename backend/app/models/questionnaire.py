@@ -1,5 +1,5 @@
 from pydantic import BaseModel, Field
-from typing import Optional
+from typing import Optional, List
 from datetime import datetime
 
 
@@ -19,10 +19,16 @@ class MBTISubmission(BaseModel):
     type_code: Optional[str] = None  # when mode="direct"
 
 
+class InterestTag(BaseModel):
+    """兴趣标签（支持自定义）"""
+    name: str
+    is_custom: bool = False  # 是否用户自定义标签
+
+
 class InterestSubmission(BaseModel):
     """兴趣提交数据"""
-    tags: list[str] = Field(..., min_length=3, max_length=8)
-    descriptions: list[str] = Field(..., min_length=1, max_length=3)
+    tags: List[InterestTag]  # 改为支持自定义标签
+    descriptions: List[str] = []
 
 
 class IELTSSubmission(BaseModel):
@@ -32,11 +38,52 @@ class IELTSSubmission(BaseModel):
     exam_date: Optional[str] = None
 
 
+class PersonItem(BaseModel):
+    """人物维度：重要的人"""
+    relationship: str  # 挚友/对象/家人/导师/同学等
+    nickname: str  # 称呼
+    description: str  # 一句话描述这个人的特点或你们之间的故事
+    memorable_experience: Optional[str] = None  # 难忘经历
+
+
+class ObjectItem(BaseModel):
+    """物品维度：有意义的物"""
+    category: str  # 宠物/乐器/书/车/礼物/收藏品等
+    name: str  # 物品名
+    significance: str  # 为什么重要/有什么故事
+
+
+class PlaceItem(BaseModel):
+    """地点维度：印象深刻的地"""
+    category: str  # 山水名胜/国家/博物馆/公园/城市/校园等
+    name: str  # 地点名
+    experience: str  # 去过的经历/感受/故事
+
+
+class LifeExperiences(BaseModel):
+    """真实经历场景"""
+    people: List[PersonItem] = []  # 重要的人
+    objects: List[ObjectItem] = []  # 有意义的物
+    places: List[PlaceItem] = []  # 印象深刻的地
+
+
+class PersonalBackground(BaseModel):
+    """个人背景"""
+    age: Optional[int] = None
+    gender: Optional[str] = None
+    zodiac: Optional[str] = None  # 星座
+    profession: Optional[str] = None  # 职业/专业
+    city: Optional[str] = None  # 所在城市
+    self_description: Optional[str] = None  # 自我描述（自由文本）
+
+
 class QuestionnaireSubmission(BaseModel):
     """完整问卷提交数据"""
     mbti: MBTISubmission
     interests: InterestSubmission
     ielts: IELTSSubmission
+    personal_background: Optional[PersonalBackground] = None
+    life_experiences: Optional[LifeExperiences] = None
 
 
 class QuestionnaireResponse(BaseModel):
@@ -45,6 +92,8 @@ class QuestionnaireResponse(BaseModel):
     mbti_result: dict
     interests: dict
     ielts: dict
+    personal_background: Optional[dict] = None
+    life_experiences: Optional[dict] = None
     created_at: str
 
 

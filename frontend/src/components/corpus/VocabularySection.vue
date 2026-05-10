@@ -1,116 +1,117 @@
 <template>
-  <section id="vocabulary" class="mb-12">
-    <h2 class="text-2xl font-bold text-white mb-4 flex items-center gap-2">
-      <svg class="w-6 h-6 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z" />
-      </svg>
-      Vocabulary Upgrade
-    </h2>
+  <section id="vocabulary" class="mb-16 stagger">
+    <header class="mb-7 flex items-end justify-between flex-wrap gap-4">
+      <div>
+        <p class="num-chapter text-[11px] mb-2">§ 03 · lexicon</p>
+        <h2 class="font-display italic text-3xl md:text-4xl text-ink-900 leading-tight">
+          Vocabulary Upgrade
+        </h2>
+        <p class="mt-2 font-serif text-sm text-ink-500 italic max-w-xl">
+          Substitute the plain word with its cultivated cousin.
+        </p>
+      </div>
 
-    <!-- View Toggle -->
-    <div class="flex items-center gap-2 mb-6">
-      <button
-        @click="viewMode = 'card'"
-        class="p-2 rounded-lg transition-colors duration-200"
-        :class="viewMode === 'card' ? 'bg-cyan-500/20 text-cyan-300' : 'text-gray-500 hover:text-gray-300'"
-      >
-        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zm10 0a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zm10 0a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
-        </svg>
-      </button>
-      <button
-        @click="viewMode = 'table'"
-        class="p-2 rounded-lg transition-colors duration-200"
-        :class="viewMode === 'table' ? 'bg-cyan-500/20 text-cyan-300' : 'text-gray-500 hover:text-gray-300'"
-      >
-        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16" />
-        </svg>
-      </button>
-    </div>
+      <!-- View Toggle -->
+      <div class="flex items-center gap-0 border border-ink-900/15">
+        <button
+          @click="viewMode = 'card'"
+          class="px-3 py-1.5 font-mono text-[10px] tracking-widest transition-colors"
+          :class="viewMode === 'card' ? 'bg-ink-900 text-paper-50' : 'text-ink-500 hover:text-ink-900'"
+        >CARD</button>
+        <button
+          @click="viewMode = 'table'"
+          class="px-3 py-1.5 font-mono text-[10px] tracking-widest transition-colors border-l border-ink-900/15"
+          :class="viewMode === 'table' ? 'bg-ink-900 text-paper-50' : 'text-ink-500 hover:text-ink-900'"
+        >TABLE</button>
+      </div>
+    </header>
+    <div class="hairline mb-7"></div>
 
     <!-- Card View -->
     <div v-if="viewMode === 'card'">
-      <div v-for="(group, category) in groupedVocab" :key="category" class="mb-8">
-        <h3 class="text-sm font-semibold text-gray-400 uppercase tracking-wider mb-3 flex items-center gap-2">
-          <span class="w-2 h-2 bg-cyan-400 rounded-full"></span>
-          {{ category }}
-        </h3>
+      <div v-for="(group, category) in groupedVocab" :key="category" class="mb-10">
+        <div class="flex items-center gap-4 mb-4">
+          <span class="font-mono text-ochre-500 text-[10px] tracking-widest">—</span>
+          <h3 class="font-display italic text-xl text-ink-900">{{ category }}</h3>
+          <span class="hairline flex-1"></span>
+          <span class="font-mono text-ink-500 text-[10px] tracking-widest">
+            {{ String(group.length).padStart(2, '0') }}
+          </span>
+        </div>
+
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div
+          <article
             v-for="(item, i) in group"
             :key="i"
-            class="bg-gray-800 rounded-xl p-4 transition-all duration-200 hover:bg-gray-750"
+            class="paper-card p-5"
           >
             <!-- Word upgrade arrow -->
-            <div class="flex items-center gap-3 mb-3">
-              <span class="text-gray-500 line-through text-sm">{{ item.basic_word }}</span>
-              <svg class="w-4 h-4 text-cyan-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
-              </svg>
-              <div class="flex flex-wrap gap-1.5">
+            <div class="flex items-baseline gap-3 mb-3 flex-wrap">
+              <span class="font-serif text-ink-500 line-through text-[15px] italic">
+                {{ item.basic_word }}
+              </span>
+              <span class="font-display text-ochre-500 text-xl leading-none">→</span>
+              <div class="flex flex-wrap gap-x-3 gap-y-1">
                 <span
                   v-for="(alt, j) in item.advanced_alternatives"
                   :key="j"
-                  class="px-2 py-0.5 bg-cyan-500/10 border border-cyan-500/30 rounded text-cyan-300 text-sm font-medium"
+                  class="font-display italic text-indigo-800 text-[17px] font-medium"
                 >
-                  {{ alt }}
+                  {{ alt }}<span v-if="j !== item.advanced_alternatives.length - 1" class="text-ink-300 font-sans">,</span>
                 </span>
               </div>
             </div>
 
-            <!-- Example sentence with highlighted word -->
-            <p class="text-gray-400 text-sm leading-relaxed" v-html="highlightExample(item)"></p>
+            <!-- Example sentence -->
+            <p class="font-serif italic text-[14px] leading-[1.75] text-ink-700" v-html="highlightExample(item)"></p>
 
             <!-- Anchor context -->
-            <div class="mt-2 flex items-center gap-2">
-              <span
-                class="px-1.5 py-0.5 rounded text-xs font-bold"
-                :class="anchorBadge(item.anchor_context)"
-              >
-                {{ item.anchor_context }}
+            <div class="mt-3 pt-3 border-t border-ink-900/10 flex items-center gap-2">
+              <span class="font-mono text-[10px] text-ink-500 tracking-widest">anchor</span>
+              <span class="font-mono text-[11px] tracking-widest" :class="anchorColor(item.anchor_context)">
+                ▲ {{ item.anchor_context }}
               </span>
             </div>
-          </div>
+          </article>
         </div>
       </div>
     </div>
 
     <!-- Table View -->
-    <div v-else class="overflow-x-auto">
+    <div v-else class="overflow-x-auto paper-card">
       <table class="w-full text-sm">
         <thead>
-          <tr class="border-b border-gray-700">
-            <th class="text-left py-3 px-4 text-gray-400 font-medium">Basic</th>
-            <th class="text-left py-3 px-4 text-gray-400 font-medium">Upgrades</th>
-            <th class="text-left py-3 px-4 text-gray-400 font-medium">Example</th>
-            <th class="text-left py-3 px-4 text-gray-400 font-medium">Category</th>
-            <th class="text-left py-3 px-4 text-gray-400 font-medium">Anchor</th>
+          <tr class="border-b border-ink-900/20">
+            <th class="text-left py-3 px-5 field-label">Basic</th>
+            <th class="text-left py-3 px-5 field-label">Upgrades</th>
+            <th class="text-left py-3 px-5 field-label">Example</th>
+            <th class="text-left py-3 px-5 field-label">Category</th>
+            <th class="text-left py-3 px-5 field-label">Anchor</th>
           </tr>
         </thead>
         <tbody>
           <tr
             v-for="(item, i) in vocabulary"
             :key="i"
-            class="border-b border-gray-800 hover:bg-gray-800/50 transition-colors"
+            class="border-b border-ink-900/10 hover:bg-paper-100/50 transition-colors"
           >
-            <td class="py-3 px-4 text-gray-500 line-through">{{ item.basic_word }}</td>
-            <td class="py-3 px-4">
-              <div class="flex flex-wrap gap-1">
+            <td class="py-3 px-5 font-serif italic text-ink-500 line-through">{{ item.basic_word }}</td>
+            <td class="py-3 px-5">
+              <div class="flex flex-wrap gap-2">
                 <span
                   v-for="(alt, j) in item.advanced_alternatives"
                   :key="j"
-                  class="px-1.5 py-0.5 bg-cyan-500/10 rounded text-cyan-300 text-xs"
+                  class="font-display italic text-indigo-800 text-[14px]"
                 >
                   {{ alt }}
                 </span>
               </div>
             </td>
-            <td class="py-3 px-4 text-gray-400 max-w-xs truncate">{{ item.example_sentence }}</td>
-            <td class="py-3 px-4 text-gray-500 text-xs">{{ item.category }}</td>
-            <td class="py-3 px-4">
-              <span class="px-1.5 py-0.5 rounded text-xs font-bold" :class="anchorBadge(item.anchor_context)">
-                {{ item.anchor_context }}
+            <td class="py-3 px-5 font-serif text-ink-700 max-w-xs truncate">{{ item.example_sentence }}</td>
+            <td class="py-3 px-5 font-mono text-[11px] text-ink-500 tracking-wider">{{ item.category }}</td>
+            <td class="py-3 px-5">
+              <span class="font-mono text-[11px] tracking-widest" :class="anchorColor(item.anchor_context)">
+                ▲ {{ item.anchor_context }}
               </span>
             </td>
           </tr>
@@ -143,21 +144,20 @@ const groupedVocab = computed(() => {
 
 function highlightExample(item) {
   let sentence = item.example_sentence || ''
-  // Highlight advanced alternatives in the example
   item.advanced_alternatives.forEach(word => {
     const regex = new RegExp(`(${word})`, 'gi')
-    sentence = sentence.replace(regex, '<span class="text-cyan-300 font-medium">$1</span>')
+    sentence = sentence.replace(regex, '<span style="color:#1E3A8A;font-style:normal;font-weight:500;border-bottom:1px solid #C3822F">$1</span>')
   })
   return sentence
 }
 
-const anchorBadge = (id) => {
+const anchorColor = (id) => {
   const colors = {
-    A: 'bg-cyan-500/20 text-cyan-300',
-    B: 'bg-purple-500/20 text-purple-300',
-    C: 'bg-amber-500/20 text-amber-300',
-    D: 'bg-emerald-500/20 text-emerald-300'
+    A: 'text-indigo-800',
+    B: 'text-ochre-500',
+    C: 'text-sage-500',
+    D: 'text-rouge-600'
   }
-  return colors[id] || 'bg-gray-700 text-gray-300'
+  return colors[id] || 'text-ink-500'
 }
 </script>

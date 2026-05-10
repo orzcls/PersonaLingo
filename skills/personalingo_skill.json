@@ -1,126 +1,186 @@
 {
   "skill_name": "PersonaLingo",
-  "version": "1.0.0",
-  "description": "AI-powered personalized IELTS speaking corpus generator",
-  "author": "Xiangbo Cheng",
-  "repository": "https://github.com/username/PersonaLingo",
-  "workflow": {
-    "steps": [
-      {
-        "id": "collect_mbti",
-        "name": "Collect MBTI Profile",
-        "type": "user_input",
-        "description": "Determine the student's MBTI personality type via test or direct input",
-        "input_schema": {
-          "mode": {
-            "type": "string",
-            "enum": ["test", "direct"],
-            "description": "Whether to run the 12-question test or accept a known type"
-          },
-          "answers": {
-            "type": "object",
-            "description": "Map of question_id to 'a'/'b' (required when mode=test)"
-          },
-          "type_code": {
-            "type": "string",
-            "pattern": "^[EI][SN][TF][JP]$",
-            "description": "4-letter MBTI code (required when mode=direct)"
-          }
+  "version": "2.1",
+  "user_profile": {
+    "mbti_type": "XXXX",
+    "interests": [],
+    "communication_style": ""
+  },
+  "workflows": [
+    {
+      "name": "corpus_generation",
+      "description": "语料库生成流程",
+      "steps": [
+        {
+          "step": 1,
+          "name": "persona",
+          "description": "用户画像生成",
+          "input": {"mbti_type": "str", "interests": "list", "target_score": "str"},
+          "output": {"persona_profile": "dict", "communication_style": "str"}
+        },
+        {
+          "step": 2,
+          "name": "anchors",
+          "description": "锚点故事生成",
+          "input": {"persona_profile": "dict"},
+          "output": {"anchor_stories": "list[3-4]"}
+        },
+        {
+          "step": 3,
+          "name": "bridges",
+          "description": "题库桥接",
+          "input": {"anchors": "list", "topic_pool": "list"},
+          "output": {"bridge_responses": "list"}
+        },
+        {
+          "step": 4,
+          "name": "vocabulary",
+          "description": "词汇升级",
+          "input": {"target_score": "str", "interests": "list"},
+          "output": {"vocabulary_upgrades": "list[25-30]"}
+        },
+        {
+          "step": 5,
+          "name": "patterns",
+          "description": "句型模板",
+          "input": {"mbti_type": "str", "target_score": "str"},
+          "output": {"sentence_patterns": "list[8-10]"}
+        }
+      ]
+    },
+    {
+      "name": "conversation_maintenance",
+      "description": "对话维护流程",
+      "steps": [
+        {
+          "step": 1,
+          "name": "rag_retrieval",
+          "description": "RAG 检索",
+          "input": {"user_message": "str", "corpus_id": "str"},
+          "output": {"relevant_context": "list"}
+        },
+        {
+          "step": 2,
+          "name": "coach_reply",
+          "description": "对话回复",
+          "input": {"context": "list", "user_message": "str"},
+          "output": {"reply": "str"}
+        },
+        {
+          "step": 3,
+          "name": "content_extraction",
+          "description": "内容提取",
+          "input": {"conversation": "list"},
+          "output": {"new_materials": "list"}
+        },
+        {
+          "step": 4,
+          "name": "style_learning",
+          "description": "风格学习",
+          "input": {"user_messages": "list"},
+          "output": {"style_stats": "dict"}
+        },
+        {
+          "step": 5,
+          "name": "corpus_merge",
+          "description": "语料融合",
+          "input": {"new_materials": "list", "corpus_id": "str"},
+          "output": {"updated_corpus": "dict"}
+        }
+      ]
+    },
+    {
+      "name": "dynamic_topic_bank_update",
+      "description": "动态题库更新：按考试季抓取 IELTS 口语题库并衍生 P3",
+      "audiences": ["end_user", "external_agent"],
+      "protocol_name": "IELTS_TOPIC_SYNC",
+      "prerequisites": {
+        "llm_configured": true,
+        "search_provider_configured": true,
+        "supported_providers": {
+          "api": ["tavily", "exa", "exa_mcp", "bocha", "zhipu", "querit", "searxng"],
+          "local": ["google", "bing", "baidu"]
         }
       },
-      {
-        "id": "collect_interests",
-        "name": "Collect Interest Profile",
-        "type": "user_input",
-        "description": "Gather the student's interest tags and personal hobby descriptions",
-        "input_schema": {
-          "tags": {
-            "type": "array",
-            "items": { "type": "string" },
-            "minItems": 3,
-            "maxItems": 8,
-            "description": "Selected interest tags from the predefined list"
-          },
-          "descriptions": {
-            "type": "array",
-            "items": { "type": "string" },
-            "minItems": 1,
-            "maxItems": 3,
-            "description": "2-3 sentence descriptions of top hobbies"
-          }
+      "constraints": [
+        "P3 仅由 P2 衍生，不直接网抓",
+        "LLM 抽取必须携带严格约束：不得编造语料未出现的题目",
+        "仅 UPSERT，不清空旧题库"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "name": "compute_season",
+          "description": "计算当前考试季",
+          "input": {"current_date": "ISO"},
+          "output": {"season": "YYYY-QX"},
+          "formula": "quarter = (month - 1) // 4 + 1"
+        },
+        {
+          "step": 2,
+          "name": "build_queries",
+          "description": "构造多语种搜索 query",
+          "input": {"season": "str", "parts": "list[P1|P2]"},
+          "output": {"queries": "list[str]"}
+        },
+        {
+          "step": 3,
+          "name": "fetch_and_extract",
+          "description": "抓取 SERP + 正文 → 临时 BM25+TF-IDF 索引 → LLM 抽取",
+          "input": {"queries": "list[str]"},
+          "output": {"topics": "list[{title, part, questions[]}]", "source_urls": "list[str]"},
+          "system_prompt": "Only include topics that ACTUALLY APPEAR in the context below. Do NOT invent."
+        },
+        {
+          "step": 4,
+          "name": "derive_p3",
+          "description": "为每道 P2 衍生 3-4 道 linked P3",
+          "input": {"p2_topics": "list"},
+          "output": {"p3_topics": "list[{title, part:'P3', linked_p2_id}]"}
+        },
+        {
+          "step": 5,
+          "name": "upsert",
+          "description": "按 (title, part) 幂等入库；命中则刷新 season/updated_at/source_url",
+          "input": {"topics": "list"},
+          "output": {"imported": "int", "updated": "int"}
         }
+      ],
+      "fallbacks": {
+        "no_search_key": "fail_fast with search_provider_not_configured",
+        "all_fetch_failed": "keep existing bank, do not clear, do not invent",
+        "llm_extraction_empty": "return by_part.Pn=0 with source_urls for human review"
       },
-      {
-        "id": "collect_ielts",
-        "name": "Collect IELTS Preferences",
-        "type": "user_input",
-        "description": "Gather exam-specific preferences including topics, target score, and date",
-        "input_schema": {
-          "topic_types": {
-            "type": "array",
-            "items": {
-              "type": "string",
-              "enum": ["People", "Places", "Events", "Objects", "Abstract"]
-            },
-            "description": "Topic categories the student is most concerned about"
-          },
-          "target_score": {
-            "type": "string",
-            "enum": ["6.0", "6.5", "7.0", "7.5+"],
-            "description": "Target IELTS band score"
-          },
-          "exam_date": {
-            "type": "string",
-            "description": "Planned exam date (month/year)"
-          }
-        }
-      },
-      {
-        "id": "generate_corpus",
-        "name": "Generate Personalized Corpus",
-        "type": "llm_generation",
-        "description": "Use all collected data to generate a complete personalized speaking corpus",
-        "depends_on": ["collect_mbti", "collect_interests", "collect_ielts"],
-        "output_schema": {
-          "persona": {
-            "type": "object",
-            "description": "Student profile summary"
-          },
-          "anchors": {
-            "type": "array",
-            "description": "3-4 anchor stories"
-          },
-          "bridges": {
-            "type": "array",
-            "description": "Topic bridge responses"
-          },
-          "vocabulary": {
-            "type": "array",
-            "description": "25-30 vocabulary upgrades"
-          },
-          "patterns": {
-            "type": "array",
-            "description": "8-10 sentence patterns"
-          },
-          "practice": {
-            "type": "array",
-            "description": "5 practice exercises"
-          }
-        }
+      "api_shortcuts": [
+        {"method": "GET",  "path": "/api/topics/meta",                "desc": "current season, stale flag, config status"},
+        {"method": "POST", "path": "/api/topics/scrape",              "desc": "run full sync pipeline"},
+        {"method": "POST", "path": "/api/topics/backfill-p3?limit=N", "desc": "backfill linked P3 for existing P2"},
+        {"method": "GET",  "path": "/api/settings/search/providers",  "desc": "list 10 providers with group metadata"},
+        {"method": "POST", "path": "/api/settings/search/test",       "desc": "ping a search provider"}
+      ],
+      "output_schema": {
+        "source": "scraped|cached",
+        "current_season": "YYYY-QX",
+        "by_part": {"P1": "int", "P2": "int", "P3": "int"},
+        "derived_p3": "int",
+        "imported": "int",
+        "updated": "int",
+        "source_urls": "list[str]",
+        "errors": "list[str]"
       }
-    ]
+    }
+  ],
+  "corpus_summary": {
+    "anchors_count": 0,
+    "bridges_count": 0,
+    "vocabulary_count": 0,
+    "patterns_count": 0,
+    "band_target": "7.0"
   },
-  "prompts": {
-    "anchor_generation": "You are an expert IELTS speaking coach. Based on the student's MBTI type ({mbti_type}) and their personal interests/experiences, create {count} anchor stories. Each anchor should be a vivid personal narrative that can naturally connect to at least 5 different IELTS topics. Include sensory details, emotional elements, and match the student's communication style.",
-    "bridge_generation": "For each IELTS topic below, create a natural bridge response that connects the topic to one of the student's anchor stories. The bridge should feel conversational, be 4-6 sentences (25-35 seconds spoken), and target band {target_score}.",
-    "vocabulary_generation": "Create a personalized vocabulary upgrade list for an IELTS candidate with interests in {interests}. Include: interest-specific advanced vocabulary, general high-frequency replacements, connector upgrades, and emotion/description upgrades. Target band {target_score}.",
-    "pattern_generation": "Create sentence patterns that match the {mbti_type} communication style. Each pattern should include a template, an example using the student's interests, and guidance on when to use it.",
-    "practice_generation": "Create 5 deliberate practice exercises for an IELTS speaking candidate. Each exercise should include a prompt, a thinking guide, and a model answer using the student's anchor stories and vocabulary."
+  "user_style": {
+    "avg_sentence_length": null,
+    "frequent_connectors": [],
+    "vocabulary_level": null
   },
-  "interest_tags": [
-    "Photography", "Music", "Coding", "Gaming", "Reading",
-    "Travel", "Sports", "Cooking", "Art", "Film",
-    "Nature", "Writing", "Dance", "Fitness", "Technology",
-    "Science", "History", "Philosophy", "Fashion", "Animals"
-  ]
+  "export_time": "ISO timestamp"
 }

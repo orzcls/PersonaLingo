@@ -1,58 +1,244 @@
-# PersonaLingo 个性化雅思口语语料库生成器
+# PersonaLingo v2
 
-> 基于 MBTI 性格分析的 AI 驱动雅思口语语料库生成系统，支持 Agent Skill 导出
+> AI 驱动的个性化雅思口语语料库生成器，集成 RAG 检索与记忆系统
 
-## 项目定位
+## ✨ 核心功能
 
-PersonaLingo 将你的性格特征（MBTI）、兴趣爱好和雅思目标转化为量身定制的口语语料库——包含锚点故事、话题桥接、词汇升级和句式模板。并可将整个工作流导出为可复用的 AI Agent Skill。
+- **智能语料生成** — 5 步 LLM 驱动流水线（人设 → 锚点故事 → 话题桥接 → 词汇升级 → 模式模板）
+- **双 LLM 支持** — OpenAI 与 Anthropic 无缝切换
+- **QMD RAG 引擎** — Query-Match-Decide 三层检索架构（查询扩展 + BM25/TF-IDF 双通道 + LLM 重排序）
+- **动态题库** — P1/P2 雅思口语话题，支持季度/分类筛选
+- **NotebookLM 风格对话** — 对话式语料维护与风格学习
+- **素材上传** — 解析 .txt/.md/.docx/.pdf 文件丰富语料库
+- **智能笔记** — 自动生成学习笔记与 Mermaid 思维导图
+- **分数段策略** — 针对 6.0/6.5/7.0/7.5+ 目标差异化输出
+- **技能导出** — 导出为 Markdown 或 JSON，用于 AI Agent 集成
 
-## 核心功能
+## 🏗️ 系统架构
 
-- **MBTI 驱动个性化** — 12题快速评估或直接选择性格类型
-- **智能锚点策略** — 生成 3-4 个可桥接 20+ 雅思话题的个人故事
-- **词汇与句式引擎** — 基于兴趣领域的高级词汇替换和句式升级
-- **Agent Skill 导出** — 将工作流打包为 Trae/Cursor/GPTs/Coze/Dify 可用的 Skill
-- **多格式导出** — Markdown、JSON Schema、OpenAPI 规范
+```mermaid
+graph TB
+    subgraph Frontend["前端 (Vue 3 + Vite + Tailwind)"]
+        UI[用户界面]
+        Router[Vue Router]
+        Store[Pinia Store]
+        I18N[i18n 国际化]
+    end
 
-## 技术栈
+    subgraph Backend["后端 (FastAPI + Python)"]
+        API[REST API Layer]
+
+        subgraph CoreServices["核心服务"]
+            CG["语料生成器<br/>5步流水线"]
+            CE["对话引擎<br/>NotebookLM风格"]
+            TM["题库管理器<br/>P1+P2+P3"]
+            NE["笔记生成器<br/>Mermaid思维导图"]
+            SE["技能导出器<br/>MD+JSON"]
+        end
+
+        subgraph RAGLayer["QMD RAG 引擎"]
+            QE["Query Expansion<br/>查询扩展"]
+            MS["Multi-signal Match<br/>BM25 + TF-IDF + RRF"]
+            RR["Reranker<br/>LLM重排序"]
+        end
+
+        subgraph LLMLayer["LLM 适配层"]
+            OA[OpenAI Compatible]
+            AN[Anthropic Claude]
+        end
+
+        TK["Token Manager<br/>阈值预警+自动压缩"]
+        SL["Style Learner<br/>风格学习"]
+    end
+
+    subgraph Data["数据层"]
+        DB[(SQLite)]
+        Topics["题库 JSON<br/>86题"]
+        Vocab["地道表达库<br/>132词"]
+        QTypes["题型框架<br/>7类"]
+    end
+
+    UI --> Router --> API
+    Store --> API
+    API --> CoreServices
+    CG --> RAGLayer
+    CE --> RAGLayer
+    CE --> TK
+    CE --> SL
+    RAGLayer --> LLMLayer
+    CG --> LLMLayer
+    CoreServices --> DB
+    TM --> Topics
+    CG --> Vocab
+    CG --> QTypes
+```
+
+## 🔍 QMD RAG 引擎
+
+PersonaLingo 采用自研的 **QMD（Query-Match-Decide）** 三层检索增强架构，实现零外部模型依赖的高质量语料检索：
+
+### 三层架构
+
+| 层级 | 功能 | 实现方式 |
+|------|------|----------|
+| **Q - Query Expansion** | 查询扩展 | LLM 语义扩展 + 同义词规则 fallback |
+| **M - Multi-signal Match** | 多信号匹配 | BM25（词频） + TF-IDF（语义） + RRF 融合排序 |
+| **D - Decide/Rerank** | 智能重排序 | LLM 相关性评分 + 规则 fallback |
+
+### 工作流程
+
+```
+用户查询 → [Q层] 扩展为多个检索词
+         → [M层] BM25 + TF-IDF 双通道检索 → RRF 融合
+         → [D层] LLM 重排序 → Top-K 结果
+```
+
+### 设计理念
+
+- **轻量化**：不依赖 embedding 模型或向量数据库，纯算法 + LLM API
+- **渐进降级**：每层都有 fallback 机制，无 LLM 时退化为纯规则检索
+- **快速模式**：对话场景提供 `search_fast()` 跳过 Q/D 层的快速检索
+
+## 🛠️ 技术栈
 
 | 层级 | 技术 |
 |------|------|
-| 前端 | Vue 3, Vite, Tailwind CSS, Pinia |
-| 后端 | FastAPI, Pydantic, OpenAI SDK |
-| 大模型 | GPT-4o / GLM-4（可配置） |
-| 导出 | Markdown, JSON Schema, OpenAPI 3.0 |
+| 前端 | Vue 3, Vite, Tailwind CSS, Pinia, Mermaid.js |
+| 后端 | FastAPI, Python 3.11+, aiosqlite |
+| LLM | OpenAI API, Anthropic Claude API |
+| 数据库 | SQLite (异步) |
+| 检索 | QMD RAG (BM25 + TF-IDF + RRF 融合, 纯 Python 实现) |
+| 文件解析 | python-docx, PyPDF2 |
+| 部署 | Docker, nginx |
 
-## 快速启动
+## 🚀 快速开始
 
-### 后端
+### 环境要求
+
+- Python 3.11+
+- Node.js 18+
+- OpenAI 或 Anthropic API 密钥
+
+### 后端启动
+
 ```bash
 cd backend
 pip install -r requirements.txt
-cp .env.example .env  # 编辑 .env 填入 API Key
+cp .env.example .env
+# 编辑 .env 填入你的 API 密钥
 python run.py
+# 服务运行在 http://localhost:9849
 ```
 
-### 前端
+### 前端启动
+
 ```bash
 cd frontend
 npm install
 npm run dev
+# 访问 http://localhost:5273
 ```
 
-### Docker 一键启动
+### Docker 部署
+
 ```bash
-docker-compose up --build
+docker-compose up -d
+# 前端: http://localhost:5273
+# 后端 API: http://localhost:9849
 ```
 
-访问 `http://localhost:5173` 开始使用。
+### Windows 快速启动（无需 Docker）
 
-## 为什么做这个项目
+双击 `start.bat` 或在 PowerShell 中运行：
 
-1. **解决真实痛点** — 雅思口语备考缺乏个性化语料，通用模板难以展现个人特色
-2. **AI Agent 生态** — 将传统工具升级为可被 AI Agent 调用的 Skill，探索 LLM 应用新范式
-3. **全栈工程实践** — 前后端分离架构 + LLM 集成 + Docker 部署的完整工程链路
+```powershell
+.\start.ps1
+```
 
-## 许可证
+自动安装依赖并启动服务：
+- 后端: http://localhost:9849
+- 前端: http://localhost:5273
+```
 
-MIT License
+## 📁 项目结构
+
+```
+PersonaLingo/
+├── backend/
+│   ├── app/
+│   │   ├── data/              # SQLite 数据库 & JSON 数据文件
+│   │   ├── db/                # 数据库 CRUD & 模式定义
+│   │   ├── models/            # Pydantic 模型
+│   │   ├── routers/           # API 路由处理器
+│   │   ├── services/          # 核心业务逻辑
+│   │   │   ├── llm_adapter.py        # 多供应商 LLM 接口
+│   │   │   ├── corpus_generator.py   # 5 步生成流水线
+│   │   │   ├── corpus_rag.py         # QMD RAG 引擎 (BM25+TF-IDF+RRF)
+│   │   │   ├── qmd_engine.py         # QMD 三层引擎 (Q/M/D)
+│   │   │   ├── conversation_engine.py # 对话 + 风格学习
+│   │   │   ├── note_generator.py     # 笔记 & 思维导图生成
+│   │   │   ├── material_parser.py    # 文件上传处理
+│   │   │   ├── topic_manager.py      # 话题库管理
+│   │   │   ├── skill_exporter.py     # 导出为 MD/JSON
+│   │   │   └── token_manager.py      # Token 计数 & 限制
+│   │   ├── config.py          # 应用配置
+│   │   ├── database.py        # 异步数据库初始化
+│   │   └── main.py            # FastAPI 应用入口
+│   ├── .env.example
+│   ├── Dockerfile
+│   ├── requirements.txt
+│   └── run.py
+├── frontend/
+│   ├── src/
+│   │   ├── api/               # API 客户端
+│   │   ├── components/        # Vue 组件
+│   │   │   ├── chat/          # 对话界面
+│   │   │   ├── corpus/        # 语料管理
+│   │   │   ├── notes/         # 笔记查看
+│   │   │   ├── questionnaire/ # 用户画像
+│   │   │   └── topics/        # 话题浏览
+│   │   ├── router/            # Vue Router
+│   │   ├── stores/            # Pinia 状态管理
+│   │   └── views/             # 页面视图
+│   ├── Dockerfile
+│   ├── nginx.conf
+│   └── package.json
+├── skills/                    # 导出的 AI Agent 技能
+├── docker-compose.yml
+└── README.md
+```
+
+
+## 🎯 核心工作流
+
+### 1. 语料生成（三段式蒸馏 · v3.0）
+
+> **v3.0 升级**：借鉴 `huashu-nuwa` 的「深度调研→思维框架→可运行 Skill」三段式，对蒸馏链路做前置增强。原 5 步扩展为 **7 步**，新增「可运行 Skill 包」作为第三段交付物。Stage 1/2 失败自动降级到 5 步，向后兼容。
+
+```
+问卷调查 + 资料 + 对话 + 主题
+  → [Stage 1] 深度调研 (learner_profile)
+  → [Stage 2] 思维框架提炼 (capability_framework)
+  → [Stage 3] 用户人设 → 锚点故事 → 话题桥接
+             → 词汇升级 → 句型模板
+  → [交付] 语料库 + 可运行 Skill 包（4 件套）
+```
+
+**三段式 API**：`POST /api/distill/diagnose` · `POST /api/distill/run` · `GET /api/distill/skill/{id}/runnable[/download]`
+
+### 2. 对话维护
+
+```
+用户消息 → RAG 上下文检索 → LLM 响应
+→ 语料提取 → 风格学习 → 语料更新
+```
+
+### 3. 技能导出
+
+```
+语料数据 → 工作流文档 → MD/JSON 导出 → AI Agent 集成
+```
+
+## 📄 许可证
+
+MIT

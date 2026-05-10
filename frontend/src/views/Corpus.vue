@@ -1,56 +1,64 @@
 <template>
-  <div class="min-h-screen bg-gray-900">
+  <div class="min-h-screen">
     <!-- Loading State -->
     <div v-if="loading" class="flex items-center justify-center min-h-[60vh]">
       <div class="text-center">
-        <div class="w-12 h-12 border-2 border-cyan-400 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-        <p class="text-gray-400 text-sm">Loading your corpus...</p>
+        <LoadingSpinner />
+        <p class="mt-5 font-serif italic text-ink-500 text-sm">{{ t('corpus.loading') }}</p>
       </div>
     </div>
 
     <!-- Error State -->
     <div v-else-if="error" class="flex items-center justify-center min-h-[60vh]">
-      <div class="text-center max-w-md">
-        <div class="w-16 h-16 bg-red-500/10 rounded-full flex items-center justify-center mx-auto mb-4">
-          <svg class="w-8 h-8 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z" />
-          </svg>
-        </div>
-        <h2 class="text-xl font-semibold text-white mb-2">Failed to load corpus</h2>
-        <p class="text-gray-400 text-sm mb-4">{{ error }}</p>
-        <button @click="fetchCorpus" class="px-4 py-2 bg-cyan-500/20 border border-cyan-500/40 text-cyan-300 rounded-lg text-sm hover:bg-cyan-500/30 transition-colors">
-          Retry
+      <div class="text-center max-w-md paper-card p-10">
+        <p class="num-chapter text-[11px] mb-3">§ error</p>
+        <h2 class="font-display italic text-2xl text-ink-900 mb-3">
+          {{ t('corpus.errorTitle') }}
+        </h2>
+        <p class="font-serif text-sm text-ink-500 italic mb-6 leading-relaxed">{{ error }}</p>
+        <button @click="fetchCorpus" class="btn-ink">
+          <span>{{ t('corpus.retry') }}</span>
+          <span class="text-ochre-300">↻</span>
         </button>
       </div>
     </div>
 
     <!-- Main Content -->
-    <div v-else-if="corpus" class="pb-24">
+    <div v-else-if="corpus" class="pb-28">
       <!-- Page Header -->
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8">
-        <div class="mb-6">
-          <h1 class="text-3xl font-bold text-white mb-2">Your Personalized Corpus</h1>
-          <p class="text-gray-400">AI-generated IELTS Speaking materials tailored to your personality and interests</p>
+      <header class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12">
+        <p class="num-chapter mb-3">§ 03 · personal corpus</p>
+        <div class="flex items-end justify-between flex-wrap gap-6 mb-2">
+          <h1 class="font-display italic text-4xl md:text-5xl text-ink-900 leading-[1.05]">
+            {{ t('corpus.title') }}
+          </h1>
+          <p class="font-serif italic text-ink-500 text-sm max-w-sm">
+            {{ t('corpus.subtitle') }}
+          </p>
         </div>
+        <div class="hairline-strong mt-6"></div>
 
         <!-- Persona Card -->
-        <PersonaCard :persona="corpus.persona" />
-      </div>
+        <div class="mt-8">
+          <PersonaCard :persona="corpus.persona" />
+        </div>
+      </header>
 
-      <!-- Sticky Navigation -->
-      <nav class="sticky top-16 z-40 bg-gray-900/95 backdrop-blur-sm border-b border-gray-800 mb-8">
+      <!-- Sticky Navigation —— 章节式 -->
+      <nav class="sticky top-16 z-40 bg-paper-50/92 backdrop-blur-sm border-b border-ink-900/10 mb-10">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div class="flex items-center gap-1 overflow-x-auto py-3 scrollbar-hide">
+          <div class="flex items-center gap-x-8 overflow-x-auto py-4 scrollbar-hide">
             <button
-              v-for="tab in tabs"
+              v-for="(tab, idx) in tabs"
               :key="tab.id"
               @click="scrollToSection(tab.id)"
-              class="px-4 py-2 text-sm font-medium whitespace-nowrap rounded-lg transition-all duration-200"
-              :class="activeTab === tab.id
-                ? 'text-cyan-300 bg-cyan-500/10 border-b-2 border-cyan-400'
-                : 'text-gray-400 hover:text-gray-200 hover:bg-gray-800/50'"
+              class="corpus-tab whitespace-nowrap"
+              :class="activeTab === tab.id ? 'is-active' : ''"
             >
-              {{ tab.label }}
+              <span class="font-mono text-[10px] text-ochre-500 tracking-widest mr-2">
+                {{ String(idx + 1).padStart(2, '0') }}
+              </span>
+              <span class="font-serif italic">{{ tab.label }}</span>
             </button>
           </div>
         </div>
@@ -67,34 +75,31 @@
     </div>
 
     <!-- Bottom Action Bar -->
-    <div v-if="corpus" class="fixed bottom-0 left-0 right-0 z-50 bg-gray-900/95 backdrop-blur-sm border-t border-gray-800">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex flex-wrap items-center justify-center gap-3">
-        <button
-          @click="downloadHTML"
-          class="px-4 py-2 bg-gray-700/50 hover:bg-gray-700 border border-gray-600/50 rounded-lg text-sm text-gray-300 hover:text-white transition-all duration-200 flex items-center gap-2"
-        >
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-          </svg>
-          Download HTML
-        </button>
-        <router-link
-          to="/export"
-          class="px-4 py-2 bg-cyan-500/20 hover:bg-cyan-500/30 border border-cyan-500/40 rounded-lg text-sm text-cyan-300 hover:text-cyan-200 transition-all duration-200 flex items-center gap-2"
-        >
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
-          </svg>
-          Export as Skill
+    <div v-if="corpus" class="fixed bottom-0 left-0 right-0 z-50 bg-paper-50/95 backdrop-blur-sm border-t border-ink-900/15">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex flex-wrap items-center justify-center gap-x-6 gap-y-2">
+        <router-link to="/chat" class="action-link">
+          <span class="font-mono text-[10px] text-ochre-500 tracking-widest">01</span>
+          <span>{{ t('corpus.chatBtn') }}</span>
         </router-link>
-        <router-link
-          to="/questionnaire"
-          class="px-4 py-2 bg-gray-700/50 hover:bg-gray-700 border border-gray-600/50 rounded-lg text-sm text-gray-300 hover:text-white transition-all duration-200 flex items-center gap-2"
-        >
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-          </svg>
-          Generate New
+        <span class="action-divider">·</span>
+        <button @click="showUpload = true" class="action-link">
+          <span class="font-mono text-[10px] text-ochre-500 tracking-widest">02</span>
+          <span>{{ t('corpus.uploadBtn') }}</span>
+        </button>
+        <span class="action-divider">·</span>
+        <button @click="downloadHTML" class="action-link">
+          <span class="font-mono text-[10px] text-ochre-500 tracking-widest">03</span>
+          <span>Download HTML</span>
+        </button>
+        <span class="action-divider">·</span>
+        <router-link to="/export" class="action-link">
+          <span class="font-mono text-[10px] text-ochre-500 tracking-widest">04</span>
+          <span>{{ t('corpus.exportSkill') }}</span>
+        </router-link>
+        <span class="action-divider">·</span>
+        <router-link to="/questionnaire" class="action-link">
+          <span class="font-mono text-[10px] text-ochre-500 tracking-widest">05</span>
+          <span>{{ t('corpus.generateNew') }}</span>
         </router-link>
       </div>
     </div>
@@ -106,12 +111,16 @@ import { ref, onMounted, onUnmounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useQuestionnaireStore } from '../stores/questionnaire'
 import { getCorpus } from '../api/index'
+import LoadingSpinner from '../components/LoadingSpinner.vue'
 import PersonaCard from '../components/corpus/PersonaCard.vue'
 import AnchorSection from '../components/corpus/AnchorSection.vue'
 import BridgeSection from '../components/corpus/BridgeSection.vue'
 import VocabularySection from '../components/corpus/VocabularySection.vue'
 import PatternSection from '../components/corpus/PatternSection.vue'
 import PracticeSection from '../components/corpus/PracticeSection.vue'
+import { useI18n } from '../i18n'
+
+const { t } = useI18n()
 
 const router = useRouter()
 const store = useQuestionnaireStore()
@@ -120,6 +129,7 @@ const loading = ref(true)
 const error = ref(null)
 const corpus = ref(null)
 const activeTab = ref('anchors')
+const showUpload = ref(false)
 
 const tabs = [
   { id: 'anchors', label: 'Anchors' },
@@ -129,18 +139,16 @@ const tabs = [
   { id: 'practice', label: 'Practice' }
 ]
 
-// Scroll to section
 function scrollToSection(id) {
   activeTab.value = id
   const el = document.getElementById(id)
   if (el) {
-    const offset = 140 // sticky nav height
+    const offset = 140
     const top = el.getBoundingClientRect().top + window.scrollY - offset
     window.scrollTo({ top, behavior: 'smooth' })
   }
 }
 
-// Intersection observer for active tab tracking
 let observer = null
 
 function setupObserver() {
@@ -162,7 +170,6 @@ function setupObserver() {
   })
 }
 
-// Fetch corpus data
 async function fetchCorpus() {
   loading.value = true
   error.value = null
@@ -183,7 +190,6 @@ async function fetchCorpus() {
   }
 }
 
-// Download as HTML
 function downloadHTML() {
   const htmlContent = document.documentElement.outerHTML
   const blob = new Blob([htmlContent], { type: 'text/html' })
@@ -197,7 +203,6 @@ function downloadHTML() {
 
 onMounted(async () => {
   await fetchCorpus()
-  // Setup intersection observer after data loads
   setTimeout(() => {
     setupObserver()
   }, 100)
@@ -207,3 +212,40 @@ onUnmounted(() => {
   if (observer) observer.disconnect()
 })
 </script>
+
+<style scoped>
+.corpus-tab {
+  position: relative;
+  padding: 0.25rem 0;
+  color: var(--ink-500, #5F6572);
+  transition: color .2s ease;
+}
+.corpus-tab:hover { color: var(--ink-900, #1B1F2A); }
+.corpus-tab::after {
+  content: '';
+  position: absolute;
+  left: 0; right: 100%;
+  bottom: -2px;
+  height: 2px;
+  background: var(--ochre-500, #C3822F);
+  transition: right .25s cubic-bezier(.2,.8,.2,1);
+}
+.corpus-tab.is-active { color: var(--ink-900, #1B1F2A); }
+.corpus-tab.is-active::after { right: 30%; }
+
+.action-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.25rem 0;
+  font-family: 'Fraunces', Georgia, serif;
+  font-style: italic;
+  font-size: 13px;
+  color: var(--ink-700, #2B303C);
+  transition: color .2s ease;
+}
+.action-link:hover { color: var(--ink-900, #1B1F2A); }
+.action-divider { color: var(--ink-300, #A7ABB3); font-family: 'Fraunces', serif; }
+.scrollbar-hide::-webkit-scrollbar { display: none; }
+.scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+</style>

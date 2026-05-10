@@ -1,0 +1,207 @@
+{
+  "version": "1.0",
+  "source": "P1题型练习-PDF",
+  "question_types": [
+    {
+      "type": "preference",
+      "description": "喜好题 - 是否喜欢/最喜欢什么",
+      "template": "Do you like/enjoy...? / What's your favorite...?",
+      "answer_framework": {
+        "structure": "Topic + Reasons x2（具象化理由）",
+        "extended_structure": "Topic + Reason + Personal Experience（增加交流感）",
+        "time_target": "20-25秒",
+        "tips": [
+          "直接表明喜好立场",
+          "给出2个具象化的理由",
+          "可以加入个人经历增加交流感",
+          "用 passion for / fascinated by 等替代简单的 like"
+        ]
+      },
+      "examples": [
+        "Do you like reading?",
+        "Do you like to take scenery pictures?",
+        "Do you like taking pictures of different views?",
+        "Do you like watching team sports games?",
+        "Do you like to visit a museum?",
+        "Do you like buying shoes?",
+        "Do you like to lend things to others?",
+        "Do you like getting up early in the morning?",
+        "Do you want to live in a tall building?",
+        "Do you have any hobbies?",
+        "Do you have a hobby that you've had since childhood?",
+        "Do you walk a lot?",
+        "Do you keep plants at home?",
+        "Do you always bring a lot of keys with you?",
+        "What's your favorite animal?",
+        "What's your favorite food?",
+        "What are the most beautiful sights you have seen while travelling?",
+        "Do you bring food or snacks with you when going out?",
+        "Do you always take your mobile phone with you when going out?",
+        "Do you often tell your friends when they do something well?",
+        "Do you look out the window at the scenery when travelling by bus or car?"
+      ]
+    },
+    {
+      "type": "comparison",
+      "description": "对比题 - 偏好选择/二选一",
+      "template": "Do you prefer A or B? / Which do you prefer, A or B?",
+      "answer_framework": {
+        "structure": "双边讨论 - 捧一踩一（不同角度）",
+        "extended_structure": "分情况讨论（按物品/人群/时间等维度）",
+        "time_target": "20-25秒",
+        "tips": [
+          "可以选择一边明确立场",
+          "也可以分情况讨论 (It depends on...)",
+          "使用转折连接词: however, while, whereas, in contrast",
+          "用不同角度对比，避免重复",
+          "结构示例: If I want to... markets are..., while if I purchase... malls are..."
+        ]
+      },
+      "examples": [
+        "Do you prefer living in an old building or a modern house?",
+        "Do you prefer the mountains or the sea?",
+        "Do you prefer views in urban areas or rural areas?",
+        "Do you prefer views in your own country or in other countries?",
+        "Do you prefer to read on paper or on a screen?",
+        "Do you prefer scanned reading or detailed reading?",
+        "Do you prefer typing or handwriting?",
+        "Do you type on a desktop or laptop keyboard every day?",
+        "Do you prefer to have more or fewer rules at school?",
+        "Which do you prefer, fashionable shoes or comfortable shoes?",
+        "Where do you prefer to keep your pet, indoors or outdoors?"
+      ]
+    },
+    {
+      "type": "category",
+      "description": "种类题 - 什么种类/类型",
+      "template": "What kind(s) of... do you like/are popular...?",
+      "answer_framework": {
+        "structure_single": "Kind: 大类→小类 + 特点/原因",
+        "structure_plural": "Kinds: 三类 + 其中典型一类 + 原因x2",
+        "time_target": "20-25秒",
+        "tips": [
+          "单数kind: 先说大类再举小类的例子",
+          "复数kinds: 列举三类，再详细说其中一类",
+          "使用话题词提升词汇分数",
+          "递进连接词: especially, such as, particularly, in specific, to name a few"
+        ]
+      },
+      "examples": [
+        "What kind of cars do you like?",
+        "What kind of house or apartment do you want to have in the future?",
+        "What kind of food did you like when you were young?",
+        "What kind of things do you like to share with others?",
+        "What kinds of flowers have special meanings?",
+        "What kinds of things are not suitable for sharing?",
+        "What kinds of websites are popular in your country?"
+      ]
+    },
+    {
+      "type": "opinion",
+      "description": "观点题 - 你认为…重要/好吗",
+      "template": "Do you think... is important/good/beneficial...?",
+      "answer_framework": {
+        "structure": "Topic + Reasons x2",
+        "extended_structure_1": "Topic + Reason + 反证（负面影响/假设句）",
+        "extended_structure_2": "分情况讨论: 普遍性 + 特殊性",
+        "time_target": "20-25秒",
+        "tips": [
+          "直接表明立场 (Agree/Disagree)",
+          "给出2个支持理由",
+          "可用反证法: 假设反面情况的负面影响",
+          "假设句型: If..., Assuming..., Imagining..., Given that...",
+          "注意陷阱词: all, never, impossible, only — 避免绝对化",
+          "可以分情况: In most situations... While in some special cases..."
+        ]
+      },
+      "examples": [
+        "Do you think punctuality is important?",
+        "Do you think museums are important?",
+        "Do you think we should preserve old buildings in cities?",
+        "Do you think parents should often praise and encourage their children?",
+        "Do you think students would benefit more from more rules?",
+        "Do you think you are good at choosing gifts?",
+        "Do you think it's a good idea to leave your keys with a neighbor?",
+        "Why do people like to walk in parks?"
+      ]
+    },
+    {
+      "type": "experience",
+      "description": "经历题 - 你曾经…过吗/上次是什么时候",
+      "template": "Have you ever...? / When was the last time you...? / Did you...?",
+      "answer_framework": {
+        "structure_yes": "Yes + 时间/地点/人物/事件 + 感受(which...)",
+        "structure_no": "No + 期待/拒绝 + 原因",
+        "time_target": "20-25秒",
+        "tips": [
+          "使用过去时态（一般过去时为主）",
+          "Yes回答: 提供时地人事四要素",
+          "结尾用 which 引导感受句",
+          "感受词: light-hearted / heavy-hearted / memorable / fascinating",
+          "No回答: 表达期待或解释为什么没有",
+          "时间标记: Back in my childhood / Last year / When I was in college"
+        ]
+      },
+      "examples": [
+        "Have you ever bought shoes online?",
+        "Have you ever talked with someone you don't know in public places?",
+        "Have you ever been part of a sports team?",
+        "Have you ever had a pet before?",
+        "Have you seen an unforgettable and beautiful view or scenery?",
+        "Have you ever sent handmade gifts to others?",
+        "Have you ever received a great gift?",
+        "Have you ever lost your keys?",
+        "Have you borrowed books from others?",
+        "Have you ever borrowed money from others?",
+        "Have you ever worked with old people?",
+        "When was the last time you visited a museum?",
+        "When did you learn how to type on a keyboard?",
+        "What did you do in the morning when you were little?",
+        "Did you often go outside to have a walk when you were a child?",
+        "Did you have any hobbies when you were a child?",
+        "Do you have an experience that your teacher thought you did a good job?"
+      ]
+    },
+    {
+      "type": "frequency",
+      "description": "频率题 - 多久一次/经常吗",
+      "template": "How often do you...? / Do you often...?",
+      "answer_framework": {
+        "structure": "频率 + 原因 + 具体描述",
+        "time_target": "20-25秒",
+        "tips": [
+          "使用地道频率表达替代简单的 always/sometimes/never",
+          "频率由高到低: all the time → constantly → daily → every other day → on a weekly basis → often → every now and then → occasionally → once in a while → rarely → hardly ever → once in a blue moon",
+          "搭配具体场景和原因"
+        ]
+      },
+      "examples": [
+        "Do you walk a lot?",
+        "Do you often go to public places with your friends?",
+        "How often he/she draws/paints?",
+        "Do you often forget the keys and lock yourself out?"
+      ]
+    },
+    {
+      "type": "change",
+      "description": "变化题 - 过去与现在的对比",
+      "template": "Has... changed since...? / Did you... when you were young?",
+      "answer_framework": {
+        "structure": "过去情况 + 现在情况 + 原因/感受",
+        "time_target": "20-25秒",
+        "tips": [
+          "使用时态对比: 过去时 vs 现在时",
+          "时间标记: back in my childhood / when I was young / nowadays",
+          "表达变化: used to... but now... / has changed from... to...",
+          "如果没变化可以说: From my childhood till now, I've always..."
+        ]
+      },
+      "examples": [
+        "Has your favorite food changed since you were a child?",
+        "What kind of food did you like when you were young?",
+        "Did you have any hobbies when you were a child?",
+        "What did you do in the morning when you were little?"
+      ]
+    }
+  ]
+}

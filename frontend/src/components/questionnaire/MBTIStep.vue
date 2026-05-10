@@ -1,185 +1,163 @@
 <template>
-  <div class="space-y-8">
+  <div class="space-y-10">
     <!-- Header -->
-    <div class="text-center">
-      <h2 class="text-2xl font-bold text-white mb-2">MBTI Personality Profile</h2>
-      <p class="text-dark-400">Discover your personality type to personalize your corpus</p>
-    </div>
+    <header class="text-center space-y-3">
+      <p class="num-chapter">§ 02 · Personality</p>
+      <h2 class="font-display text-3xl text-ink-900" style="font-variation-settings:'opsz' 96, 'SOFT' 50;">
+        MBTI <em class="italic text-ochre-500">Profile</em>
+      </h2>
+      <p class="text-ink-500 font-serif italic">Discover your personality type to personalise your corpus.</p>
+    </header>
 
     <!-- Mode Toggle -->
     <div class="flex justify-center">
-      <div class="inline-flex bg-dark-800 rounded-xl p-1">
+      <div class="inline-flex hairline">
         <button
           :class="[
-            'px-5 py-2.5 rounded-lg text-sm font-medium transition-all duration-200',
-            mode === 'select'
-              ? 'bg-accent-500 text-white shadow-lg shadow-accent-500/25'
-              : 'text-dark-400 hover:text-white'
+            'px-6 py-2.5 text-sm font-serif transition-colors duration-300',
+            mode === 'select' ? 'chip-ink-selected-slim' : 'text-ink-500 hover:text-ink-900'
           ]"
           @click="mode = 'select'"
-        >
-          I know my type
-        </button>
+        >I know my type</button>
         <button
           :class="[
-            'px-5 py-2.5 rounded-lg text-sm font-medium transition-all duration-200',
-            mode === 'quiz'
-              ? 'bg-accent-500 text-white shadow-lg shadow-accent-500/25'
-              : 'text-dark-400 hover:text-white'
+            'px-6 py-2.5 text-sm font-serif transition-colors duration-300',
+            mode === 'quiz' ? 'chip-ink-selected-slim' : 'text-ink-500 hover:text-ink-900'
           ]"
           @click="mode = 'quiz'"
-        >
-          Quick Assessment
-        </button>
+        >Quick Assessment</button>
       </div>
     </div>
 
-    <!-- Mode A: Direct MBTI Selection (16-grid) -->
-    <div v-if="mode === 'select'" class="space-y-6">
-      <p class="text-center text-dark-400 text-sm">Select your MBTI type</p>
-      <div class="grid grid-cols-4 gap-3">
+    <!-- Mode A: Direct MBTI Selection -->
+    <section v-if="mode === 'select'" class="space-y-6">
+      <p class="text-center text-ink-500 text-sm font-serif italic">Select your MBTI type from the table.</p>
+      <div class="grid grid-cols-4 gap-2">
         <button
           v-for="type in mbtiTypes"
           :key="type"
           :class="[
-            'p-4 rounded-xl border-2 text-center font-bold transition-all duration-200',
+            'p-4 text-center transition-colors duration-300',
             store.mbtiResult === type
-              ? 'border-accent-400 bg-accent-400/10 text-accent-400 shadow-lg shadow-accent-500/10'
-              : 'border-dark-700 bg-dark-800 text-dark-300 hover:border-dark-500 hover:text-white'
+              ? 'chip-ink-selected'
+              : 'hairline text-ink-500 hover:text-ink-900'
           ]"
           @click="selectType(type)"
         >
-          {{ type }}
+          <span class="font-display text-lg tracking-wider">{{ type }}</span>
         </button>
       </div>
 
-      <!-- Selected type description -->
       <Transition name="fade">
-        <div v-if="store.mbtiResult && mode === 'select'" class="bg-dark-800 rounded-xl p-6 border border-accent-400/20">
-          <div class="flex items-center gap-3 mb-3">
-            <span class="text-2xl font-bold text-accent-400">{{ store.mbtiResult }}</span>
-            <span class="text-dark-400">—</span>
-            <span class="text-white font-medium">{{ mbtiDescriptions[store.mbtiResult]?.title }}</span>
+        <div v-if="store.mbtiResult && mode === 'select'" class="paper-card p-6">
+          <div class="flex items-baseline gap-3 mb-3">
+            <span class="font-display text-3xl italic text-ochre-500">{{ store.mbtiResult }}</span>
+            <span class="text-ink-500 font-mono">—</span>
+            <span class="font-serif italic text-ink-900 text-lg">{{ mbtiDescriptions[store.mbtiResult]?.title }}</span>
           </div>
-          <p class="text-dark-300 text-sm leading-relaxed">{{ mbtiDescriptions[store.mbtiResult]?.desc }}</p>
+          <p class="text-ink-700 text-sm font-serif leading-relaxed">
+            <span class="font-display text-2xl italic text-ochre-500 mr-1 leading-none">“</span>{{ mbtiDescriptions[store.mbtiResult]?.desc }}
+          </p>
         </div>
       </Transition>
-    </div>
+    </section>
 
     <!-- Mode B: 12-Question Quiz -->
-    <div v-if="mode === 'quiz'" class="space-y-6">
+    <section v-if="mode === 'quiz'" class="space-y-6">
       <!-- Quiz progress -->
-      <div class="flex items-center justify-between text-sm">
-        <span class="text-dark-400">Question {{ currentQuestion + 1 }} of {{ mbtiQuestions.length }}</span>
-        <span class="text-accent-400 font-medium">{{ answeredCount }}/12 answered</span>
+      <div class="flex items-baseline justify-between text-sm">
+        <span class="font-mono text-xs tracking-[0.22em] text-ink-500">
+          QUESTION {{ String(currentQuestion + 1).padStart(2, '0') }} / {{ String(mbtiQuestions.length).padStart(2, '0') }}
+        </span>
+        <span class="font-serif italic text-ochre-500">
+          {{ answeredCount }}/12 answered
+        </span>
       </div>
-      <div class="w-full h-1.5 bg-dark-800 rounded-full overflow-hidden">
+      <div class="w-full h-px bg-ink-900/10 relative">
         <div
-          class="h-full bg-gradient-to-r from-accent-500 to-secondary-500 rounded-full transition-all duration-300"
+          class="absolute top-0 left-0 h-px bg-indigo-800 transition-all duration-500"
           :style="{ width: `${(answeredCount / 12) * 100}%` }"
-        />
+        ></div>
       </div>
 
       <!-- Question Card -->
-      <div class="bg-dark-800 rounded-xl p-6 border border-dark-700">
-        <p class="text-white text-lg font-medium mb-6">{{ mbtiQuestions[currentQuestion].question }}</p>
+      <article class="paper-card p-8">
+        <p class="font-display text-xl text-ink-900 mb-6 leading-snug" style="font-variation-settings:'opsz' 96, 'SOFT' 60;">
+          {{ mbtiQuestions[currentQuestion].question }}
+        </p>
         <div class="space-y-3">
           <button
+            v-for="opt in ['a', 'b']"
+            :key="opt"
             :class="[
-              'w-full text-left p-4 rounded-xl border-2 transition-all duration-200',
-              store.mbtiAnswers[mbtiQuestions[currentQuestion].id] === 'a'
-                ? 'border-accent-400 bg-accent-400/10 text-white'
-                : 'border-dark-700 bg-dark-900 text-dark-300 hover:border-dark-500 hover:text-white'
+              'w-full text-left p-4 transition-colors duration-300 hairline',
+              store.mbtiAnswers[mbtiQuestions[currentQuestion].id] === opt
+                ? 'bg-ochre-300/25 hairline-strong text-ink-900'
+                : 'text-ink-700 hover:text-ink-900'
             ]"
-            @click="answerQuestion(mbtiQuestions[currentQuestion].id, 'a')"
+            @click="answerQuestion(mbtiQuestions[currentQuestion].id, opt)"
           >
-            <span class="inline-flex items-center gap-3">
+            <span class="inline-flex items-baseline gap-3">
               <span :class="[
-                'w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold shrink-0',
-                store.mbtiAnswers[mbtiQuestions[currentQuestion].id] === 'a'
-                  ? 'bg-accent-400 text-dark-900'
-                  : 'bg-dark-700 text-dark-400'
-              ]">A</span>
-              <span>{{ mbtiQuestions[currentQuestion].option_a }}</span>
-            </span>
-          </button>
-          <button
-            :class="[
-              'w-full text-left p-4 rounded-xl border-2 transition-all duration-200',
-              store.mbtiAnswers[mbtiQuestions[currentQuestion].id] === 'b'
-                ? 'border-accent-400 bg-accent-400/10 text-white'
-                : 'border-dark-700 bg-dark-900 text-dark-300 hover:border-dark-500 hover:text-white'
-            ]"
-            @click="answerQuestion(mbtiQuestions[currentQuestion].id, 'b')"
-          >
-            <span class="inline-flex items-center gap-3">
-              <span :class="[
-                'w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold shrink-0',
-                store.mbtiAnswers[mbtiQuestions[currentQuestion].id] === 'b'
-                  ? 'bg-accent-400 text-dark-900'
-                  : 'bg-dark-700 text-dark-400'
-              ]">B</span>
-              <span>{{ mbtiQuestions[currentQuestion].option_b }}</span>
+                'font-display italic text-lg shrink-0',
+                store.mbtiAnswers[mbtiQuestions[currentQuestion].id] === opt ? 'text-ochre-500' : 'text-ink-500'
+              ]">{{ opt.toUpperCase() }}.</span>
+              <span class="font-serif">{{ mbtiQuestions[currentQuestion]['option_' + opt] }}</span>
             </span>
           </button>
         </div>
-      </div>
+      </article>
 
       <!-- Question Navigation -->
       <div class="flex items-center justify-between">
         <button
           :disabled="currentQuestion === 0"
           :class="[
-            'px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200',
-            currentQuestion === 0
-              ? 'text-dark-600 cursor-not-allowed'
-              : 'text-dark-300 hover:text-white hover:bg-dark-700'
+            'px-3 py-2 text-sm font-serif italic transition-colors duration-300',
+            currentQuestion === 0 ? 'text-ink-300 cursor-not-allowed' : 'text-ink-500 hover:text-ink-900'
           ]"
           @click="currentQuestion--"
-        >
-          ← Previous
-        </button>
-        <div class="flex gap-1.5">
+        >← Previous</button>
+        <div class="flex gap-2">
           <button
             v-for="(q, idx) in mbtiQuestions"
             :key="q.id"
             :class="[
-              'w-2.5 h-2.5 rounded-full transition-all duration-200',
+              'w-2 h-2 rounded-full transition-all duration-300',
               idx === currentQuestion
-                ? 'bg-accent-400 scale-125'
-                : store.mbtiAnswers[q.id]
-                  ? 'bg-accent-400/40'
-                  : 'bg-dark-700'
+                ? 'bg-indigo-800 scale-125'
+                : store.mbtiAnswers[q.id] ? 'bg-ochre-500' : 'bg-ink-900/15'
             ]"
             @click="currentQuestion = idx"
+            :aria-label="'Question ' + (idx + 1)"
           />
         </div>
         <button
           :disabled="currentQuestion === mbtiQuestions.length - 1"
           :class="[
-            'px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200',
-            currentQuestion === mbtiQuestions.length - 1
-              ? 'text-dark-600 cursor-not-allowed'
-              : 'text-dark-300 hover:text-white hover:bg-dark-700'
+            'px-3 py-2 text-sm font-serif italic transition-colors duration-300',
+            currentQuestion === mbtiQuestions.length - 1 ? 'text-ink-300 cursor-not-allowed' : 'text-ink-500 hover:text-ink-900'
           ]"
           @click="currentQuestion++"
-        >
-          Next →
-        </button>
+        >Next →</button>
       </div>
 
-      <!-- Result (shown when all 12 answered) -->
+      <!-- Result -->
       <Transition name="fade">
-        <div v-if="answeredCount === 12 && quizResult" class="bg-dark-800 rounded-xl p-6 border border-accent-400/30">
-          <div class="text-center">
-            <p class="text-dark-400 text-sm mb-2">Your Result</p>
-            <p class="text-4xl font-bold text-accent-400 mb-2">{{ quizResult }}</p>
-            <p class="text-white font-medium mb-1">{{ mbtiDescriptions[quizResult]?.title }}</p>
-            <p class="text-dark-300 text-sm leading-relaxed max-w-md mx-auto">{{ mbtiDescriptions[quizResult]?.desc }}</p>
+        <div v-if="answeredCount === 12 && quizResult" class="paper-card p-8">
+          <div class="text-center space-y-2">
+            <p class="num-chapter">— your result —</p>
+            <p class="font-display text-5xl italic text-ochre-500" style="font-variation-settings:'opsz' 144, 'SOFT' 40;">
+              {{ quizResult }}
+            </p>
+            <p class="font-display italic text-ink-900 text-lg">{{ mbtiDescriptions[quizResult]?.title }}</p>
+            <p class="text-ink-700 text-sm font-serif leading-relaxed max-w-md mx-auto pt-2">
+              {{ mbtiDescriptions[quizResult]?.desc }}
+            </p>
           </div>
         </div>
       </Transition>
-    </div>
+    </section>
   </div>
 </template>
 
@@ -188,7 +166,6 @@ import { ref, computed, watch } from 'vue'
 import { useQuestionnaireStore } from '../../stores/questionnaire'
 
 const store = useQuestionnaireStore()
-
 const mode = ref('quiz')
 const currentQuestion = ref(0)
 
@@ -249,26 +226,17 @@ const quizResult = computed(() => {
   return E + S + T + J
 })
 
-// Auto-set mbtiResult when quiz is complete
-watch(quizResult, (val) => {
-  if (val) store.setMBTIResult(val)
-})
+watch(quizResult, (val) => { if (val) store.setMBTIResult(val) })
 
-function selectType(type) {
-  store.setMBTIResult(type)
-}
+function selectType(type) { store.setMBTIResult(type) }
 
 function answerQuestion(questionId, answer) {
   store.setMBTIAnswer(questionId, answer)
-  // Auto-advance to next unanswered question
   if (currentQuestion.value < mbtiQuestions.length - 1) {
     setTimeout(() => {
       const nextUnanswered = mbtiQuestions.findIndex((q, idx) => idx > currentQuestion.value && !store.mbtiAnswers[q.id])
-      if (nextUnanswered !== -1) {
-        currentQuestion.value = nextUnanswered
-      } else if (currentQuestion.value < mbtiQuestions.length - 1) {
-        currentQuestion.value++
-      }
+      if (nextUnanswered !== -1) currentQuestion.value = nextUnanswered
+      else if (currentQuestion.value < mbtiQuestions.length - 1) currentQuestion.value++
     }, 300)
   }
 }
@@ -277,7 +245,7 @@ function answerQuestion(questionId, answer) {
 <style scoped>
 .fade-enter-active,
 .fade-leave-active {
-  transition: opacity 0.3s ease, transform 0.3s ease;
+  transition: opacity 0.4s cubic-bezier(.2,.8,.2,1), transform 0.4s cubic-bezier(.2,.8,.2,1);
 }
 .fade-enter-from,
 .fade-leave-to {

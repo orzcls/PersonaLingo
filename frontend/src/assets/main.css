@@ -2,26 +2,399 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Global Styles */
+/* =========================================================
+   Soft Scholar · 柔雅学院风
+   Ivory paper · indigo ink · ochre accent
+   ========================================================= */
+
+:root {
+  --paper-50: #FBF7EE;
+  --paper-100: #F3ECDC;
+  --paper-200: #E8DEC6;
+  --ink-900: #1B1F2A;
+  --ink-700: #2F3342;
+  --ink-500: #5A5E6E;
+  --ink-300: #9A9487;
+  --indigo-600: #2C3E6B;
+  --indigo-800: #1C2A52;
+  --ochre-500: #B8692B;
+  --ochre-300: #E3B98E;
+  --rouge-600: #A8402E;
+  --sage-500: #6B8A6E;
+}
+
+html {
+  scroll-behavior: smooth;
+  color-scheme: light;
+  background-color: var(--paper-50);
+}
+
 body {
-  @apply bg-dark-950 text-gray-100 antialiased;
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
-    Oxygen, Ubuntu, Cantarell, sans-serif;
+  min-height: 100vh;
+  background-color: var(--paper-50);
+  color: var(--ink-700);
+  font-family: 'IBM Plex Sans', 'Noto Sans SC', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  font-feature-settings: "ss01", "ss02", "cv02", "liga", "kern";
+  font-size: 15.5px;
+  line-height: 1.68;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 
-/* Custom scrollbar */
-::-webkit-scrollbar {
-  width: 8px;
+/* Paper grain — full-viewport subtle turbulence overlay */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='280' height='280'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='matrix' values='0 0 0 0 0.10  0 0 0 0 0.12  0 0 0 0 0.16  0 0 0 0.55 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  opacity: 0.055;
+  mix-blend-mode: multiply;
+}
+body > * { position: relative; z-index: 1; }
+
+/* Selection — indigo ink on paper */
+::selection {
+  background: var(--indigo-600);
+  color: var(--paper-50);
 }
 
-::-webkit-scrollbar-track {
-  @apply bg-dark-900;
-}
-
+/* Hairline scrollbar */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: var(--paper-100); }
 ::-webkit-scrollbar-thumb {
-  @apply bg-dark-600 rounded-full;
+  background: var(--indigo-600);
+  border-radius: 0;
+  opacity: .7;
+}
+::-webkit-scrollbar-thumb:hover { background: var(--indigo-800); }
+
+/* Focus ring — ochre */
+*:focus-visible {
+  outline: 2px solid var(--ochre-500);
+  outline-offset: 2px;
+  border-radius: 2px;
 }
 
-::-webkit-scrollbar-thumb:hover {
-  @apply bg-dark-500;
+/* =========================================================
+   Typography utilities
+   ========================================================= */
+
+@layer components {
+  .font-display {
+    font-family: 'Fraunces', 'Noto Serif SC', Georgia, serif;
+    font-variation-settings: "opsz" 96, "SOFT" 60, "WONK" 0;
+    letter-spacing: -0.015em;
+  }
+
+  .font-serif-body {
+    font-family: 'Fraunces', 'Noto Serif SC', Georgia, serif;
+    font-variation-settings: "opsz" 14, "SOFT" 50;
+  }
+
+  /* Chapter numeral — mono + ochre + tracked */
+  .num-chapter {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.22em;
+    color: var(--ochre-500);
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  /* Fine-line hairline border helpers */
+  .hairline        { border: 1px solid rgba(27,31,42,0.10); }
+  .hairline-t      { border-top: 1px solid rgba(27,31,42,0.10); }
+  .hairline-b      { border-bottom: 1px solid rgba(27,31,42,0.10); }
+  .hairline-l      { border-left: 1px solid rgba(27,31,42,0.10); }
+  .hairline-r      { border-right: 1px solid rgba(27,31,42,0.10); }
+  .hairline-strong { border: 1px solid rgba(27,31,42,0.18); }
+
+  /* Paper card — no glow, soft offset shadow */
+  .paper-card {
+    background: var(--paper-50);
+    border: 1px solid rgba(27,31,42,0.09);
+    border-radius: 4px;
+    box-shadow: 0 1px 0 rgba(27,31,42,.04), 0 18px 40px -28px rgba(27,31,42,.18);
+  }
+
+  .paper-card-muted {
+    background: var(--paper-100);
+    border: 1px solid rgba(27,31,42,0.08);
+    border-radius: 4px;
+  }
+
+  /* Horizontal rule heading — short strokes flanking a title */
+  .rule-heading {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    color: var(--ink-900);
+  }
+  .rule-heading::before,
+  .rule-heading::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: rgba(27,31,42,0.14);
+  }
+
+  /* Ink underline on hover — animated wavy SVG via background */
+  .ink-underline {
+    position: relative;
+    display: inline;
+    transition: color .24s cubic-bezier(.2,.8,.2,1);
+  }
+  .ink-underline::after {
+    content: '';
+    position: absolute;
+    left: 0; right: 0; bottom: -4px;
+    height: 6px;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 6' preserveAspectRatio='none'><path d='M0 3 Q5 0 10 3 T20 3 T30 3 T40 3' stroke='%23B8692B' stroke-width='1.2' fill='none' stroke-linecap='round'/></svg>");
+    background-repeat: repeat-x;
+    background-size: 40px 6px;
+    transform: scaleX(0);
+    transform-origin: left center;
+    transition: transform .36s cubic-bezier(.2,.8,.2,1);
+  }
+  .ink-underline:hover,
+  .ink-underline.is-active { color: var(--indigo-800); }
+  .ink-underline:hover::after,
+  .ink-underline.is-active::after { transform: scaleX(1); }
+
+  /* Drop-cap for editorial paragraphs */
+  .drop-cap::first-letter {
+    font-family: 'Fraunces', 'Noto Serif SC', Georgia, serif;
+    font-weight: 700;
+    font-size: 3.4em;
+    line-height: .86;
+    float: left;
+    padding: .15em .12em 0 0;
+    color: var(--indigo-800);
+    font-variation-settings: "opsz" 144, "SOFT" 40;
+  }
+
+  /* Ruled lines (notebook feel) — applied to containers that need it */
+  .ruled-lines {
+    background-image: linear-gradient(
+      to bottom,
+      transparent 0,
+      transparent calc(1.68em - 1px),
+      rgba(27,31,42,0.06) calc(1.68em - 1px),
+      rgba(27,31,42,0.06) 1.68em
+    );
+    background-size: 100% 1.68em;
+  }
+
+  /* Primary CTA — indigo slab with ochre pointer */
+  .btn-ink {
+    display: inline-flex;
+    align-items: center;
+    gap: .75rem;
+    padding: .9rem 1.4rem;
+    background: var(--indigo-600);
+    color: var(--paper-50);
+    font-family: 'IBM Plex Sans', 'Noto Sans SC', sans-serif;
+    font-weight: 500;
+    letter-spacing: .02em;
+    border-radius: 2px;
+    border: 1px solid var(--indigo-800);
+    box-shadow: 0 1px 0 rgba(255,255,255,.08) inset, 0 10px 22px -14px rgba(28,42,82,.55);
+    transition: transform .24s cubic-bezier(.2,.8,.2,1), background .24s, box-shadow .24s;
+  }
+  .btn-ink:hover {
+    background: var(--indigo-800);
+    transform: translateY(-1px);
+  }
+  .btn-ink:active { transform: translateY(0); }
+  .btn-ink .arrow { color: var(--ochre-300); transition: transform .24s cubic-bezier(.2,.8,.2,1); }
+  .btn-ink:hover .arrow { transform: translateX(4px); }
+
+  .btn-ghost {
+    display: inline-flex;
+    align-items: center;
+    gap: .6rem;
+    padding: .75rem 1.1rem;
+    background: transparent;
+    color: var(--ink-700);
+    border: 1px solid rgba(27,31,42,0.16);
+    border-radius: 2px;
+    transition: background .2s, border-color .2s, color .2s;
+  }
+  .btn-ghost:hover {
+    background: rgba(44,62,107,0.05);
+    border-color: rgba(27,31,42,0.28);
+    color: var(--indigo-800);
+  }
+
+  /* Subtle card hover — no scale, no glow */
+  .card-hover {
+    transition: border-color .24s cubic-bezier(.2,.8,.2,1),
+                box-shadow .24s cubic-bezier(.2,.8,.2,1);
+  }
+  .card-hover:hover {
+    border-color: rgba(184,105,43,0.45);
+    box-shadow: 0 1px 0 rgba(27,31,42,.05), 0 22px 42px -30px rgba(27,31,42,.25);
+  }
+
+  /* Gradient text utility — remapped to a refined duotone (no AI neon) */
+  .gradient-text {
+    background-image: linear-gradient(90deg, var(--indigo-800) 0%, var(--ochre-500) 100%);
+    -webkit-background-clip: text;
+            background-clip: text;
+    color: transparent;
+  }
+
+  /* Field label — small caps uppercase meta text */
+  .field-label {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: .68rem;
+    letter-spacing: .22em;
+    text-transform: uppercase;
+    color: var(--ink-500);
+  }
+
+  /* --------------------------------------------------------
+     Selected-chip — ink fill + ochre edge-tab (bookmark cue)
+     Use on option buttons / toggles / segmented controls so the
+     active state differs from inactive in *shape*, not just hue.
+     -------------------------------------------------------- */
+  .chip-ink-selected {
+    background-color: var(--ink-900) !important;
+    color: var(--paper-50) !important;
+    border: 1px solid var(--ink-900) !important;
+    /* Left 4px ochre tab + subtle inner highlight for letter-press feel */
+    box-shadow:
+      inset 4px 0 0 0 var(--ochre-500),
+      inset 0 1px 0 0 rgba(255,255,255,.06);
+    font-weight: 500;
+    letter-spacing: .01em;
+    padding-left: calc(var(--chip-pad-l, 1rem) + 4px);
+    position: relative;
+  }
+  /* Tiny corner mark — serifed check-glyph at top-right */
+  .chip-ink-selected::after {
+    content: '';
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    width: 6px;
+    height: 6px;
+    border-right: 1px solid var(--ochre-300);
+    border-top: 1px solid var(--ochre-300);
+    opacity: .85;
+  }
+  /* Soft variant for slim segmented toggles (no inner padding shift) */
+  .chip-ink-selected-slim {
+    background-color: var(--ink-900) !important;
+    color: var(--paper-50) !important;
+    box-shadow: inset 3px 0 0 0 var(--ochre-500);
+    font-weight: 500;
+  }
+
+  /* Hairline input — underline-only text field */
+  .input-hairline {
+    width: 100%;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid rgba(27,31,42,0.22);
+    padding: .6rem .15rem;
+    font-family: inherit;
+    color: var(--ink-900);
+    transition: border-color .24s;
+  }
+  .input-hairline:focus {
+    outline: none;
+    border-bottom-color: var(--indigo-600);
+  }
+  .input-hairline::placeholder { color: var(--ink-300); }
+}
+
+/* =========================================================
+   Motion
+   ========================================================= */
+
+@keyframes breathe {
+  0%, 100% { opacity: 1; filter: blur(0); }
+  50% { opacity: 0.78; filter: blur(.3px); }
+}
+.animate-breathe { animation: breathe 2.8s ease-in-out infinite; }
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(44,62,107,0.18); }
+  50%      { box-shadow: 0 0 0 10px rgba(44,62,107,0);  }
+}
+.animate-pulse-glow { animation: pulse-glow 2.6s ease-in-out infinite; }
+
+@keyframes ink-rise {
+  0%   { opacity: 0; transform: translateY(12px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+.animate-ink-rise { animation: ink-rise .42s cubic-bezier(.2,.8,.2,1) both; }
+
+@keyframes ink-blot {
+  0%   { transform: scale(.55); opacity: .15; }
+  45%  { transform: scale(1);   opacity: .9;  }
+  100% { transform: scale(1.55); opacity: 0;  }
+}
+.animate-ink-blot { animation: ink-blot 1.6s cubic-bezier(.2,.8,.2,1) infinite; }
+
+/* Staggered reveal helpers */
+.stagger > * { opacity: 0; animation: ink-rise .5s cubic-bezier(.2,.8,.2,1) forwards; }
+.stagger > *:nth-child(1) { animation-delay: 40ms; }
+.stagger > *:nth-child(2) { animation-delay: 120ms; }
+.stagger > *:nth-child(3) { animation-delay: 200ms; }
+.stagger > *:nth-child(4) { animation-delay: 280ms; }
+.stagger > *:nth-child(5) { animation-delay: 360ms; }
+.stagger > *:nth-child(6) { animation-delay: 440ms; }
+.stagger > *:nth-child(7) { animation-delay: 520ms; }
+.stagger > *:nth-child(8) { animation-delay: 600ms; }
+
+/* =========================================================
+   Legacy class compatibility — remap dark-theme-only colors
+   so stale class names (text-white, text-gray-*, bg-white)
+   read correctly on the ivory paper background.
+   ========================================================= */
+.text-white        { color: var(--ink-900) !important; }
+.text-gray-50,
+.text-gray-100,
+.text-gray-200     { color: var(--ink-700) !important; }
+.text-gray-300,
+.text-gray-400     { color: var(--ink-500) !important; }
+.text-gray-500,
+.text-gray-600     { color: var(--ink-500) !important; }
+.text-gray-700,
+.text-gray-800,
+.text-gray-900     { color: var(--ink-900) !important; }
+
+.bg-white          { background-color: var(--paper-50) !important; }
+.bg-gray-50        { background-color: var(--paper-50) !important; }
+.bg-gray-100       { background-color: var(--paper-100) !important; }
+.bg-black          { background-color: var(--ink-900) !important; }
+
+.border-white,
+.border-gray-100,
+.border-gray-200,
+.border-gray-300   { border-color: rgba(27,31,42,0.10) !important; }
+
+/* Gradient backgrounds that still reference accent/primary/secondary
+   should have already been remapped via tailwind.config; but hard-coded
+   from-white / to-white / from-black remnants get neutralised here. */
+.bg-gradient-to-r.from-white,
+.bg-gradient-to-br.from-white,
+.bg-gradient-to-b.from-white   { --tw-gradient-from: var(--paper-50) var(--tw-gradient-from-position); }
+
+/* Honour reduced-motion preference */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: .001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .001ms !important;
+    scroll-behavior: auto !important;
+  }
+  .stagger > * { opacity: 1 !important; transform: none !important; }
 }

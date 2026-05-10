@@ -1,581 +1,459 @@
+"""Skill 导出器 - 仅 MD + JSON 两种格式"""
 import json
-import yaml
+import logging
+from datetime import datetime
+from pathlib import Path
+from typing import Optional
+
+from app.config import get_settings
+from app.db.crud import get_corpus, get_questionnaire
+
+logger = logging.getLogger(__name__)
 
 
 class SkillExporter:
-    """AI Agent Skill 导出服务"""
+    """Skill 导出器 - 仅 Markdown 和 JSON 两种格式"""
 
-    SUPPORTED_FORMATS = ["markdown", "json", "openapi"]
-
-    def export(self, format: str, corpus_data: dict = None) -> dict:
+    async def export_markdown(self, corpus_id: str) -> str:
         """
-        根据格式导出 Skill 文件
-        返回: {"filename": "...", "content": "...", "mime_type": "..."}
+        导出 Markdown 格式 Skill 文件
+        从数据库读取语料库数据，生成完整的 Markdown 内容
         """
-        if format == "markdown":
-            return self._export_markdown(corpus_data)
-        elif format == "json":
-            return self._export_json(corpus_data)
-        elif format == "openapi":
-            return self._export_openapi()
-        else:
-            raise ValueError(f"Unsupported format: {format}")
+        corpus = await get_corpus(corpus_id)
+        if not corpus:
+            raise ValueError(f"语料库不存在: {corpus_id}")
 
-    def _export_markdown(self, corpus_data: dict = None) -> dict:
-        """生成 Markdown Skill 文件（适用于 Trae/Cursor/类IDE Agent）"""
-        content = self._build_markdown_content(corpus_data)
-        return {
-            "filename": "personalingo_skill.md",
-            "content": content,
-            "mime_type": "text/markdown",
-        }
+        # 获取问卷数据（用于MBTI等信息）
+        questionnaire = None
+        if corpus.get("questionnaire_id"):
+            questionnaire = await get_questionnaire(corpus["questionnaire_id"])
 
-    def _export_json(self, corpus_data: dict = None) -> dict:
-        """生成 JSON Schema Skill 文件（适用于 GPTs/Coze/Dify）"""
-        schema = self._build_json_schema(corpus_data)
-        return {
-            "filename": "personalingo_skill.json",
-            "content": json.dumps(schema, indent=2, ensure_ascii=False),
-            "mime_type": "application/json",
-        }
+        mbti_type = self._extract_mbti(corpus, questionnaire)
+        persona = corpus.get("persona") or {}
+        anchors = corpus.get("anchors") or []
+        bridges = corpus.get("bridges") or []
+        vocabulary = corpus.get("vocabulary") or []
+        patterns = corpus.get("patterns") or []
+        band_strategy = corpus.get("band_strategy") or {}
+        user_style = corpus.get("user_style") or {}
 
-    def _export_openapi(self) -> dict:
-        """生成 OpenAPI 文档（适用于有后端调用能力的 Agent）"""
-        spec = self._build_openapi_spec()
-        return {
-            "filename": "personalingo_openapi.yaml",
-            "content": yaml.dump(spec, default_flow_style=False, allow_unicode=True, sort_keys=False),
-            "mime_type": "application/x-yaml",
-        }
+        # 构建 Markdown 内容
+        sections = []
 
-    # ──────────────────────────────────────────────
-    #  Markdown Builder
-    # ──────────────────────────────────────────────
-    def _build_markdown_content(self, corpus_data: dict = None) -> str:
-        sections = [
-            self._md_header(),
-            self._md_trigger(),
-            self._md_workflow(),
-            self._md_output_format(),
-            self._md_quality_guidelines(),
-        ]
-        if corpus_data:
-            sections.append(self._md_corpus_snapshot(corpus_data))
+        # 标题
+        sections.append(f"# PersonaLingo Skill - {mbti_type}")
+
+        # 语料库生成流程
+        sections.append("""## 语料库生成流程
+
+### 输入
+- MBTI类型 + 兴趣问卷 + 目标分数
+
+### 流程
+1. **用户画像生成** → MBTI维度分析 + 沟通风格推断
+2. **锚点故事生成** → 3-4个个人核心故事
+3. **题库桥接** → 21题桥接法连接锚点和题库
+4. **词汇升级** → 分数段适配的词汇表
+5. **句型模板** → MBTI匹配的表达模式
+
+### 输出
+- 完整个性化语料库""")
+
+        # 对话维护流程
+        sections.append("""## 对话维护流程
+
+### 输入
+- 用户对话 / 上传资料
+
+### 流程
+1. **RAG 检索** → 从语料库获取相关上下文
+2. **对话回复** → 带教练角色的智能回复
+3. **内容提取** → 识别可加入语料库的新素材
+4. **风格学习** → 更新用户表达风格统计
+5. **语料融合** → 确认后更新语料库
+
+### 输出
+- 更新后的语料库 + 学习笔记""")
+
+        # 当前语料库摘要
+        target_score = band_strategy.get("target_score", "N/A") if isinstance(band_strategy, dict) else "N/A"
+        sections.append(f"""## 当前语料库摘要
+- 锚点数: {len(anchors)}
+- 桥接数: {len(bridges)}
+- 词汇数: {len(vocabulary)}
+- 句型数: {len(patterns)}
+- 目标分数: {target_score}""")
+
+        # 用户风格特征
+        avg_sentence_len = user_style.get("avg_sentence_length", "N/A")
+        connectors = ", ".join(user_style.get("frequent_connectors", [])) or "N/A"
+        vocab_level = user_style.get("vocabulary_level", "N/A")
+        sections.append(f"""## 用户风格特征
+- MBTI类型: {mbti_type}
+- 平均句长: {avg_sentence_len} words
+- 常用连接词: {connectors}
+- 词汇层级: {vocab_level}""")
+
+        # 锚点故事概览
+        if anchors:
+            anchor_lines = ["## 锚点故事概览"]
+            for i, anchor in enumerate(anchors, 1):
+                label = anchor.get("label", f"锚点{i}")
+                keywords = ", ".join(anchor.get("keywords", []))
+                anchor_lines.append(f"- **{label}**: {keywords}")
+            sections.append("\n".join(anchor_lines))
+
         return "\n\n".join(sections)
 
-    @staticmethod
-    def _md_header() -> str:
-        return """# PersonaLingo - Personalized IELTS Speaking Corpus Generator
+    async def export_json(self, corpus_id: str) -> dict:
+        """
+        导出 JSON 格式 Skill 文件
+        返回结构化的工作流描述 + 语料库摘要
+        """
+        corpus = await get_corpus(corpus_id)
+        if not corpus:
+            raise ValueError(f"语料库不存在: {corpus_id}")
 
-## Skill Description
-This skill enables you to generate a personalized IELTS speaking corpus for any student by conducting a structured questionnaire and applying AI-driven corpus generation.
+        # 获取问卷数据
+        questionnaire = None
+        if corpus.get("questionnaire_id"):
+            questionnaire = await get_questionnaire(corpus["questionnaire_id"])
 
-The workflow combines MBTI personality profiling, interest analysis, and IELTS exam preferences to produce a fully personalized speaking corpus including anchor stories, topic bridges, vocabulary upgrades, sentence patterns, and practice exercises."""
+        mbti_type = self._extract_mbti(corpus, questionnaire)
+        persona = corpus.get("persona") or {}
+        anchors = corpus.get("anchors") or []
+        bridges = corpus.get("bridges") or []
+        vocabulary = corpus.get("vocabulary") or []
+        patterns = corpus.get("patterns") or []
+        band_strategy = corpus.get("band_strategy") or {}
+        user_style = corpus.get("user_style") or {}
 
-    @staticmethod
-    def _md_trigger() -> str:
-        return """## Trigger Conditions
-Activate this skill when the user:
-- Asks for IELTS speaking preparation materials
-- Wants a personalized speaking corpus or vocabulary list
-- Mentions IELTS oral exam preparation
-- Asks for speaking practice exercises
-- Requests help with IELTS Part 1, Part 2, or Part 3 topics"""
+        target_score = band_strategy.get("target_score", "6.5") if isinstance(band_strategy, dict) else "6.5"
 
-    @staticmethod
-    def _md_workflow() -> str:
-        return """## Workflow
-
-### Step 1: Collect MBTI Profile
-Ask the user to either:
-- **Option A:** State their known MBTI type (e.g., "I'm an INTP")
-- **Option B:** Answer 12 quick questions to determine their type
-
-If Option B, ask these questions one by one:
-
-1. At a party, do you: (a) interact with many people, including strangers, or (b) interact with a few people you know well?
-2. When learning something new, do you prefer: (a) hands-on experience and examples, or (b) theoretical concepts and ideas?
-3. When making decisions, do you: (a) prioritize logic and consistency, or (b) consider people's feelings and circumstances?
-4. Do you prefer to: (a) have things decided and settled, or (b) keep options open and flexible?
-5. In social situations, do you: (a) feel energized by being around others, or (b) need time alone to recharge?
-6. Do you tend to focus on: (a) concrete facts and details, or (b) patterns and possibilities?
-7. Which is more important: (a) being truthful even if it hurts, or (b) being tactful and considerate?
-8. Do you prefer to: (a) follow a schedule and plan, or (b) be spontaneous and adaptable?
-9. When meeting new people, do you: (a) easily start conversations, or (b) wait for others to approach you?
-10. When reading, do you prefer: (a) literal and straightforward writing, or (b) figurative and symbolic writing?
-11. In a conflict, do you: (a) analyze the problem objectively, or (b) empathize with everyone involved?
-12. Is your workspace usually: (a) neat and organized, or (b) flexible with multiple projects spread out?
-
-Calculate the result:
-- Questions 1, 5, 9 → E (option a) vs I (option b)
-- Questions 2, 6, 10 → S (option a) vs N (option b)
-- Questions 3, 7, 11 → T (option a) vs F (option b)
-- Questions 4, 8, 12 → J (option a) vs P (option b)
-- For each dimension, the option selected more determines the letter
-
-### Step 2: Collect Interest Profile
-Ask the user to:
-1. Select 3-8 interests from: Photography, Music, Coding, Gaming, Reading, Travel, Sports, Cooking, Art, Film, Nature, Writing, Dance, Fitness, Technology, Science, History, Philosophy, Fashion, Animals
-2. Describe their top 3 hobbies/experiences in 2-3 sentences each (include what they do, why they love it, a memorable moment)
-
-### Step 3: Collect IELTS Preferences
-Ask the user:
-1. Which topic types concern you most? (People, Places, Events, Objects, Abstract)
-2. What's your target band score? (6.0, 6.5, 7.0, 7.5+)
-3. When is your exam? (month/year)
-
-### Step 4: Generate Personal Profile
-Based on collected information, create a student persona:
-- MBTI type and communication style implications
-- Core interests and experiences that can become "anchor stories"
-- Target performance level
-
-### Step 5: Generate Anchor Stories (3-4)
-Create 3-4 personal "anchor stories" based on the student's experiences. Each anchor:
-- Is based on their REAL interests
-- Can connect to 5+ different IELTS topics
-- Includes sensory details and emotional elements
-- Matches their natural communication style
-
-### Step 6: Generate Topic Bridges
-For common IELTS P1/P2 topics, create bridge responses that:
-- Naturally connect each topic to one of their anchors
-- Use their preferred communication style
-- Are 25-35 seconds when spoken (4-6 sentences)
-- Target their specified band score level
-
-### Step 7: Generate Vocabulary Upgrades
-Create 25-30 vocabulary upgrades:
-- Interest-specific advanced vocabulary
-- General high-frequency word replacements
-- Connector upgrades
-- Emotion/description upgrades
-
-### Step 8: Generate Sentence Patterns
-Create 8-10 sentence patterns matching their MBTI communication style."""
-
-    @staticmethod
-    def _md_output_format() -> str:
-        return """## Output Format
-Present the complete corpus in a structured format with clear sections:
-1. **Student Profile Summary** — MBTI type, interests, target score
-2. **Anchor Stories** — Each with keywords and versatility topics list
-3. **Topic Bridges** — Grouped by category (People/Places/Events/Objects/Abstract), each with bridge sentence + sample answer
-4. **Vocabulary Upgrades** — Table with basic word → advanced alternatives + example sentence
-5. **Sentence Patterns** — Template + example + when to use
-6. **Practice Exercises** — 5 exercises with thinking guides and model answers"""
-
-    @staticmethod
-    def _md_quality_guidelines() -> str:
-        return """## Quality Guidelines
-- All content must feel personal and authentic to the student
-- Answers should sound natural, not rehearsed or formulaic
-- Vocabulary should match the target band score
-- Communication style should consistently reflect their MBTI preferences
-- Each anchor must be versatile enough to bridge to multiple topics
-- Bridge sentences should feel like natural conversation transitions
-- Practice exercises should progressively build confidence"""
-
-    @staticmethod
-    def _md_corpus_snapshot(corpus_data: dict) -> str:
-        lines = ["## Embedded Corpus Data (for reference)"]
-        if "user_profile" in corpus_data:
-            profile = corpus_data["user_profile"]
-            lines.append(f"- **MBTI:** {profile.get('mbti', 'N/A')}")
-            lines.append(f"- **Interests:** {', '.join(profile.get('interests', []))}")
-        if "anchors" in corpus_data:
-            lines.append(f"- **Anchor stories:** {len(corpus_data['anchors'])}")
-        if "bridges" in corpus_data:
-            lines.append(f"- **Topic bridges:** {len(corpus_data['bridges'])}")
-        if "vocabulary" in corpus_data:
-            lines.append(f"- **Vocabulary upgrades:** {len(corpus_data['vocabulary'])}")
-        return "\n".join(lines)
-
-    # ──────────────────────────────────────────────
-    #  JSON Schema Builder
-    # ──────────────────────────────────────────────
-    def _build_json_schema(self, corpus_data: dict = None) -> dict:
-        schema = {
+        result = {
             "skill_name": "PersonaLingo",
-            "version": "1.0.0",
-            "description": "AI-powered personalized IELTS speaking corpus generator",
-            "author": "Xiangbo Cheng",
-            "repository": "https://github.com/username/PersonaLingo",
-            "workflow": {
-                "steps": [
-                    {
-                        "id": "collect_mbti",
-                        "name": "Collect MBTI Profile",
-                        "type": "user_input",
-                        "description": "Determine the student's MBTI personality type via test or direct input",
-                        "input_schema": {
-                            "mode": {"type": "string", "enum": ["test", "direct"], "description": "Whether to run the 12-question test or accept a known type"},
-                            "answers": {"type": "object", "description": "Map of question_id to 'a'/'b' (required when mode=test)"},
-                            "type_code": {"type": "string", "pattern": "^[EI][SN][TF][JP]$", "description": "4-letter MBTI code (required when mode=direct)"},
-                        },
-                    },
-                    {
-                        "id": "collect_interests",
-                        "name": "Collect Interest Profile",
-                        "type": "user_input",
-                        "description": "Gather the student's interest tags and personal hobby descriptions",
-                        "input_schema": {
-                            "tags": {
-                                "type": "array",
-                                "items": {"type": "string"},
-                                "minItems": 3,
-                                "maxItems": 8,
-                                "description": "Selected interest tags from the predefined list",
-                            },
-                            "descriptions": {
-                                "type": "array",
-                                "items": {"type": "string"},
-                                "minItems": 1,
-                                "maxItems": 3,
-                                "description": "2-3 sentence descriptions of top hobbies",
-                            },
-                        },
-                    },
-                    {
-                        "id": "collect_ielts",
-                        "name": "Collect IELTS Preferences",
-                        "type": "user_input",
-                        "description": "Gather exam-specific preferences including topics, target score, and date",
-                        "input_schema": {
-                            "topic_types": {
-                                "type": "array",
-                                "items": {"type": "string", "enum": ["People", "Places", "Events", "Objects", "Abstract"]},
-                                "description": "Topic categories the student is most concerned about",
-                            },
-                            "target_score": {
-                                "type": "string",
-                                "enum": ["6.0", "6.5", "7.0", "7.5+"],
-                                "description": "Target IELTS band score",
-                            },
-                            "exam_date": {
-                                "type": "string",
-                                "description": "Planned exam date (month/year)",
-                            },
-                        },
-                    },
-                    {
-                        "id": "generate_corpus",
-                        "name": "Generate Personalized Corpus",
-                        "type": "llm_generation",
-                        "description": "Use all collected data to generate a complete personalized speaking corpus",
-                        "depends_on": ["collect_mbti", "collect_interests", "collect_ielts"],
-                        "output_schema": {
-                            "persona": {"type": "object", "description": "Student profile summary"},
-                            "anchors": {"type": "array", "description": "3-4 anchor stories"},
-                            "bridges": {"type": "array", "description": "Topic bridge responses"},
-                            "vocabulary": {"type": "array", "description": "25-30 vocabulary upgrades"},
-                            "patterns": {"type": "array", "description": "8-10 sentence patterns"},
-                            "practice": {"type": "array", "description": "5 practice exercises"},
-                        },
-                    },
-                ],
+            "version": "2.0",
+            "user_profile": {
+                "mbti_type": mbti_type,
+                "interests": persona.get("interests", []),
+                "communication_style": persona.get("communication_style", ""),
             },
-            "prompts": {
-                "anchor_generation": "You are an expert IELTS speaking coach. Based on the student's MBTI type ({mbti_type}) and their personal interests/experiences, create {count} anchor stories. Each anchor should be a vivid personal narrative that can naturally connect to at least 5 different IELTS topics. Include sensory details, emotional elements, and match the student's communication style.",
-                "bridge_generation": "For each IELTS topic below, create a natural bridge response that connects the topic to one of the student's anchor stories. The bridge should feel conversational, be 4-6 sentences (25-35 seconds spoken), and target band {target_score}.",
-                "vocabulary_generation": "Create a personalized vocabulary upgrade list for an IELTS candidate with interests in {interests}. Include: interest-specific advanced vocabulary, general high-frequency replacements, connector upgrades, and emotion/description upgrades. Target band {target_score}.",
-                "pattern_generation": "Create sentence patterns that match the {mbti_type} communication style. Each pattern should include a template, an example using the student's interests, and guidance on when to use it.",
-                "practice_generation": "Create 5 deliberate practice exercises for an IELTS speaking candidate. Each exercise should include a prompt, a thinking guide, and a model answer using the student's anchor stories and vocabulary.",
-            },
-            "interest_tags": [
-                "Photography", "Music", "Coding", "Gaming", "Reading",
-                "Travel", "Sports", "Cooking", "Art", "Film",
-                "Nature", "Writing", "Dance", "Fitness", "Technology",
-                "Science", "History", "Philosophy", "Fashion", "Animals",
+            "workflows": [
+                {
+                    "name": "corpus_generation",
+                    "description": "语料库生成流程",
+                    "steps": [
+                        {
+                            "step": 1,
+                            "name": "persona",
+                            "description": "用户画像生成",
+                            "input": {"mbti_type": "str", "interests": "list", "target_score": "str"},
+                            "output": {"persona_profile": "dict", "communication_style": "str"},
+                        },
+                        {
+                            "step": 2,
+                            "name": "anchors",
+                            "description": "锚点故事生成",
+                            "input": {"persona_profile": "dict"},
+                            "output": {"anchor_stories": "list[3-4]"},
+                        },
+                        {
+                            "step": 3,
+                            "name": "bridges",
+                            "description": "题库桥接",
+                            "input": {"anchors": "list", "topic_pool": "list"},
+                            "output": {"bridge_responses": "list"},
+                        },
+                        {
+                            "step": 4,
+                            "name": "vocabulary",
+                            "description": "词汇升级",
+                            "input": {"target_score": "str", "interests": "list"},
+                            "output": {"vocabulary_upgrades": "list[25-30]"},
+                        },
+                        {
+                            "step": 5,
+                            "name": "patterns",
+                            "description": "句型模板",
+                            "input": {"mbti_type": "str", "target_score": "str"},
+                            "output": {"sentence_patterns": "list[8-10]"},
+                        },
+                    ],
+                },
+                {
+                    "name": "conversation_maintenance",
+                    "description": "对话维护流程",
+                    "steps": [
+                        {
+                            "step": 1,
+                            "name": "rag_retrieval",
+                            "description": "RAG 检索",
+                            "input": {"user_message": "str", "corpus_id": "str"},
+                            "output": {"relevant_context": "list"},
+                        },
+                        {
+                            "step": 2,
+                            "name": "coach_reply",
+                            "description": "对话回复",
+                            "input": {"context": "list", "user_message": "str"},
+                            "output": {"reply": "str"},
+                        },
+                        {
+                            "step": 3,
+                            "name": "content_extraction",
+                            "description": "内容提取",
+                            "input": {"conversation": "list"},
+                            "output": {"new_materials": "list"},
+                        },
+                        {
+                            "step": 4,
+                            "name": "style_learning",
+                            "description": "风格学习",
+                            "input": {"user_messages": "list"},
+                            "output": {"style_stats": "dict"},
+                        },
+                        {
+                            "step": 5,
+                            "name": "corpus_merge",
+                            "description": "语料融合",
+                            "input": {"new_materials": "list", "corpus_id": "str"},
+                            "output": {"updated_corpus": "dict"},
+                        },
+                    ],
+                },
             ],
+            "corpus_summary": {
+                "anchors_count": len(anchors),
+                "bridges_count": len(bridges),
+                "vocabulary_count": len(vocabulary),
+                "patterns_count": len(patterns),
+                "band_target": target_score,
+            },
+            "user_style": {
+                "avg_sentence_length": user_style.get("avg_sentence_length"),
+                "frequent_connectors": user_style.get("frequent_connectors", []),
+                "vocabulary_level": user_style.get("vocabulary_level"),
+            },
+            "export_time": datetime.now().isoformat(),
         }
-        if corpus_data:
-            schema["embedded_corpus"] = corpus_data
-        return schema
 
-    # ──────────────────────────────────────────────
-    #  OpenAPI Spec Builder
-    # ──────────────────────────────────────────────
-    def _build_openapi_spec(self) -> dict:
-        return {
-            "openapi": "3.0.3",
-            "info": {
-                "title": "PersonaLingo API",
-                "description": "AI-powered personalized IELTS speaking corpus generator. This API allows agents to conduct questionnaires, generate corpora, and export skill files.",
-                "version": "1.0.0",
-                "contact": {
-                    "name": "Xiangbo Cheng",
-                },
-            },
-            "servers": [
-                {"url": "http://localhost:8000", "description": "Local development"},
+        return result
+
+    def _extract_mbti(self, corpus: dict, questionnaire: dict | None) -> str:
+        """从语料库或问卷中提取 MBTI 类型"""
+        # 优先从 persona 中获取
+        persona = corpus.get("persona") or {}
+        if persona.get("mbti_type"):
+            return persona["mbti_type"]
+        # 然后从问卷中获取
+        if questionnaire and questionnaire.get("mbti_type"):
+            return questionnaire["mbti_type"]
+        return "Unknown"
+
+    # ============================================================
+    # Runnable Skill Pack (三段式蒸馏的自包含可运行产物)
+    # ============================================================
+
+    async def export_runnable_skill(
+        self,
+        corpus_id: str,
+        out_root: Optional[Path] = None,
+    ) -> Path:
+        """
+        导出自包含可运行 Skill 包。
+
+        产物目录:
+            <out_root>/<corpus_id>/
+              ├── Skill.md               人读用说明 + 7 步链路
+              ├── corpus.json            完整语料 + learner_profile + capability_framework
+              ├── runtime_protocol.md    Agent 执行协议
+              └── prompts/
+                   └── README.md         prompts 位置索引
+
+        Args:
+            corpus_id: 目标语料库 ID
+            out_root: 输出根路径,留空则使用 settings.SKILL_RUNNABLE_OUT_ROOT
+                     再降级到 <PersonaLingo>/skills/runnable/
+
+        Returns:
+            Path: 导出后的 Skill 包根目录
+        """
+        corpus = await get_corpus(corpus_id)
+        if not corpus:
+            raise ValueError(f"语料库不存在: {corpus_id}")
+
+        questionnaire = None
+        if corpus.get("questionnaire_id"):
+            questionnaire = await get_questionnaire(corpus["questionnaire_id"])
+
+        target_dir = self._resolve_runnable_dir(corpus_id, out_root)
+        target_dir.mkdir(parents=True, exist_ok=True)
+        (target_dir / "prompts").mkdir(parents=True, exist_ok=True)
+
+        # 1) Skill.md
+        skill_md = await self._build_runnable_md(corpus, questionnaire)
+        (target_dir / "Skill.md").write_text(skill_md, encoding="utf-8")
+
+        # 2) corpus.json (完整数据,便于外部 Agent 独立加载)
+        corpus_payload = self._build_corpus_payload(corpus, questionnaire)
+        (target_dir / "corpus.json").write_text(
+            json.dumps(corpus_payload, ensure_ascii=False, indent=2),
+            encoding="utf-8",
+        )
+
+        # 3) runtime_protocol.md (Agent 执行协议)
+        (target_dir / "runtime_protocol.md").write_text(
+            self._build_runtime_protocol(corpus_id), encoding="utf-8"
+        )
+
+        # 4) prompts/README.md (指向仓库中的 prompt 源文件)
+        (target_dir / "prompts" / "README.md").write_text(
+            self._build_prompts_index(), encoding="utf-8"
+        )
+
+        logger.info(f"[SkillExporter] runnable skill exported to {target_dir}")
+        return target_dir
+
+    @staticmethod
+    def _resolve_runnable_dir(corpus_id: str, out_root: Optional[Path]) -> Path:
+        """统一的路径解析: 显式传入 > env 配置 > 项目默认"""
+        if out_root is not None:
+            return Path(out_root) / corpus_id
+        configured = (get_settings().SKILL_RUNNABLE_OUT_ROOT or "").strip()
+        if configured:
+            return Path(configured) / corpus_id
+        # 项目默认: <PersonaLingo>/skills/runnable/<corpus_id>/
+        # __file__ = <repo>/PersonaLingo/backend/app/services/skill_exporter.py
+        # parents[3] = <repo>/PersonaLingo
+        repo_root = Path(__file__).resolve().parents[3]
+        return repo_root / "skills" / "runnable" / corpus_id
+
+    async def _build_runnable_md(self, corpus: dict, questionnaire: Optional[dict]) -> str:
+        mbti = self._extract_mbti(corpus, questionnaire)
+        anchors = corpus.get("anchors") or []
+        vocabulary = corpus.get("vocabulary") or []
+        patterns = corpus.get("patterns") or []
+        bridges = corpus.get("bridges") or []
+        band = corpus.get("band_strategy") or {}
+        target_score = band.get("target_score", "N/A") if isinstance(band, dict) else "N/A"
+        has_research = bool(corpus.get("learner_profile"))
+        has_framework = bool(corpus.get("capability_framework"))
+
+        lines = [
+            f"# PersonaLingo Skill - {mbti}",
+            "",
+            "## 语料库生成流程 (三段式蒸馏 / 7 步)",
+            "",
+            "### 输入",
+            "- MBTI类型 + 兴趣问卷 + 目标分数 (+ 上传材料/对话历史)",
+            "",
+            "### 流程",
+            "1. **Research 深度调研** → 聚合问卷+材料+对话→ LearnerProfile",
+            "2. **Framework 框架提炼** → 能力×场景×目标三维矩阵 + 痛点 + 提升路径",
+            "3. **Persona 用户画像** → MBTI维度分析 + 沟通风格推断",
+            "4. **Anchors 锚点故事** → 3-4个个人核心故事",
+            "5. **Bridges 题库桥接** → 21题桥接法连接锚点和题库",
+            "6. **Vocabulary 词汇升级** → 分数段适配的词汇表",
+            "7. **Patterns 句型模板** → MBTI匹配的表达模式",
+            "",
+            "### 输出",
+            "- 完整个性化语料库 (corpus.json) + 本 Skill.md",
+            "",
+            "## 当前语料库摘要",
+            f"- Stage 1 深度调研产物: {'✓ 已生成' if has_research else '✗ 未启用'}",
+            f"- Stage 2 能力框架产物: {'✓ 已生成' if has_framework else '✗ 未启用'}",
+            f"- 锚点数: {len(anchors)}",
+            f"- 桥接数: {len(bridges)}",
+            f"- 词汇数: {len(vocabulary)}",
+            f"- 句型数: {len(patterns)}",
+            f"- 目标分数: {target_score}",
+            "",
+            "## 如何加载本 Skill (给外部 Agent)",
+            "1. 读取同目录的 `corpus.json` 获得完整语料 + profile + framework",
+            "2. 按 `runtime_protocol.md` 描述的协议Call 法执行 RAG 检索 / 生成回复",
+            "3. 若需再生成: 调用 PersonaLingo `/api/distill/run?questionnaire_id=<id>`",
+        ]
+        return "\n".join(lines) + "\n"
+
+    @staticmethod
+    def _build_corpus_payload(corpus: dict, questionnaire: Optional[dict]) -> dict:
+        """将 DB 记录打包为自包含 JSON(去除 SQLite 内部时间戳等不必要字段)"""
+        whitelist = [
+            "id", "questionnaire_id", "status",
+            "persona", "anchors", "bridges", "vocabulary", "patterns",
+            "practices", "band_strategy", "user_style",
+            "learner_profile", "capability_framework",
+        ]
+        payload = {k: corpus.get(k) for k in whitelist if k in corpus}
+        payload["questionnaire"] = (
+            {
+                "mbti_type": questionnaire.get("mbti_type"),
+                "interests_tags": questionnaire.get("interests_tags"),
+                "ielts_target_score": questionnaire.get("ielts_target_score"),
+                "ielts_topic_types": questionnaire.get("ielts_topic_types"),
+            }
+            if questionnaire
+            else None
+        )
+        payload["skill_manifest"] = {
+            "name": "PersonaLingo",
+            "version": "3.0",
+            "pipeline": "three_stage_distill",
+            "stages": [
+                "research", "framework",
+                "persona", "anchors", "bridges", "vocabulary", "patterns",
             ],
-            "paths": {
-                "/api/questionnaire/mbti-questions": {
-                    "get": {
-                        "operationId": "getMBTIQuestions",
-                        "summary": "Get MBTI test questions and type list",
-                        "tags": ["Questionnaire"],
-                        "responses": {
-                            "200": {
-                                "description": "MBTI questions and type list",
-                                "content": {
-                                    "application/json": {
-                                        "schema": {
-                                            "type": "object",
-                                            "properties": {
-                                                "questions": {"type": "array", "items": {"$ref": "#/components/schemas/MBTIQuestion"}},
-                                                "types": {"type": "array", "items": {"$ref": "#/components/schemas/MBTIType"}},
-                                            },
-                                        },
-                                    },
-                                },
-                            },
-                        },
-                    },
-                },
-                "/api/questionnaire/interest-tags": {
-                    "get": {
-                        "operationId": "getInterestTags",
-                        "summary": "Get available interest tags",
-                        "tags": ["Questionnaire"],
-                        "responses": {
-                            "200": {
-                                "description": "List of interest tag strings",
-                                "content": {
-                                    "application/json": {
-                                        "schema": {"type": "array", "items": {"type": "string"}},
-                                    },
-                                },
-                            },
-                        },
-                    },
-                },
-                "/api/questionnaire/submit": {
-                    "post": {
-                        "operationId": "submitQuestionnaire",
-                        "summary": "Submit complete questionnaire",
-                        "tags": ["Questionnaire"],
-                        "requestBody": {
-                            "required": True,
-                            "content": {
-                                "application/json": {
-                                    "schema": {"$ref": "#/components/schemas/QuestionnaireSubmission"},
-                                },
-                            },
-                        },
-                        "responses": {
-                            "200": {
-                                "description": "Submission result with questionnaire ID",
-                                "content": {
-                                    "application/json": {
-                                        "schema": {"$ref": "#/components/schemas/QuestionnaireResponse"},
-                                    },
-                                },
-                            },
-                        },
-                    },
-                },
-                "/api/corpus/generate": {
-                    "post": {
-                        "operationId": "generateCorpus",
-                        "summary": "Generate personalized corpus from questionnaire",
-                        "tags": ["Corpus"],
-                        "requestBody": {
-                            "required": True,
-                            "content": {
-                                "application/json": {
-                                    "schema": {
-                                        "type": "object",
-                                        "properties": {
-                                            "questionnaire_id": {"type": "string"},
-                                        },
-                                        "required": ["questionnaire_id"],
-                                    },
-                                },
-                            },
-                        },
-                        "responses": {
-                            "200": {
-                                "description": "Generated corpus data",
-                                "content": {
-                                    "application/json": {
-                                        "schema": {"$ref": "#/components/schemas/Corpus"},
-                                    },
-                                },
-                            },
-                        },
-                    },
-                },
-                "/api/corpus/{corpus_id}": {
-                    "get": {
-                        "operationId": "getCorpus",
-                        "summary": "Get corpus by ID",
-                        "tags": ["Corpus"],
-                        "parameters": [
-                            {
-                                "name": "corpus_id",
-                                "in": "path",
-                                "required": True,
-                                "schema": {"type": "string"},
-                            },
-                        ],
-                        "responses": {
-                            "200": {
-                                "description": "Corpus data",
-                                "content": {
-                                    "application/json": {
-                                        "schema": {"$ref": "#/components/schemas/Corpus"},
-                                    },
-                                },
-                            },
-                        },
-                    },
-                },
-                "/api/skill/formats": {
-                    "get": {
-                        "operationId": "getSkillFormats",
-                        "summary": "Get available skill export formats",
-                        "tags": ["Skill Export"],
-                        "responses": {
-                            "200": {
-                                "description": "List of export formats",
-                                "content": {
-                                    "application/json": {
-                                        "schema": {
-                                            "type": "object",
-                                            "properties": {
-                                                "formats": {
-                                                    "type": "array",
-                                                    "items": {"$ref": "#/components/schemas/ExportFormat"},
-                                                },
-                                            },
-                                        },
-                                    },
-                                },
-                            },
-                        },
-                    },
-                },
-                "/api/skill/export": {
-                    "post": {
-                        "operationId": "exportSkill",
-                        "summary": "Export skill file in specified format",
-                        "tags": ["Skill Export"],
-                        "requestBody": {
-                            "required": True,
-                            "content": {
-                                "application/json": {
-                                    "schema": {
-                                        "type": "object",
-                                        "properties": {
-                                            "format": {"type": "string", "enum": ["markdown", "json", "openapi"]},
-                                            "corpus_id": {"type": "string", "description": "Optional corpus ID to embed data"},
-                                        },
-                                        "required": ["format"],
-                                    },
-                                },
-                            },
-                        },
-                        "responses": {
-                            "200": {
-                                "description": "Exported skill file",
-                                "content": {
-                                    "application/json": {
-                                        "schema": {
-                                            "type": "object",
-                                            "properties": {
-                                                "filename": {"type": "string"},
-                                                "content": {"type": "string"},
-                                                "mime_type": {"type": "string"},
-                                            },
-                                        },
-                                    },
-                                },
-                            },
-                        },
-                    },
-                },
-            },
-            "components": {
-                "schemas": {
-                    "MBTIQuestion": {
-                        "type": "object",
-                        "properties": {
-                            "id": {"type": "integer"},
-                            "dimension": {"type": "string"},
-                            "question": {"type": "string"},
-                            "option_a": {"type": "string"},
-                            "option_b": {"type": "string"},
-                        },
-                    },
-                    "MBTIType": {
-                        "type": "object",
-                        "properties": {
-                            "code": {"type": "string"},
-                            "description": {"type": "string"},
-                        },
-                    },
-                    "QuestionnaireSubmission": {
-                        "type": "object",
-                        "properties": {
-                            "mbti": {
-                                "type": "object",
-                                "properties": {
-                                    "mode": {"type": "string", "enum": ["test", "direct"]},
-                                    "answers": {"type": "object"},
-                                    "type_code": {"type": "string"},
-                                },
-                            },
-                            "interests": {
-                                "type": "object",
-                                "properties": {
-                                    "tags": {"type": "array", "items": {"type": "string"}},
-                                    "descriptions": {"type": "array", "items": {"type": "string"}},
-                                },
-                            },
-                            "ielts": {
-                                "type": "object",
-                                "properties": {
-                                    "topic_types": {"type": "array", "items": {"type": "string"}},
-                                    "target_score": {"type": "string"},
-                                    "exam_date": {"type": "string"},
-                                },
-                            },
-                        },
-                    },
-                    "QuestionnaireResponse": {
-                        "type": "object",
-                        "properties": {
-                            "id": {"type": "string"},
-                            "mbti_result": {"type": "object"},
-                            "interests": {"type": "object"},
-                            "ielts": {"type": "object"},
-                            "created_at": {"type": "string"},
-                        },
-                    },
-                    "Corpus": {
-                        "type": "object",
-                        "properties": {
-                            "id": {"type": "string"},
-                            "user_profile": {"type": "object"},
-                            "anchors": {"type": "array"},
-                            "bridges": {"type": "array"},
-                            "vocabulary": {"type": "array"},
-                            "patterns": {"type": "array"},
-                            "created_at": {"type": "string"},
-                        },
-                    },
-                    "ExportFormat": {
-                        "type": "object",
-                        "properties": {
-                            "id": {"type": "string"},
-                            "name": {"type": "string"},
-                            "description": {"type": "string"},
-                            "extension": {"type": "string"},
-                            "icon": {"type": "string"},
-                        },
-                    },
-                },
-            },
+            "exported_at": datetime.now().isoformat(),
         }
+        return payload
+
+    @staticmethod
+    def _build_runtime_protocol(corpus_id: str) -> str:
+        return (
+            "# Runtime Protocol (PersonaLingo Skill)\n"
+            "\n"
+            "本文档描述 Agent 如何加载与调用本 Skill 包。\n"
+            "\n"
+            "## 1. 入口\n"
+            "本 Skill 适配 huashu-nuwa 的两种入口:\n"
+            "- **明确目标**: 用户已完成 MBTI 问卷 + 目标分数 → 直接调用 `/api/distill/run`\n"
+            "- **模糊需求**: 用户仅提供自由文本 → 先调 `/api/distill/diagnose` 获得诊断问卷,再提交问卷之后进入 run\n"
+            "\n"
+            "## 2. 数据加载\n"
+            "```python\n"
+            "import json\n"
+            "with open('corpus.json', 'r', encoding='utf-8') as f:\n"
+            "    skill = json.load(f)\n"
+            "profile  = skill.get('learner_profile') or {}\n"
+            "framework = skill.get('capability_framework') or {}\n"
+            "anchors  = skill.get('anchors') or []\n"
+            "```\n"
+            "\n"
+            "## 3. 调用菜单 (HTTP)\n"
+            "| 操作 | 端点 | 备注 |\n"
+            "|---|---|---|\n"
+            f"| 对话维护 | `POST /api/conversations/{corpus_id}/chat` | NotebookLM 风格对话 + RAG |\n"
+            f"| 查看笔记 | `GET /api/notes/{corpus_id}` | 学习笔记时间线 |\n"
+            f"| 重新蒸馏 | `POST /api/distill/run?questionnaire_id=<qid>` | 触发 7 步链路 |\n"
+            "\n"
+            "## 4. 安全约束\n"
+            "- 回答必须以 `corpus.anchors` / `corpus.bridges` / `corpus.vocabulary` 为首要上下文\n"
+            "- 不得虚构用户未出现的个人经历\n"
+            "- 若 `capability_framework.lift_paths` 给出步骤,教练回复应对齐步骤\n"
+        )
+
+    @staticmethod
+    def _build_prompts_index() -> str:
+        return (
+            "# Prompts Index\n"
+            "\n"
+            "本 Skill 的运行时 prompt 模板集中维护在仓库代码仓(不随包导出以保持可维护性):\n"
+            "\n"
+            "| Stage | 文件 | 符号 |\n"
+            "|---|---|---|\n"
+            "| Stage 2 框架提炼 | `backend/app/services/capability_framework.py` | `FRAMEWORK_SYSTEM`, `FRAMEWORK_USER` |\n"
+            "| Stage 3 语料生成 | `backend/app/services/corpus_generator_prompts.py` | `PERSONA_*`, `ANCHORS_*`, `BRIDGES_*`, `VOCABULARY_*`, `PATTERNS_*`, `PRACTICES_*` |\n"
+            "| QMD 检索 | `backend/app/services/qmd_engine.py` | `QUERY_EXPANSION_PROMPT` |\n"
+            "\n"
+            "若需内联 prompt,可覆写本目录下的 `stage3_persona.txt` 等文件;Skill 加载会优先采用本地文件。\n"
+        )

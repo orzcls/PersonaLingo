@@ -1,0 +1,218 @@
+[
+  {
+    "id": "p1_2026q1_hobby",
+    "part": "P1",
+    "season": "2026-Q1",
+    "category": "hobby_leisure",
+    "title": "Hobby",
+    "questions": [
+      "What's your hobby?",
+      "Have your hobbies changed over the years?",
+      "Do you think hobbies are important? Why?",
+      "Did you have a hobby when you were a child?"
+    ],
+    "difficulty": "easy",
+    "is_new": true,
+    "recommended_anchors": [],
+    "source": "corpus_demo_2026q1",
+    "source_url": "corpus_demo://P1新题库总结1-4-PDF.pdf"
+  },
+  {
+    "id": "p1_2026q1_reading",
+    "part": "P1",
+    "season": "2026-Q1",
+    "category": "hobby_leisure",
+    "title": "Reading",
+    "questions": [
+      "Do you like reading?",
+      "What kinds of books do you like to read?",
+      "Do you prefer reading e-books or paper books?",
+      "Did you read a lot when you were a child?"
+    ],
+    "difficulty": "easy",
+    "is_new": true,
+    "recommended_anchors": [],
+    "source": "corpus_demo_2026q1",
+    "source_url": "corpus_demo://P1新题库总结1-4-PDF.pdf"
+  },
+  {
+    "id": "p1_2026q1_sports_team",
+    "part": "P1",
+    "season": "2026-Q1",
+    "category": "hobby_leisure",
+    "title": "Sports team",
+    "questions": [
+      "Do you like doing team sports?",
+      "Have you ever been part of a sports team?",
+      "Do you think team sports are important for children?",
+      "Do you prefer team sports or individual sports?"
+    ],
+    "difficulty": "easy",
+    "is_new": true,
+    "recommended_anchors": [],
+    "source": "corpus_demo_2026q1",
+    "source_url": "corpus_demo://P1新题库总结1-4-PDF.pdf"
+  },
+  {
+    "id": "p1_2026q1_morning_time",
+    "part": "P1",
+    "season": "2026-Q1",
+    "category": "hobby_leisure",
+    "title": "Morning time",
+    "questions": [
+      "Do you like mornings?",
+      "What do you usually do in the morning?",
+      "Has your morning routine changed over the years?",
+      "Are you more productive in the morning or evening?"
+    ],
+    "difficulty": "easy",
+    "is_new": true,
+    "recommended_anchors": [],
+    "source": "corpus_demo_2026q1",
+    "source_url": "corpus_demo://P1新题库总结1-4-PDF.pdf"
+  },
+  {
+    "id": "p1_2026q1_museum",
+    "part": "P1",
+    "season": "2026-Q1",
+    "category": "place",
+    "title": "Museum",
+    "questions": [
+      "Do you like visiting museums?",
+      "How often do you visit museums?",
+      "What kind of museums do you like?",
+      "Are museums popular in your country?"
+    ],
+    "difficulty": "easy",
+    "is_new": true,
+    "recommended_anchors": [],
+    "source": "corpus_demo_2026q1",
+    "source_url": "corpus_demo://P1新题库总结1-4-PDF.pdf"
+  },
+  {
+    "id": "p1_2026q1_scenery",
+    "part": "P1",
+    "season": "2026-Q1",
+    "category": "place",
+    "title": "Scenery / Views",
+    "questions": [
+      "Do you like looking at beautiful views?",
+      "Is there a place with a great view near where you live?",
+      "Do you prefer natural or urban scenery?",
+      "Do you like to take photos of scenery?"
+    ],
+    "difficulty": "easy",
+    "is_new": true,
+    "recommended_anchors": [],
+    "source": "corpus_demo_2026q1",
+    "source_url": "corpus_demo://P1新题库总结1-4-PDF.pdf"
+  },
+  {
+    "id": "p1_2026q1_food",
+    "part": "P1",
+    "season": "2026-Q1",
+    "category": "object",
+    "title": "Food",
+    "questions": [
+      "What's your favorite food?",
+      "Do you like cooking?",
+      "Do you prefer home-cooked food or eating out?",
+      "Has your taste in food changed over time?"
+    ],
+    "difficulty": "easy",
+    "is_new": true,
+    "recommended_anchors": [],
+    "source": "corpus_demo_2026q1",
+    "source_url": "corpus_demo://P1新题库总结1-4-PDF.pdf"
+  },
+  {
+    "id": "p1_2026q1_gifts",
+    "part": "P1",
+    "season": "2026-Q1",
+    "category": "object",
+    "title": "Gifts",
+    "questions": [
+      "Do you like giving gifts?",
+      "When did you last receive a gift?",
+      "What kinds of gifts are popular in your country?",
+      "Is it difficult for you to choose a gift?"
+    ],
+    "difficulty": "easy",
+    "is_new": true,
+    "recommended_anchors": [],
+    "source": "corpus_demo_2026q1",
+    "source_url": "corpus_demo://P1新题库总结1-4-PDF.pdf"
+  },
+  {
+    "id": "p1_2026q1_shoes",
+    "part": "P1",
+    "season": "2026-Q1",
+    "category": "object",
+    "title": "Shoes",
+    "questions": [
+      "Do you like buying shoes?",
+      "How often do you buy new shoes?",
+      "Do you prefer comfortable or fashionable shoes?",
+      "Have you ever bought shoes online?"
+    ],
+    "difficulty": "easy",
+    "is_new": true,
+    "recommended_anchors": [],
+    "source": "corpus_demo_2026q1",
+    "source_url": "corpus_demo://P1新题库总结1-4-PDF.pdf"
+  },
+  {
+    "id": "p1_2026q1_watches",
+    "part": "P1",
+    "season": "2026-Q1",
+    "category": "object",
+    "title": "Watches",
+    "questions": [
+      "Do you wear a watch?",
+      "Have you ever received a watch as a gift?",
+      "Do you think watches are important?",
+      "Do young people still wear watches in your country?"
+    ],
+    "difficulty": "easy",
+    "is_new": true,
+    "recommended_anchors": [],
+    "source": "corpus_demo_2026q1",
+    "source_url": "corpus_demo://P1新题库总结1-4-PDF.pdf"
+  },
+  {
+    "id": "p1_2026q1_dreams",
+    "part": "P1",
+    "season": "2026-Q1",
+    "category": "abstract",
+    "title": "Dreams",
+    "questions": [
+      "Do you often remember your dreams?",
+      "Do you think dreams are important?",
+      "Do you like talking about your dreams with others?",
+      "What was the most interesting dream you've had?"
+    ],
+    "difficulty": "easy",
+    "is_new": true,
+    "recommended_anchors": [],
+    "source": "corpus_demo_2026q1",
+    "source_url": "corpus_demo://P1新题库总结1-4-PDF.pdf"
+  },
+  {
+    "id": "p1_2026q1_patience",
+    "part": "P1",
+    "season": "2026-Q1",
+    "category": "abstract",
+    "title": "Patience",
+    "questions": [
+      "Are you a patient person?",
+      "When do you need to be patient?",
+      "Is it important to be patient?",
+      "Do you think patience is more important today than in the past?"
+    ],
+    "difficulty": "easy",
+    "is_new": true,
+    "recommended_anchors": [],
+    "source": "corpus_demo_2026q1",
+    "source_url": "corpus_demo://P1新题库总结1-4-PDF.pdf"
+  }
+]

@@ -1,45 +1,54 @@
 <template>
-  <section id="patterns" class="mb-12">
-    <h2 class="text-2xl font-bold text-white mb-6 flex items-center gap-2">
-      <svg class="w-6 h-6 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zm0 8a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zm12 0a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z" />
-      </svg>
-      Sentence Patterns
-    </h2>
+  <section id="patterns" class="mb-16 stagger">
+    <header class="mb-7">
+      <p class="num-chapter text-[11px] mb-2">§ 04 · syntax</p>
+      <h2 class="font-display italic text-3xl md:text-4xl text-ink-900 leading-tight">
+        Sentence Patterns
+      </h2>
+      <p class="mt-2 font-serif text-sm text-ink-500 italic max-w-xl">
+        Re-usable scaffolding — slot your own vocabulary into the marked apertures.
+      </p>
+      <div class="hairline mt-5"></div>
+    </header>
 
     <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-      <div
+      <article
         v-for="(pattern, i) in patterns"
         :key="i"
-        class="bg-gray-800 rounded-xl p-5 border border-gray-700/50 transition-all duration-200 hover:border-cyan-500/30 hover:shadow-lg hover:shadow-cyan-500/5"
+        class="paper-card p-6"
       >
-        <!-- Pattern Name -->
-        <h3 class="text-base font-semibold text-white mb-3">{{ pattern.pattern_name }}</h3>
+        <div class="flex items-baseline gap-3 mb-4">
+          <span class="num-chapter text-[10px]">{{ String(i + 1).padStart(2, '0') }}</span>
+          <h3 class="font-display italic text-xl text-ink-900 flex-1 leading-tight">
+            {{ pattern.pattern_name }}
+          </h3>
+        </div>
 
         <!-- Template Formula -->
-        <div class="bg-gray-900/50 rounded-lg p-3 mb-3 font-mono text-sm">
-          <span v-html="formatTemplate(pattern.template)"></span>
+        <div class="border-t border-b border-ink-900/15 py-3 px-1 mb-4 bg-paper-100/40">
+          <span class="font-mono text-[13px] leading-relaxed text-ink-700" v-html="formatTemplate(pattern.template)"></span>
         </div>
 
         <!-- Example -->
-        <div class="mb-3">
-          <h4 class="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1">Example</h4>
-          <p class="text-gray-300 text-sm leading-relaxed" v-html="formatExample(pattern)"></p>
+        <div class="mb-4">
+          <p class="field-label mb-1.5">Example</p>
+          <p class="font-serif italic text-[15px] leading-[1.8] text-ink-700" v-html="formatExample(pattern)"></p>
         </div>
 
         <!-- Usage Context -->
-        <p class="text-gray-500 text-xs mb-3">
-          <span class="text-gray-400 font-medium">When:</span> {{ pattern.usage_context }}
-        </p>
+        <div class="mb-3">
+          <p class="field-label mb-1">When</p>
+          <p class="font-serif text-[13px] text-ink-500 leading-relaxed">{{ pattern.usage_context }}</p>
+        </div>
+
+        <div class="hairline mb-3"></div>
 
         <!-- MBTI Fit -->
-        <div class="flex items-center gap-2">
-          <span class="px-2 py-0.5 bg-purple-500/10 border border-purple-500/30 rounded text-purple-300 text-xs">
-            MBTI Fit
-          </span>
-          <span class="text-gray-400 text-xs">{{ pattern.why_it_fits }}</span>
+        <div class="flex items-start gap-3">
+          <span class="font-mono text-[10px] text-ochre-500 tracking-widest shrink-0 pt-0.5">MBTI·FIT</span>
+          <span class="font-serif italic text-[13px] text-ink-500 leading-relaxed">{{ pattern.why_it_fits }}</span>
         </div>
-      </div>
+      </article>
     </div>
   </section>
 </template>
@@ -52,24 +61,21 @@ defineProps({
   }
 })
 
-// Format template: highlight [...] variables
+// Format template: highlight [...] variables —— ochre 下划线
 function formatTemplate(template) {
   if (!template) return ''
   return template.replace(
     /\[([^\]]+)\]/g,
-    '<span class="text-amber-300 bg-amber-500/10 px-1 rounded">[<span class="font-semibold">$1</span>]</span>'
+    '<span style="color:#C3822F;border-bottom:1px dashed #C3822F;padding:0 2px;font-style:italic">$1</span>'
   )
 }
 
-// Format example: highlight the filled-in variable parts with cyan
+// Format example: highlight differences against template —— indigo
 function formatExample(pattern) {
   if (!pattern.example) return ''
-  // Try to highlight words that differ from template placeholders
   let example = pattern.example
-  // Simple approach: highlight any part that matches keywords from template variables
   const templateVars = pattern.template?.match(/\[([^\]]+)\]/g) || []
   if (templateVars.length > 0) {
-    // Find the common prefix/suffix between template and example to highlight differences
     const templateParts = pattern.template.split(/\[[^\]]+\]/)
     let remaining = example
     let result = ''
@@ -77,7 +83,7 @@ function formatExample(pattern) {
       const part = templateParts[k]
       const idx = remaining.indexOf(part)
       if (idx > 0) {
-        result += `<span class="text-cyan-300 font-medium">${remaining.substring(0, idx)}</span>`
+        result += `<span style="color:#1E3A8A;font-weight:500;border-bottom:1px solid #1E3A8A">${remaining.substring(0, idx)}</span>`
         result += part
         remaining = remaining.substring(idx + part.length)
       } else if (idx === 0) {
@@ -90,7 +96,7 @@ function formatExample(pattern) {
       }
     }
     if (remaining) {
-      result += `<span class="text-cyan-300 font-medium">${remaining}</span>`
+      result += `<span style="color:#1E3A8A;font-weight:500;border-bottom:1px solid #1E3A8A">${remaining}</span>`
     }
     return result || example
   }

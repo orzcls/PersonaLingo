@@ -1,0 +1,308 @@
+[
+  {
+    "id": "p3_2025q2_001",
+    "part": "P3",
+    "linked_p2_id": "p2_2025q2_001",
+    "season": "2025-Q2",
+    "category": "person",
+    "title": "Discussion: Teaching and Learning",
+    "questions": [
+      "What qualities make a good teacher?",
+      "Do you think teaching methods have changed over the years?",
+      "Is it better to learn from a person or from the internet?",
+      "Should teachers be strict or friendly with students?"
+    ],
+    "is_new": true,
+    "difficulty": "hard",
+    "recommended_anchors": ["education", "mentor", "technology"]
+  },
+  {
+    "id": "p3_2025q2_002",
+    "part": "P3",
+    "linked_p2_id": "p2_2025q2_002",
+    "season": "2025-Q2",
+    "category": "person",
+    "title": "Discussion: Friendship",
+    "questions": [
+      "What makes a good friendship last?",
+      "Do you think online friendships are as valuable as in-person ones?",
+      "How has the way people make friends changed?",
+      "Is it important to have many friends or just a few close ones?"
+    ],
+    "is_new": true,
+    "difficulty": "hard",
+    "recommended_anchors": ["relationships", "social", "values"]
+  },
+  {
+    "id": "p3_2025q2_003",
+    "part": "P3",
+    "linked_p2_id": "p2_2025q2_003",
+    "season": "2025-Q2",
+    "category": "event",
+    "title": "Discussion: Problem Solving",
+    "questions": [
+      "Do you think problem-solving skills can be taught?",
+      "What types of problems do young people face today?",
+      "Is it better to solve problems alone or in a team?",
+      "How has technology changed the way we solve problems?"
+    ],
+    "is_new": true,
+    "difficulty": "hard",
+    "recommended_anchors": ["coding", "critical_thinking", "teamwork"]
+  },
+  {
+    "id": "p3_2025q2_004",
+    "part": "P3",
+    "linked_p2_id": "p2_2025q2_004",
+    "season": "2025-Q2",
+    "category": "event",
+    "title": "Discussion: Competition",
+    "questions": [
+      "Is competition healthy for society?",
+      "Do you think children should be encouraged to compete?",
+      "What are the advantages and disadvantages of competition?",
+      "How do different cultures view competition?"
+    ],
+    "is_new": true,
+    "difficulty": "hard",
+    "recommended_anchors": ["competition", "growth", "society"]
+  },
+  {
+    "id": "p3_2025q2_005",
+    "part": "P3",
+    "linked_p2_id": "p2_2025q2_005",
+    "season": "2025-Q2",
+    "category": "event",
+    "title": "Discussion: Helping Others",
+    "questions": [
+      "Why do some people choose not to help others?",
+      "Should governments do more to help people in need?",
+      "Do you think volunteering should be compulsory for students?",
+      "How has the concept of charity changed in the modern world?"
+    ],
+    "is_new": true,
+    "difficulty": "hard",
+    "recommended_anchors": ["community", "empathy", "society"]
+  },
+  {
+    "id": "p3_2025q2_006",
+    "part": "P3",
+    "linked_p2_id": "p2_2025q2_006",
+    "season": "2025-Q2",
+    "category": "place",
+    "title": "Discussion: Relaxation and Stress",
+    "questions": [
+      "Why are people more stressed now compared to the past?",
+      "What are effective ways to deal with stress?",
+      "Do you think work-life balance is achievable?",
+      "Should companies provide relaxation spaces for employees?"
+    ],
+    "is_new": true,
+    "difficulty": "hard",
+    "recommended_anchors": ["balance", "health", "modern_life"]
+  },
+  {
+    "id": "p3_2025q2_007",
+    "part": "P3",
+    "linked_p2_id": "p2_2025q2_007",
+    "season": "2025-Q2",
+    "category": "place",
+    "title": "Discussion: Travel and Tourism",
+    "questions": [
+      "How has tourism affected local cultures?",
+      "Do you think travel broadens the mind?",
+      "What are the environmental impacts of tourism?",
+      "Should there be limits on the number of tourists visiting popular places?"
+    ],
+    "is_new": true,
+    "difficulty": "hard",
+    "recommended_anchors": ["culture", "environment", "globalization"]
+  },
+  {
+    "id": "p3_2025q2_008",
+    "part": "P3",
+    "linked_p2_id": "p2_2025q2_008",
+    "season": "2025-Q2",
+    "category": "object",
+    "title": "Discussion: Technology in Daily Life",
+    "questions": [
+      "Do you think people rely too much on technology?",
+      "What are the risks of depending on technology?",
+      "How will AI change our daily lives in the future?",
+      "Should children be limited in their use of technology?"
+    ],
+    "is_new": true,
+    "difficulty": "hard",
+    "recommended_anchors": ["technology", "AI", "future"]
+  },
+  {
+    "id": "p3_2025q2_009",
+    "part": "P3",
+    "linked_p2_id": "p2_2025q2_009",
+    "season": "2025-Q2",
+    "category": "object",
+    "title": "Discussion: Reading and Knowledge",
+    "questions": [
+      "Do you think people read less nowadays?",
+      "Are e-books better than physical books?",
+      "How important is reading for personal development?",
+      "Should schools focus more on encouraging reading?"
+    ],
+    "is_new": true,
+    "difficulty": "hard",
+    "recommended_anchors": ["reading", "education", "knowledge"]
+  },
+  {
+    "id": "p3_2025q2_010",
+    "part": "P3",
+    "linked_p2_id": "p2_2025q2_010",
+    "season": "2025-Q2",
+    "category": "abstract",
+    "title": "Discussion: Lifelong Learning",
+    "questions": [
+      "Is it important to keep learning throughout your life?",
+      "What motivates people to learn new skills?",
+      "Do you think the education system prepares people for real life?",
+      "How has the internet changed the way people learn?"
+    ],
+    "is_new": true,
+    "difficulty": "hard",
+    "recommended_anchors": ["education", "technology", "self_improvement"]
+  },
+  {
+    "id": "p3_2025q2_011",
+    "part": "P3",
+    "linked_p2_id": "p2_2025q2_011",
+    "season": "2025-Q2",
+    "category": "abstract",
+    "title": "Discussion: Goals and Ambition",
+    "questions": [
+      "Do you think young people today are more ambitious?",
+      "Is it important to set goals in life?",
+      "What happens when people fail to achieve their goals?",
+      "How do cultural differences affect people's ambitions?"
+    ],
+    "is_new": true,
+    "difficulty": "hard",
+    "recommended_anchors": ["career", "growth", "motivation"]
+  },
+  {
+    "id": "p3_2025q2_012",
+    "part": "P3",
+    "linked_p2_id": "p2_2025q2_012",
+    "season": "2025-Q2",
+    "category": "event",
+    "title": "Discussion: Teamwork and Collaboration",
+    "questions": [
+      "Is teamwork more important than individual effort?",
+      "What challenges do people face when working in teams?",
+      "How can leaders create effective teams?",
+      "Do you think remote teams can be as effective as in-person teams?"
+    ],
+    "is_new": true,
+    "difficulty": "hard",
+    "recommended_anchors": ["teamwork", "leadership", "communication"]
+  },
+  {
+    "id": "p3_2025q2_013",
+    "part": "P3",
+    "linked_p2_id": "p2_2025q2_013",
+    "season": "2025-Q2",
+    "category": "person",
+    "title": "Discussion: Role Models",
+    "questions": [
+      "What qualities make a person inspiring?",
+      "Do you think celebrities are good role models?",
+      "Is it important for children to have role models?",
+      "How have role models changed compared to the past?"
+    ],
+    "is_new": true,
+    "difficulty": "hard",
+    "recommended_anchors": ["values", "influence", "society"]
+  },
+  {
+    "id": "p3_2025q2_014",
+    "part": "P3",
+    "linked_p2_id": "p2_2025q2_014",
+    "season": "2025-Q2",
+    "category": "event",
+    "title": "Discussion: Sleep and Lifestyle",
+    "questions": [
+      "Why do many young people stay up late?",
+      "How does lack of sleep affect productivity?",
+      "Do you think society puts too much pressure on people to be productive?",
+      "What are the long-term effects of poor sleeping habits?"
+    ],
+    "is_new": true,
+    "difficulty": "hard",
+    "recommended_anchors": ["health", "balance", "modern_life"]
+  },
+  {
+    "id": "p3_2025q2_015",
+    "part": "P3",
+    "linked_p2_id": "p2_2025q2_018",
+    "season": "2025-Q2",
+    "category": "abstract",
+    "title": "Discussion: Decision Making",
+    "questions": [
+      "What makes decision-making difficult for young people?",
+      "Do you think people make better decisions as they get older?",
+      "How much should parents influence their children's decisions?",
+      "Is it better to make quick decisions or think carefully?"
+    ],
+    "is_new": true,
+    "difficulty": "hard",
+    "recommended_anchors": ["growth", "independence", "wisdom"]
+  },
+  {
+    "id": "p3_2025q2_016",
+    "part": "P3",
+    "linked_p2_id": "p2_2025q2_019",
+    "season": "2025-Q2",
+    "category": "event",
+    "title": "Discussion: Success and Achievement",
+    "questions": [
+      "How do you define success?",
+      "Do you think success means the same thing to everyone?",
+      "Is hard work more important than talent for achieving success?",
+      "How does society measure success differently across cultures?"
+    ],
+    "is_new": true,
+    "difficulty": "hard",
+    "recommended_anchors": ["career", "values", "culture"]
+  },
+  {
+    "id": "p3_2025q2_017",
+    "part": "P3",
+    "linked_p2_id": "p2_2025q2_020",
+    "season": "2025-Q2",
+    "category": "person",
+    "title": "Discussion: Work and Professionalism",
+    "questions": [
+      "What qualities are most important in a professional?",
+      "Do you think job satisfaction is more important than salary?",
+      "How has the concept of a 'good job' changed over time?",
+      "Should people follow their passion or choose a stable career?"
+    ],
+    "is_new": true,
+    "difficulty": "hard",
+    "recommended_anchors": ["career", "values", "modern_life"]
+  },
+  {
+    "id": "p3_2025q2_018",
+    "part": "P3",
+    "linked_p2_id": "p2_2025q2_023",
+    "season": "2025-Q2",
+    "category": "abstract",
+    "title": "Discussion: Learning from Mistakes",
+    "questions": [
+      "Why is it important to learn from mistakes?",
+      "Do you think society is too harsh on people who make mistakes?",
+      "How can failure lead to success?",
+      "Should schools teach children that it's okay to fail?"
+    ],
+    "is_new": true,
+    "difficulty": "hard",
+    "recommended_anchors": ["growth", "resilience", "education"]
+  }
+]

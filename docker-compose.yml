@@ -4,18 +4,24 @@ services:
   backend:
     build: ./backend
     ports:
-      - "8000:8000"
+      - "9849:9849"
     environment:
+      - LLM_PROVIDER=${LLM_PROVIDER:-openai}
       - OPENAI_API_KEY=${OPENAI_API_KEY}
       - OPENAI_BASE_URL=${OPENAI_BASE_URL:-https://api.openai.com/v1}
-      - MODEL_NAME=${MODEL_NAME:-gpt-4o}
+      - OPENAI_MODEL=${OPENAI_MODEL:-gpt-4o-mini}
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
+      - ANTHROPIC_MODEL=${ANTHROPIC_MODEL:-claude-sonnet-4-20250514}
+      - DB_PATH=app/data/personalingo.db
+      - HOST=0.0.0.0
+      - PORT=9849
     volumes:
-      - ./backend:/app
+      - ./backend/app/data:/app/app/data
     command: python run.py
 
   frontend:
     build: ./frontend
     ports:
-      - "5173:80"
+      - "5273:80"
     depends_on:
       - backend

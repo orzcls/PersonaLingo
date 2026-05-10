@@ -1,26 +1,32 @@
-import uuid
 from datetime import datetime, timezone
 from fastapi import APIRouter, HTTPException
 from app.models.questionnaire import (
     MBTIQuestion,
     QuestionnaireSubmission,
     QuestionnaireResponse,
+    InterestTag,
 )
 from app.services.mbti_analyzer import MBTIAnalyzer
-from app.storage import questionnaire_store
+from app.db.crud import create_questionnaire, get_questionnaire
 
-router = APIRouter(prefix="/questionnaire", tags=["问卷系统"])
+router = APIRouter(tags=["Questionnaire"])
 
 # 实例化 MBTI 分析器
 mbti_analyzer = MBTIAnalyzer()
 
-# 预设兴趣标签列表
-INTEREST_TAGS = [
-    "Photography", "Music", "Coding", "Gaming", "Reading",
-    "Travel", "Sports", "Cooking", "Art", "Film",
-    "Nature", "Writing", "Dance", "Fitness", "Technology",
-    "Science", "History", "Philosophy", "Fashion", "Animals"
-]
+# 预设兴趣标签列表（按分类）
+INTEREST_TAGS = {
+    "creative": ["Photography", "Music", "Art", "Writing", "Film", "Dance"],
+    "tech": ["Coding", "AIGC", "Gaming", "Technology", "Science"],
+    "lifestyle": ["Travel", "Cooking", "Reading", "Fitness", "Fashion"],
+    "nature": ["Nature", "Animals", "Gardening", "Hiking", "Stargazing"],
+    "social": ["Volunteering", "Sports", "Board Games", "Table Tennis", "Piano"]
+}
+
+# 人/物/地预设分类
+RELATIONSHIP_TYPES = ["挚友", "对象", "家人", "导师", "同学", "室友", "宠物"]
+OBJECT_CATEGORIES = ["乐器", "书", "宠物", "车", "礼物", "收藏品", "电子设备", "运动器材"]
+PLACE_CATEGORIES = ["山水名胜", "国家/城市", "博物馆", "公园", "校园", "餐厅/咖啡店", "旅行目的地"]
 
 
 @router.get("/mbti-questions")
@@ -37,10 +43,15 @@ async def get_mbti_questions():
     }
 
 
-@router.get("/interest-tags", response_model=list[str])
+@router.get("/interest-tags")
 async def get_interest_tags():
-    """获取可选的兴趣标签列表"""
-    return INTEREST_TAGS
+    """获取可选的兴趣标签列表（按分类）"""
+    return {
+        "tags": INTEREST_TAGS,
+        "relationship_types": RELATIONSHIP_TYPES,
+        "object_categories": OBJECT_CATEGORIES,
+        "place_categories": PLACE_CATEGORIES,
+    }
 
 
 @router.post("/submit", response_model=QuestionnaireResponse)
@@ -62,27 +73,34 @@ async def submit_questionnaire(submission: QuestionnaireSubmission):
     else:
         raise HTTPException(status_code=400, detail="Invalid mbti mode, must be 'test' or 'direct'")
 
-    # 生成唯一 ID 和时间戳
-    questionnaire_id = str(uuid.uuid4())
+    # 持久化到 SQLite（字段结构与 corpus_generator 读取约定一致）
+    db_payload = {
+        "mbti_type": mbti_result.get("type_code", ""),
+        "mbti_dimensions": mbti_result.get("dimensions", {}),
+        "interests_tags": [tag.name for tag in submission.interests.tags],
+        "interests_descriptions": submission.interests.descriptions,
+        "ielts_target_score": submission.ielts.target_score,
+        "ielts_topic_types": submission.ielts.topic_types,
+        "ielts_exam_date": submission.ielts.exam_date or "",
+        "personal_background": submission.personal_background.model_dump() if submission.personal_background else None,
+        "life_experiences": submission.life_experiences.model_dump() if submission.life_experiences else None,
+    }
+    questionnaire_id = await create_questionnaire(db_payload)
     created_at = datetime.now(timezone.utc).isoformat()
 
-    # 构建存储数据
-    record = {
-        "id": questionnaire_id,
-        "mbti_result": mbti_result,
-        "interests": {
-            "tags": submission.interests.tags,
+    return QuestionnaireResponse(
+        id=questionnaire_id,
+        mbti_result=mbti_result,
+        interests={
+            "tags": [tag.model_dump() for tag in submission.interests.tags],
             "descriptions": submission.interests.descriptions,
         },
-        "ielts": {
+        ielts={
             "topic_types": submission.ielts.topic_types,
             "target_score": submission.ielts.target_score,
             "exam_date": submission.ielts.exam_date,
         },
-        "created_at": created_at,
-    }
-
-    # 存入内存
-    questionnaire_store[questionnaire_id] = record
-
-    return QuestionnaireResponse(**record)
+        personal_background=submission.personal_background.model_dump() if submission.personal_background else None,
+        life_experiences=submission.life_experiences.model_dump() if submission.life_experiences else None,
+        created_at=created_at,
+    )

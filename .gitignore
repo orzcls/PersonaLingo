@@ -2,6 +2,7 @@
 node_modules/
 __pycache__/
 *.pyc
+*.pyo
 .venv/
 venv/
 env/
@@ -27,7 +28,18 @@ Thumbs.db
 
 # Database
 *.db
+*.db-shm
+*.db-wal
 *.sqlite3
 
 # Logs
 *.log
+
+# Runtime files
+*_pid.txt
+
+# Test cache
+.pytest_cache/
+
+# Backup files
+*.bak

@@ -1,60 +1,76 @@
 <template>
-  <div class="max-w-4xl mx-auto px-4 py-12">
-    <!-- Progress Bar -->
-    <div class="mb-12">
+  <div class="max-w-4xl mx-auto px-4 py-14">
+    <!-- Page Header -->
+    <header class="mb-10">
+      <p class="num-chapter mb-3">§ 02 · intake</p>
+      <h1 class="font-display italic text-4xl md:text-5xl text-ink-900 leading-[1.05]">
+        Tell us who you are
+      </h1>
+      <p class="mt-3 font-serif italic text-ink-500 text-sm max-w-xl">
+        Five short chapters. Answer with the particulars — details make a voice.
+      </p>
+      <div class="hairline-strong mt-6"></div>
+    </header>
+
+    <!-- Progress -->
+    <div class="mb-10">
       <ProgressBar :steps="stepNames" :current-step="store.currentStep" />
     </div>
 
     <!-- Step Content -->
-    <div class="bg-dark-800/50 border border-dark-700 rounded-2xl p-8 min-h-[400px]">
+    <article class="paper-card p-8 md:p-10 min-h-[420px]">
       <Transition :name="transitionName" mode="out-in">
         <MBTIStep v-if="store.currentStep === 1" key="mbti" />
-        <InterestStep v-else-if="store.currentStep === 2" key="interest" />
-        <IELTSStep v-else-if="store.currentStep === 3" key="ielts" />
+        <BackgroundStep v-else-if="store.currentStep === 2" key="background" />
+        <InterestStep v-else-if="store.currentStep === 3" key="interest" />
+        <ExperienceStep v-else-if="store.currentStep === 4" key="experience" />
+        <IELTSStep v-else-if="store.currentStep === 5" key="ielts" />
       </Transition>
-    </div>
+    </article>
 
-    <!-- Validation Message -->
+    <!-- Validation -->
     <Transition name="fade">
-      <div v-if="validationError" class="mt-4 px-4 py-3 bg-red-500/10 border border-red-500/30 rounded-xl text-red-400 text-sm text-center">
+      <div
+        v-if="validationError"
+        class="mt-5 px-5 py-3 border-l-2 border-rouge-600 bg-paper-100/50 font-serif italic text-[14px] text-ink-700"
+      >
         {{ validationError }}
       </div>
     </Transition>
 
-    <!-- Navigation Buttons -->
-    <div class="flex justify-between mt-8">
+    <!-- Navigation -->
+    <div class="flex items-center justify-between mt-10">
       <button
         :disabled="store.isFirstStep"
-        :class="[
-          'px-6 py-3 rounded-xl font-medium transition-all duration-200',
-          store.isFirstStep
-            ? 'bg-dark-800 text-dark-500 cursor-not-allowed'
-            : 'bg-dark-700 text-white hover:bg-dark-600'
-        ]"
+        class="nav-btn"
+        :class="store.isFirstStep ? 'is-disabled' : ''"
         @click="handlePrev"
       >
-        ← Previous
+        <span class="text-ochre-500 mr-1">←</span> Previous
       </button>
+
+      <span class="font-mono text-[11px] text-ink-500 tracking-widest">
+        {{ String(store.currentStep).padStart(2, '0') }} / {{ String(stepNames.length).padStart(2, '0') }}
+      </span>
 
       <button
         :disabled="isSubmitting"
-        :class="[
-          'px-6 py-3 rounded-xl font-medium transition-all duration-200',
-          store.isLastStep
-            ? 'bg-gradient-to-r from-accent-500 to-secondary-500 text-white shadow-lg shadow-accent-500/25 hover:shadow-accent-500/40'
-            : 'bg-accent-500 text-white hover:bg-accent-600',
-          isSubmitting ? 'opacity-50 cursor-not-allowed' : ''
-        ]"
+        class="btn-ink"
+        :class="isSubmitting ? 'opacity-50 cursor-not-allowed' : ''"
         @click="handleNext"
       >
         <span v-if="isSubmitting" class="inline-flex items-center gap-2">
-          <svg class="animate-spin h-4 w-4" viewBox="0 0 24 24">
-            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" fill="none" />
-            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
-          </svg>
-          Submitting...
+          <span class="flex gap-0.5">
+            <span class="w-1 h-1 rounded-full bg-ochre-300 animate-pulse"></span>
+            <span class="w-1 h-1 rounded-full bg-ochre-300 animate-pulse" style="animation-delay:.15s"></span>
+            <span class="w-1 h-1 rounded-full bg-ochre-300 animate-pulse" style="animation-delay:.3s"></span>
+          </span>
+          Submitting
         </span>
-        <span v-else>{{ store.isLastStep ? 'Submit & Generate' : 'Next →' }}</span>
+        <template v-else>
+          <span>{{ store.isLastStep ? 'Submit & Compose' : 'Next' }}</span>
+          <span class="text-ochre-300">→</span>
+        </template>
       </button>
     </div>
   </div>
@@ -65,7 +81,9 @@ import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import ProgressBar from '../components/ProgressBar.vue'
 import MBTIStep from '../components/questionnaire/MBTIStep.vue'
+import BackgroundStep from '../components/questionnaire/BackgroundStep.vue'
 import InterestStep from '../components/questionnaire/InterestStep.vue'
+import ExperienceStep from '../components/questionnaire/ExperienceStep.vue'
 import IELTSStep from '../components/questionnaire/IELTSStep.vue'
 import { useQuestionnaireStore } from '../stores/questionnaire'
 import { submitQuestionnaire } from '../api/index.js'
@@ -73,29 +91,20 @@ import { submitQuestionnaire } from '../api/index.js'
 const store = useQuestionnaireStore()
 const router = useRouter()
 
-const stepNames = ['MBTI Profile', 'Interests', 'IELTS Preferences']
+const stepNames = ['Personality', 'Background', 'Interests', 'Experience', 'Target']
 const validationError = ref('')
 const isSubmitting = ref(false)
 const transitionName = ref('slide-left')
 
 function validateCurrentStep() {
   validationError.value = ''
-
   if (store.currentStep === 1) {
     if (!store.mbtiResult) {
       validationError.value = 'Please select your MBTI type or complete the quiz.'
       return false
     }
   }
-
-  if (store.currentStep === 2) {
-    if (store.interests.tags.length < 3) {
-      validationError.value = 'Please select at least 3 interest tags.'
-      return false
-    }
-  }
-
-  if (store.currentStep === 3) {
+  if (store.currentStep === 5) {
     if (!store.ieltsPreference.targetBand) {
       validationError.value = 'Please select a target band score.'
       return false
@@ -105,7 +114,6 @@ function validateCurrentStep() {
       return false
     }
   }
-
   return true
 }
 
@@ -117,7 +125,6 @@ function handlePrev() {
 
 async function handleNext() {
   if (!validateCurrentStep()) return
-
   if (store.isLastStep) {
     await handleSubmit()
   } else {
@@ -129,22 +136,25 @@ async function handleNext() {
 async function handleSubmit() {
   isSubmitting.value = true
   validationError.value = ''
-
   try {
     const payload = {
-      mbti_type: store.mbtiResult,
-      mbti_answers: store.mbtiAnswers,
+      mbti: {
+        mode: store.mbtiResult ? 'direct' : 'test',
+        type_code: store.mbtiResult,
+        answers: store.mbtiAnswers
+      },
       interests: {
         tags: store.interests.tags,
         descriptions: store.interests.descriptions.filter(d => d.trim())
       },
-      ielts_preference: {
-        target_band: store.ieltsPreference.targetBand,
+      ielts: {
+        target_score: store.ieltsPreference.targetBand,
         topic_types: store.ieltsPreference.topicTypes,
-        exam_month: store.ieltsPreference.examMonth
-      }
+        exam_date: store.ieltsPreference.examMonth
+      },
+      personal_background: store.personalBackground,
+      life_experiences: store.lifeExperiences
     }
-
     const response = await submitQuestionnaire(payload)
     store.setQuestionnaireId(response.id || response.questionnaire_id)
     router.push('/generating')
@@ -158,37 +168,35 @@ async function handleSubmit() {
 </script>
 
 <style scoped>
+.nav-btn {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.55rem 0;
+  font-family: 'Fraunces', Georgia, serif;
+  font-style: italic;
+  font-size: 15px;
+  color: var(--ink-700, #2B303C);
+  transition: color .2s ease;
+}
+.nav-btn:hover:not(.is-disabled) { color: var(--ink-900, #1B1F2A); }
+.nav-btn.is-disabled {
+  color: var(--ink-300, #A7ABB3);
+  cursor: not-allowed;
+}
+
 .slide-left-enter-active,
 .slide-left-leave-active,
 .slide-right-enter-active,
 .slide-right-leave-active {
-  transition: all 0.3s ease;
+  transition: all 0.35s cubic-bezier(.2,.8,.2,1);
 }
-
-.slide-left-enter-from {
-  opacity: 0;
-  transform: translateX(30px);
-}
-.slide-left-leave-to {
-  opacity: 0;
-  transform: translateX(-30px);
-}
-
-.slide-right-enter-from {
-  opacity: 0;
-  transform: translateX(-30px);
-}
-.slide-right-leave-to {
-  opacity: 0;
-  transform: translateX(30px);
-}
+.slide-left-enter-from { opacity: 0; transform: translateX(24px); }
+.slide-left-leave-to { opacity: 0; transform: translateX(-24px); }
+.slide-right-enter-from { opacity: 0; transform: translateX(-24px); }
+.slide-right-leave-to { opacity: 0; transform: translateX(24px); }
 
 .fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.2s ease;
-}
+.fade-leave-active { transition: opacity 0.25s ease; }
 .fade-enter-from,
-.fade-leave-to {
-  opacity: 0;
-}
+.fade-leave-to { opacity: 0; }
 </style>

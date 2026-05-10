@@ -1,0 +1,214 @@
+{
+  "version": "1.0",
+  "source": "程同学课堂精练",
+  "scoring_criteria": {
+    "fluency": {
+      "p1_length": "25秒",
+      "p2_length": "1:45",
+      "p3_length": "45秒",
+      "fillers": ["well", "I mean", "you know"],
+      "connectors_ratio": "词50% + 短语50%",
+      "connectors": {
+        "addition": ["and", "what's more", "in addition", "by the way", "on top of that", "other than that"],
+        "result": ["so", "in this way", "in this case"]
+      }
+    },
+    "grammar": {
+      "sentence_types": "简单句 + 复合句40%（从句、强调句、同位语）",
+      "tenses": "一般三态为主",
+      "emphasis_pattern": "It's … (名词) that …",
+      "appositive_example": "Jack Ma, an ambitious businessman, said that he has no interest in money."
+    }
+  },
+  "examples": [
+    {
+      "topic": "Sports Team",
+      "part": "P1",
+      "type": "preference",
+      "question": "Do you like watching team sports games?",
+      "sample_answer": "Not really. Team sports tend to bring anxious emotions, and there are no solo parts to appreciate. Instead, I prefer to watch some e-sport competitions, like Valorant.",
+      "teacher_feedback": "用 Instead 转折引出真正偏好；注意给出具体例子",
+      "key_expressions": ["bring anxious emotions", "solo parts to appreciate", "e-sport competitions"]
+    },
+    {
+      "topic": "Sports Team",
+      "part": "P1",
+      "type": "experience",
+      "question": "Have you ever been part of a sports team?",
+      "sample_answer": "Well, I was part of a programming competition team. At that time, I was responsible for designing algorithms and coding. It really boosted my energy in learning computer science.",
+      "teacher_feedback": "经历题注意时地人事四要素；which引导感受句",
+      "key_expressions": ["was responsible for", "boosted my energy", "programming competition"]
+    },
+    {
+      "topic": "Zoo",
+      "part": "P1",
+      "type": "preference",
+      "question": "Do you like going to zoos?",
+      "sample_answer": "Well, I always have a passion for zoos, just because I'm an animal fanatic, under the influence of wildlife documentaries. As I recall, last time I visited a zoo in Guangzhou where I interacted with their star animals, yet the highlight was riding the cable car to see the bird's-eye view.",
+      "teacher_feedback": "结合话题词 + 个人经历 + 具体细节；交流感强",
+      "key_expressions": ["have a passion for", "animal fanatic", "under the influence of", "the highlight was"]
+    },
+    {
+      "topic": "Typing",
+      "part": "P1",
+      "type": "experience",
+      "question": "When did you learn how to type on a keyboard?",
+      "sample_answer": "I started learning to type when I was about 6 years old. I practiced for children's calculation competitions. At that time, I typed the results into the computer and repeatedly checked my answers.",
+      "teacher_feedback": "经历题提供具体时间和背景",
+      "key_expressions": ["started learning", "practiced for", "repeatedly checked"]
+    },
+    {
+      "topic": "Typing",
+      "part": "P1",
+      "type": "comparison",
+      "question": "Do you prefer typing or handwriting?",
+      "sample_answer": "I definitely prefer typing. As a coder, I deal with vast information on a daily basis, so typing is more efficient and smoother than handwriting. Besides, with handwriting, many words become forgettable over time.",
+      "teacher_feedback": "对比题捧一踩一；用身份特点支撑理由",
+      "key_expressions": ["deal with vast information", "on a daily basis", "more efficient and smoother"]
+    },
+    {
+      "topic": "Shopping",
+      "part": "P1",
+      "type": "comparison",
+      "question": "Do you prefer going to shopping malls or street markets?",
+      "sample_answer": "It depends on what I consider to buy. If I want to buy local snacks or fresh fruits, markets are more convenient to reach in a short distance. While if I purchase electronics or furniture, malls offer richer varieties and higher quality.",
+      "teacher_feedback": "分情况讨论是对比题高分策略；按物品类型分类讨论",
+      "key_expressions": ["It depends on", "convenient to reach", "richer varieties"]
+    },
+    {
+      "topic": "Sea vs Mountains",
+      "part": "P1",
+      "type": "comparison",
+      "question": "Do you prefer the mountains or the sea?",
+      "sample_answer": "I'd say the sea. I once visited a coastal city where the shiny sea water with flying seagulls singing around was really poetic. On the other hand, mountains can be tiring since I don't often exercise.",
+      "teacher_feedback": "用画面感描述增强表达；对比时注意角度不同",
+      "key_expressions": ["shiny sea water", "flying seagulls", "really poetic"]
+    },
+    {
+      "topic": "Food",
+      "part": "P1",
+      "type": "preference",
+      "question": "What's your favorite food?",
+      "sample_answer": "My favorite food is sweet potato noodles, which are sour and spicy. They have a strong taste like hotpot. Once I take a piece of noodles, I just can't stop and continue to eat the whole bowl.",
+      "teacher_feedback": "具象化描述食物特点；用感官词汇",
+      "key_expressions": ["sour and spicy", "a strong taste", "can't stop"]
+    },
+    {
+      "topic": "Food",
+      "part": "P1",
+      "type": "category",
+      "question": "What kind of foreign food do you like to eat?",
+      "sample_answer": "I enjoy Japanese cuisine, especially sushi. There are wide choices of fresh seafood, and you can take a piece of sushi one at a time to taste different textures. I also like American fast-food like burgers sometimes.",
+      "teacher_feedback": "种类题: 大类→小类→特点/原因",
+      "key_expressions": ["Japanese cuisine", "wide choices of", "taste different textures"]
+    },
+    {
+      "topic": "Cars",
+      "part": "P1",
+      "type": "category",
+      "question": "What kind of cars do you like?",
+      "sample_answer": "I like sports cars, especially the Xiaomi SU7. I recently took a C1 driving test for manual control driving, which is suitable for sports cars. The feeling of powerful engine and exciting speed, especially the sense of pushback, is really thrilling.",
+      "teacher_feedback": "话题词丰富；结合个人经历",
+      "key_expressions": ["sports cars", "manual control driving", "the sense of pushback"]
+    },
+    {
+      "topic": "Gifts",
+      "part": "P1",
+      "type": "category",
+      "question": "What kinds of gifts are popular in your country?",
+      "sample_answer": "There are a wide range of presents that are welcomed by Chinese people, such as tea, wine and desserts. Among them, wine is a common choice, not only because it has different flavors from foreign wines, but also wine is a symbol of respect in Chinese traditions.",
+      "teacher_feedback": "Kinds题型标准示范: 三类 + 典型一类 + 原因x2",
+      "key_expressions": ["a wide range of", "Among them", "not only... but also", "a symbol of respect"]
+    },
+    {
+      "topic": "Punctuality",
+      "part": "P1",
+      "type": "opinion",
+      "question": "Do you think punctuality is important?",
+      "sample_answer": "Absolutely. Being punctual reflects a person's manner and shows our respect to others. It also helps maintain a well-planned life with high efficiency. If someone is always late on a daily basis, he or she may delay more and more tasks and become anxious.",
+      "teacher_feedback": "观点题: 立场 + 理由x2 + 反证假设句",
+      "key_expressions": ["reflects a person's manner", "well-planned life", "on a daily basis", "procrastination"]
+    },
+    {
+      "topic": "Museums",
+      "part": "P1",
+      "type": "opinion",
+      "question": "Do you think museums are important?",
+      "sample_answer": "I agree. Museums can purify people's minds and spirits, and reduce some of our daily pressure. Imagining many cities don't have museums — local traditions and cultures would be hard to display, and it would also reduce tourism value.",
+      "teacher_feedback": "反证法: 假设没有博物馆的负面影响",
+      "key_expressions": ["purify people's minds", "reduce daily pressure", "tourism value"]
+    },
+    {
+      "topic": "Saving Money",
+      "part": "P1",
+      "type": "opinion",
+      "question": "Do you think it's important to save money?",
+      "sample_answer": "Yes, saving money helps us to purchase what we really want in the future. More importantly, savings can solve emergencies, like treating an illness or making an investment when opportunities arise.",
+      "teacher_feedback": "从长期和应急两个角度论述",
+      "key_expressions": ["purchase what we really want", "solve emergencies", "treating an illness"]
+    },
+    {
+      "topic": "Keys",
+      "part": "P1",
+      "type": "experience",
+      "question": "Have you ever lost your keys?",
+      "sample_answer": "Yes, once when I went swimming with my parents near a river, I was so careless that my key was lost. I suffered from strict criticism after that. Ever since then, I've switched to digital keys and don't usually carry physical keys anymore.",
+      "teacher_feedback": "经历题: 时地人事 + 后续影响",
+      "key_expressions": ["so careless that", "suffered from strict criticism", "ever since then"]
+    },
+    {
+      "topic": "Handmade Gifts",
+      "part": "P1",
+      "type": "experience",
+      "question": "Have you ever sent handmade gifts to others?",
+      "sample_answer": "Yes, I once made a handmade piano model for a friend. We used to study together, and she reached level 10 in piano playing. I sent the model to her as a congratulation gift, which she really appreciated.",
+      "teacher_feedback": "经历题: 具体物品 + 背景 + 对方反应",
+      "key_expressions": ["handmade piano model", "reached level 10", "congratulation gift"]
+    },
+    {
+      "topic": "Walking in Parks",
+      "part": "P1",
+      "type": "opinion",
+      "question": "Why do people like to walk in parks?",
+      "sample_answer": "I think it's mainly because parks offer peaceful sights like quiet lakes and blooming flowers. People can breathe fresh air and get away from city noises, which is really soothing for the mind.",
+      "teacher_feedback": "画面感描述 + 对比城市环境",
+      "key_expressions": ["peaceful sights", "blooming flowers", "breathe fresh air", "get away from city noises"]
+    },
+    {
+      "topic": "Public Places",
+      "part": "P1",
+      "type": "preference",
+      "question": "Do you often go to public places with your friends?",
+      "sample_answer": "Yes, quite often. It enriches my spirits and spices up my life. For example, there are certain attractive spots in my city, like internet bars and wine bars, where we hang out and have a blast.",
+      "teacher_feedback": "用地道表达 spice up / have a blast 提升词汇分",
+      "key_expressions": ["enriches my spirits", "spices up my life", "have a blast"]
+    },
+    {
+      "topic": "Famous Person",
+      "part": "P2",
+      "type": "narrative",
+      "question": "Describe a famous person you would like to meet",
+      "sample_answer": "I'd like to meet VAE, who is a famous original musician from China. As for how he looks, he's tall and slim, with a well-featured appearance, always wearing glasses. Plus, humorous and creative are probably the best descriptions of his personality. I first knew him in my childhood from my sister's playlist, and was attracted by his music. I would listen to his music while doing homework — the light and peaceful melody could release my daily pressure from all-day learning. If I had the chance, I'd love to attend his concert in Chongqing, get a flower board with his signature, and closely enjoy his live performances, especially some classic old songs that you can't find on the internet. The reason I want to meet him is that his sense of humor can teach you a way to tell jokes, and his love songs create an environment that brings deep emotions.",
+      "teacher_feedback": "P2标准结构: 身份外貌性格 + 认识过程 + 在哪见 + 为什么想见；话题词丰富",
+      "key_expressions": ["well-featured appearance", "light and peaceful melody", "release my daily pressure", "classic old songs"]
+    },
+    {
+      "topic": "Good Friend",
+      "part": "P2",
+      "type": "narrative",
+      "question": "Describe a good friend who is important to you",
+      "sample_answer": "My good friend is JH, who is my teammate in school competitions. He's tall and slim, with a well-featured appearance, always wearing glasses. Plus, humorous and innocent are the best descriptions of his personality. We got to know each other during college life through programming competitions. He gave me creative ideas to solve algorithm problems, and ever since then we became good friends who hang out for meals after classes. We've known each other for 5 years, starting as classmates, and with time passing by, we often do creative course projects and learn from each other. Even after graduation, we share new technologies on social media. He's important because he never draws back from difficulties, and we have a special way to chat — as coders, we use zero and one to symbolize events around us.",
+      "teacher_feedback": "P2人物类模板: 涵盖所有子问题；细节丰富",
+      "key_expressions": ["programming competitions", "creative ideas", "ever since then", "never draws back"]
+    },
+    {
+      "topic": "Barbecue Experience",
+      "part": "P1",
+      "type": "experience",
+      "question": "Have you ever tried outdoor barbecue?",
+      "sample_answer": "Yes, last year I went to a mountain nearby my college with my roommates. At that time, we held a party with barbecue and music, and prepared some drinks like wine and soda, which was really memorable.",
+      "teacher_feedback": "经历题简洁版: 时间+地点+人物+事件+感受",
+      "key_expressions": ["held a party with", "prepared some drinks", "really memorable"]
+    }
+  ]
+}

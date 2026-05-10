@@ -1,0 +1,92 @@
+{
+  "id": "smoke_c_0fe070a1",
+  "questionnaire_id": "smoke_q_3eb12de2",
+  "status": "completed",
+  "persona": {
+    "mbti": "INTJ",
+    "style": "analytical"
+  },
+  "anchors": [
+    {
+      "title": "Travel to Japan",
+      "keywords": [
+        "kyoto",
+        "ramen"
+      ]
+    }
+  ],
+  "bridges": [],
+  "vocabulary": {
+    "items": [
+      "utilize",
+      "albeit"
+    ]
+  },
+  "patterns": [
+    "It's worth noting that ..."
+  ],
+  "practices": null,
+  "band_strategy": null,
+  "user_style": null,
+  "learner_profile": {
+    "background": {
+      "mbti": "INTJ",
+      "target_score": 6.5,
+      "exam_timeline": "3 months"
+    },
+    "language_samples": [
+      {
+        "source": "conversation",
+        "text": "I like traveling."
+      }
+    ],
+    "weakness_signals": [
+      "short_sentences:3.5",
+      "lack_connectors"
+    ],
+    "goal_vector": {
+      "target_score": 6.5
+    },
+    "topic_signals": {
+      "hot": [
+        "travel"
+      ]
+    }
+  },
+  "capability_framework": {
+    "matrix": [
+      {
+        "ability": "fluency",
+        "scenario": "P2 narrative",
+        "goal": "extend to 2min"
+      }
+    ],
+    "pain_points": [
+      "过短回答"
+    ],
+    "lift_paths": [
+      "每次回答拓展 2 个细节 + 1 个情绪形容词"
+    ]
+  },
+  "questionnaire": {
+    "mbti_type": "INTJ",
+    "interests_tags": "[\"reading\", \"travel\"]",
+    "ielts_target_score": "6.5",
+    "ielts_topic_types": "[\"P1\", \"P2\"]"
+  },
+  "skill_manifest": {
+    "name": "PersonaLingo",
+    "version": "3.0",
+    "pipeline": "three_stage_distill",
+    "stages": [
+      "research",
+      "framework",
+      "persona",
+      "anchors",
+      "bridges",
+      "vocabulary",
+      "patterns"
+    ],
+    "exported_at": "2026-05-10T17:56:29.553582"
+  }
+}

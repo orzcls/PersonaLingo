@@ -1,84 +1,97 @@
 <template>
-  <div class="space-y-8">
+  <div class="space-y-10">
     <!-- Header -->
-    <div class="text-center">
-      <h2 class="text-2xl font-bold text-white mb-2">IELTS Speaking Preferences</h2>
-      <p class="text-dark-400">Customize your corpus for your IELTS speaking goals</p>
-    </div>
+    <header class="text-center space-y-3">
+      <p class="num-chapter">§ 04 · IELTS Speaking</p>
+      <h2 class="font-display text-3xl text-ink-900" style="font-variation-settings:'opsz' 96, 'SOFT' 50;">
+        备考 <em class="italic text-ochre-500">偏好</em>
+      </h2>
+      <p class="text-ink-500 font-serif italic">Customise your corpus for your IELTS speaking goals.</p>
+    </header>
 
     <!-- Topic Types -->
-    <div class="space-y-4">
-      <h3 class="text-white font-semibold">Preferred Topic Types</h3>
-      <p class="text-dark-500 text-sm">Select the types of topics you want to focus on</p>
+    <section class="space-y-4">
+      <h3 class="rule-heading font-serif italic text-ink-700 text-sm">
+        <span class="px-4">Preferred topic types</span>
+      </h3>
+      <p class="text-ink-500 text-sm font-serif italic text-center">Select the types of topics you want to focus on.</p>
       <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3">
         <button
-          v-for="topic in topicTypes"
+          v-for="(topic, idx) in topicTypes"
           :key="topic.id"
           :class="[
-            'flex flex-col items-center gap-2 p-4 rounded-xl border-2 transition-all duration-200',
+            'group flex flex-col items-center gap-2 p-5 transition-colors duration-300',
             selectedTopics.includes(topic.id)
-              ? 'border-accent-400 bg-accent-400/10 text-accent-300'
-              : 'border-dark-700 bg-dark-800 text-dark-400 hover:border-dark-500 hover:text-white'
+              ? 'bg-paper-100 hairline-strong text-ink-900'
+              : 'hairline text-ink-500 hover:text-ink-900'
           ]"
           @click="toggleTopic(topic.id)"
         >
-          <span class="text-2xl">{{ topic.icon }}</span>
-          <span class="text-sm font-medium">{{ topic.label }}</span>
+          <span class="font-mono text-xs tracking-[0.22em] text-ochre-500">
+            {{ String(idx + 1).padStart(2, '0') }}
+          </span>
+          <span class="font-serif text-base">{{ topic.label }}</span>
         </button>
       </div>
-    </div>
+    </section>
 
-    <!-- Divider -->
-    <div class="border-t border-dark-700" />
+    <div class="hairline-t"></div>
 
     <!-- Target Band Score -->
-    <div class="space-y-4">
-      <h3 class="text-white font-semibold">Target Band Score</h3>
-      <p class="text-dark-500 text-sm">Choose your target score to adjust difficulty and vocabulary level</p>
-      <div class="flex gap-3">
+    <section class="space-y-4">
+      <h3 class="rule-heading font-serif italic text-ink-700 text-sm">
+        <span class="px-4">Target band score</span>
+      </h3>
+      <p class="text-ink-500 text-sm font-serif italic text-center">
+        Choose your target score to adjust difficulty and vocabulary level.
+      </p>
+      <div class="grid grid-cols-4 gap-3">
         <button
           v-for="band in bandOptions"
           :key="band"
           :class="[
-            'flex-1 py-3 px-4 rounded-xl border-2 text-center font-bold transition-all duration-200',
+            'py-4 text-center transition-colors duration-300',
             selectedBand === band
-              ? 'border-accent-400 bg-accent-400/10 text-accent-400 shadow-lg shadow-accent-500/10'
-              : 'border-dark-700 bg-dark-800 text-dark-300 hover:border-dark-500 hover:text-white'
+              ? 'chip-ink-selected'
+              : 'hairline text-ink-700 hover:text-ink-900'
           ]"
           @click="selectBand(band)"
         >
-          {{ band }}
+          <span class="font-display text-xl" style="font-variation-settings:'opsz' 144, 'SOFT' 40;">{{ band }}</span>
         </button>
       </div>
-      <div v-if="selectedBand" class="bg-dark-800 rounded-lg px-4 py-3 border border-dark-700">
-        <p class="text-dark-300 text-sm">{{ bandDescriptions[selectedBand] }}</p>
+      <div v-if="selectedBand" class="paper-card-muted px-5 py-4">
+        <p class="text-ink-700 text-sm font-serif leading-relaxed">
+          <span class="font-display italic text-ochre-500 mr-1">”</span>{{ bandDescriptions[selectedBand] }}
+        </p>
       </div>
-    </div>
+    </section>
 
-    <!-- Divider -->
-    <div class="border-t border-dark-700" />
+    <div class="hairline-t"></div>
 
     <!-- Exam Month -->
-    <div class="space-y-4">
-      <h3 class="text-white font-semibold">Exam Timeline</h3>
-      <p class="text-dark-500 text-sm">When are you planning to take the exam?</p>
+    <section class="space-y-4">
+      <h3 class="rule-heading font-serif italic text-ink-700 text-sm">
+        <span class="px-4">Exam timeline</span>
+      </h3>
+      <p class="text-ink-500 text-sm font-serif italic text-center">When are you planning to take the exam?</p>
       <div class="grid grid-cols-3 gap-3">
         <button
           v-for="month in examMonths"
           :key="month.value"
           :class="[
-            'py-3 px-4 rounded-xl border-2 text-center transition-all duration-200',
+            'py-4 text-center transition-colors duration-300',
             selectedMonth === month.value
-              ? 'border-accent-400 bg-accent-400/10 text-accent-400'
-              : 'border-dark-700 bg-dark-800 text-dark-300 hover:border-dark-500 hover:text-white'
+              ? 'bg-paper-100 hairline-strong text-ink-900'
+              : 'hairline text-ink-500 hover:text-ink-900'
           ]"
           @click="selectMonth(month.value)"
         >
-          <span class="block font-semibold text-sm">{{ month.label }}</span>
-          <span class="block text-xs mt-0.5 opacity-70">{{ month.year }}</span>
+          <span class="block font-display text-lg italic">{{ month.label }}</span>
+          <span class="block font-mono text-xs tracking-[0.22em] text-ochre-500 mt-0.5">{{ month.year }}</span>
         </button>
       </div>
-    </div>
+    </section>
   </div>
 </template>
 
@@ -89,11 +102,11 @@ import { useQuestionnaireStore } from '../../stores/questionnaire'
 const store = useQuestionnaireStore()
 
 const topicTypes = [
-  { id: 'people', label: 'People', icon: '👤' },
-  { id: 'places', label: 'Places', icon: '🌍' },
-  { id: 'events', label: 'Events', icon: '🎉' },
-  { id: 'objects', label: 'Objects', icon: '📦' },
-  { id: 'abstract', label: 'Abstract', icon: '💭' },
+  { id: 'people', label: 'People' },
+  { id: 'places', label: 'Places' },
+  { id: 'events', label: 'Events' },
+  { id: 'objects', label: 'Objects' },
+  { id: 'abstract', label: 'Abstract' },
 ]
 
 const bandOptions = ['6.0', '6.5', '7.0', '7.5+']
@@ -105,7 +118,6 @@ const bandDescriptions = {
   '7.5+': 'Very good user — fluent with only rare errors, handles complex language well.',
 }
 
-// Generate exam months (current + next 2 months)
 const examMonths = computed(() => {
   const months = []
   const now = new Date()
@@ -127,11 +139,8 @@ const selectedMonth = ref(store.ieltsPreference.examMonth)
 
 function toggleTopic(id) {
   const idx = selectedTopics.value.indexOf(id)
-  if (idx > -1) {
-    selectedTopics.value.splice(idx, 1)
-  } else {
-    selectedTopics.value.push(id)
-  }
+  if (idx > -1) selectedTopics.value.splice(idx, 1)
+  else selectedTopics.value.push(id)
   store.setIELTSPreference({ topicTypes: [...selectedTopics.value] })
 }
 

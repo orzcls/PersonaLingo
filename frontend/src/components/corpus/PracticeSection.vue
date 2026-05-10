@@ -1,45 +1,57 @@
 <template>
-  <section id="practice" class="mb-12">
-    <h2 class="text-2xl font-bold text-white mb-6 flex items-center gap-2">
-      <svg class="w-6 h-6 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
-      </svg>
-      Self Practice
-    </h2>
+  <section id="practice" class="mb-16 stagger">
+    <header class="mb-7">
+      <p class="num-chapter text-[11px] mb-2">§ 05 · exercises</p>
+      <h2 class="font-display italic text-3xl md:text-4xl text-ink-900 leading-tight">
+        Self Practice
+      </h2>
+      <p class="mt-2 font-serif text-sm text-ink-500 italic max-w-xl">
+        Respond before you reveal. The model answer is a courtesy, not a crutch.
+      </p>
+      <div class="hairline mt-5"></div>
+    </header>
 
     <div class="space-y-6">
-      <div
+      <article
         v-for="(item, i) in practice"
         :key="item.id || i"
-        class="bg-gray-800 rounded-xl p-6 border border-gray-700/50"
+        class="paper-card p-6 md:p-7"
       >
         <!-- Question Header -->
-        <div class="flex items-start justify-between mb-4">
-          <div class="flex items-start gap-3">
-            <span class="w-8 h-8 bg-cyan-500/10 border border-cyan-500/30 rounded-lg flex items-center justify-center text-cyan-300 text-sm font-bold flex-shrink-0">
-              {{ item.id || i + 1 }}
-            </span>
-            <h3 class="text-base font-semibold text-white leading-relaxed">{{ item.question }}</h3>
+        <div class="flex items-start gap-5 mb-5">
+          <div class="shrink-0 text-right">
+            <p class="num-chapter text-[10px]">no.</p>
+            <p class="font-display italic text-3xl text-ochre-500 leading-none mt-0.5">
+              {{ String(item.id || i + 1).padStart(2, '0') }}
+            </p>
           </div>
-          <span
-            v-if="item.suggested_anchor"
-            class="px-2 py-0.5 rounded text-xs font-bold flex-shrink-0 ml-2"
-            :class="anchorBadge(item.suggested_anchor)"
-          >
-            Anchor {{ item.suggested_anchor }}
-          </span>
+          <div class="flex-1 min-w-0">
+            <h3 class="font-display italic text-xl text-ink-900 leading-snug">
+              {{ item.question }}
+            </h3>
+            <span
+              v-if="item.suggested_anchor"
+              class="inline-flex items-center gap-1.5 mt-2 font-mono text-[11px] tracking-widest"
+              :class="anchorColor(item.suggested_anchor)"
+            >
+              ▲ Anchor {{ item.suggested_anchor }}
+            </span>
+          </div>
         </div>
 
         <!-- Thinking Guide -->
-        <div class="mb-4">
-          <h4 class="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">Thinking Guide</h4>
-          <ol class="space-y-1.5 pl-4">
+        <div class="mb-5">
+          <p class="field-label mb-3">Thinking Guide</p>
+          <ol class="space-y-2.5">
             <li
               v-for="(step, j) in item.thinking_guide"
               :key="j"
-              class="text-gray-400 text-sm list-decimal"
+              class="flex items-start gap-4"
             >
-              {{ step }}
+              <span class="font-mono text-ochre-500 text-[11px] tracking-widest shrink-0 pt-1">
+                {{ String(j + 1).padStart(2, '0') }}
+              </span>
+              <span class="font-serif text-[15px] leading-[1.75] text-ink-700">{{ step }}</span>
             </li>
           </ol>
         </div>
@@ -48,54 +60,54 @@
         <div>
           <button
             @click="toggleAnswer(i)"
-            class="flex items-center gap-2 px-4 py-2 bg-gray-700/50 hover:bg-gray-700 border border-gray-600/50 rounded-lg text-sm text-gray-300 hover:text-white transition-all duration-200"
+            class="inline-flex items-center gap-3 px-4 py-2 border border-ink-900/20 hover:border-ink-900 font-serif italic text-[14px] text-ink-700 hover:text-ink-900 transition-colors"
           >
-            <svg
-              class="w-4 h-4 transition-transform duration-200"
-              :class="{ 'rotate-180': showAnswers[i] }"
-              fill="none" stroke="currentColor" viewBox="0 0 24 24"
-            >
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-            </svg>
-            {{ showAnswers[i] ? 'Hide' : 'Show' }} Model Answer
+            <span class="font-mono text-[11px] text-ochre-500 tracking-widest not-italic">
+              {{ showAnswers[i] ? '—' : '+' }}
+            </span>
+            {{ showAnswers[i] ? 'Hide' : 'Reveal' }} Model Answer
           </button>
 
           <transition
             enter-active-class="transition-all duration-300 ease-out"
             enter-from-class="opacity-0 max-h-0"
-            enter-to-class="opacity-100 max-h-[1000px]"
+            enter-to-class="opacity-100 max-h-[1200px]"
             leave-active-class="transition-all duration-200 ease-in"
-            leave-from-class="opacity-100 max-h-[1000px]"
+            leave-from-class="opacity-100 max-h-[1200px]"
             leave-to-class="opacity-0 max-h-0"
           >
-            <div v-if="showAnswers[i]" class="mt-4 overflow-hidden">
+            <div v-if="showAnswers[i]" class="mt-5 overflow-hidden">
               <!-- Model Answer -->
-              <div class="bg-gray-900/50 rounded-lg p-4 mb-4 border-l-3 border-cyan-500/50">
-                <h4 class="text-xs font-semibold text-cyan-400 uppercase tracking-wider mb-2">Model Answer</h4>
-                <p class="text-gray-300 text-sm leading-relaxed whitespace-pre-line">{{ item.model_answer }}</p>
+              <div class="bg-paper-100/50 border-l-2 border-ochre-500 p-5 mb-5">
+                <p class="field-label mb-2 text-ochre-500">Model Answer</p>
+                <p class="font-serif italic text-[15px] leading-[1.9] text-ink-700 whitespace-pre-line">
+                  {{ item.model_answer }}
+                </p>
               </div>
 
               <!-- Self Check -->
               <div v-if="item.self_check && item.self_check.length">
-                <h4 class="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">Self-Check</h4>
+                <p class="field-label mb-3">Self-Check</p>
                 <div class="space-y-2">
                   <label
                     v-for="(check, k) in item.self_check"
                     :key="k"
-                    class="flex items-start gap-2.5 cursor-pointer group"
+                    class="flex items-start gap-3 cursor-pointer group"
                   >
                     <input
                       type="checkbox"
-                      class="mt-0.5 w-4 h-4 rounded border-gray-600 bg-gray-700 text-cyan-500 focus:ring-cyan-500/30 focus:ring-offset-0"
+                      class="mt-1 w-3.5 h-3.5 accent-indigo-600 border-ink-500"
                     />
-                    <span class="text-gray-400 text-sm group-hover:text-gray-300 transition-colors">{{ check }}</span>
+                    <span class="font-serif text-[14px] leading-relaxed text-ink-700 group-hover:text-ink-900 transition-colors">
+                      {{ check }}
+                    </span>
                   </label>
                 </div>
               </div>
             </div>
           </transition>
         </div>
-      </div>
+      </article>
     </div>
   </section>
 </template>
@@ -116,13 +128,13 @@ function toggleAnswer(index) {
   showAnswers.value[index] = !showAnswers.value[index]
 }
 
-const anchorBadge = (id) => {
+const anchorColor = (id) => {
   const colors = {
-    A: 'bg-cyan-500/20 text-cyan-300',
-    B: 'bg-purple-500/20 text-purple-300',
-    C: 'bg-amber-500/20 text-amber-300',
-    D: 'bg-emerald-500/20 text-emerald-300'
+    A: 'text-indigo-800',
+    B: 'text-ochre-500',
+    C: 'text-sage-500',
+    D: 'text-rouge-600'
   }
-  return colors[id] || 'bg-gray-700 text-gray-300'
+  return colors[id] || 'text-ink-500'
 }
 </script>

@@ -1,45 +1,105 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 from typing import Optional
-from datetime import datetime
+
+
+class CorpusGenerate(BaseModel):
+    questionnaire_id: str
 
 
 class AnchorStory(BaseModel):
-    """锚点故事 - 用户的个人经历/故事"""
     id: str
-    title: str
-    description: str
-    keywords: list[str]
+    label: str = ""
+    story: str = ""
+    keywords: list[str] = []
+    emotion: str = ""
+    connectable_topics: list[str] = []
 
+
+class BridgeItem(BaseModel):
+    topic_id: str = ""
+    topic_title: str = ""
+    category: str = ""
+    anchor_id: str = ""
+    bridge_sentence: str = ""
+    sample_answer: str = ""
+    safe_stop_point: str = ""
+    techniques_used: list[str] = []
+
+
+class VocabItem(BaseModel):
+    basic_word: str
+    upgrade: str = ""
+    context: str = ""
+    category: str = ""
+
+
+class PatternItem(BaseModel):
+    name: str
+    formula: str = ""
+    example: str = ""
+    when_to_use: str = ""
+
+
+class PracticeItem(BaseModel):
+    model_config = ConfigDict(protected_namespaces=())
+
+    topic_title: str
+    thinking_guide: list[str] = []
+    steps: list[str] = []
+    model_answer: str = ""
+    checklist: list[str] = []
+
+
+class CorpusData(BaseModel):
+    persona: Optional[dict] = None
+    anchors: list[AnchorStory] = []
+    bridges: list[BridgeItem] = []
+    vocabulary: list[VocabItem] = []
+    patterns: list[PatternItem] = []
+    practices: list[PracticeItem] = []
+    band_strategy: Optional[dict] = None
+    user_style: Optional[dict] = None
+
+
+class CorpusResponse(BaseModel):
+    id: str
+    questionnaire_id: str
+    status: str
+    corpus: Optional[CorpusData] = None
+    created_at: str
+    updated_at: str
+
+
+# ============ 向后兼容别名（旧路由引用） ============
 
 class BridgeResponse(BaseModel):
-    """桥接回答 - 将任意话题桥接到个人锚点"""
-    topic: str
-    anchor_id: str
-    bridge_sentence: str
-    sample_answer: str
+    """桥接回答 - 兼容旧路由"""
+    topic: str = ""
+    anchor_id: str = ""
+    bridge_sentence: str = ""
+    sample_answer: str = ""
 
 
 class VocabularyUpgrade(BaseModel):
-    """词汇升级 - 基础词汇到高级替代"""
+    """词汇升级 - 兼容旧路由"""
     basic_word: str
-    advanced_alternatives: list[str]
-    context: str
+    advanced_alternatives: list[str] = []
+    context: str = ""
 
 
 class SentencePattern(BaseModel):
-    """句型模板 - 可复用的句型结构"""
+    """句型模板 - 兼容旧路由"""
     pattern_name: str
-    template: str
-    example: str
-    usage_context: str
+    template: str = ""
+    example: str = ""
+    usage_context: str = ""
 
 
 class PersonalCorpus(BaseModel):
-    """完整个人语料库"""
+    """完整个人语料库 - 兼容旧路由"""
     id: str
-    user_profile: dict
-    anchors: list[AnchorStory]
-    bridges: list[BridgeResponse]
-    vocabulary: list[VocabularyUpgrade]
-    patterns: list[SentencePattern]
-    created_at: datetime = datetime.now()
+    user_profile: dict = {}
+    anchors: list = []
+    bridges: list = []
+    vocabulary: list = []
+    patterns: list = []
