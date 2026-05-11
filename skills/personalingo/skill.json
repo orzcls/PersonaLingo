@@ -9,12 +9,12 @@
   "entry": "SKILL.md",
   "modes": ["install-only", "runnable-export"],
   "default_mode": "install-only",
-  "files": [
-    "SKILL.md",
-    "skill.json",
-    "LICENSE",
-    "skill-assets/**"
-  ],
+  "install_source": {
+    "cli": "vercel-labs/skills",
+    "repo": "orzcls/PersonaLingo",
+    "subpath": "skills/personalingo",
+    "command": "npx skills add https://github.com/orzcls/PersonaLingo/tree/main/skills/personalingo"
+  },
   "install_only": {
     "backend_required": false,
     "pipeline": ["questionnaire", "conversation", "distill", "profile", "site"],
