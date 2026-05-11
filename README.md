@@ -131,14 +131,10 @@ PersonaLingo ships two independent skill delivery modes. Pick the one that match
 One-line install to any skill-compatible agent (Claude / Qoder / Cursor / Cline / ...). No project code, no server. The agent itself drives **questionnaire → guided conversation → 7-step distillation → personal profile → static corpus site** using only the shipped prompt assets.
 
 ```bash
-# Subpath-targeted install (vercel-labs/skills CLI) — only the skill package is copied
-npx skills add https://github.com/orzcls/PersonaLingo/tree/main/skills/personalingo
-
-# Equivalent shorthand
-npx skills add orzcls/PersonaLingo --skill personalingo
+npx skills add orzcls/PersonaLingo
 ```
 
-What actually lands in `.agents/skills/personalingo/` (CLI copies only the `skills/personalingo/` subdirectory — backend/frontend/docs are never pulled):
+What actually lands in `.agents/skills/personalingo/` (the CLI auto-discovers `skills/personalingo/` and copies only that subdirectory — backend/frontend/docs are never pulled):
 
 ```
 SKILL.md
@@ -189,7 +185,7 @@ Exported pack contents: `Skill.md` · `corpus.json` · `runtime_protocol.md` · 
 | Capability | Install-only | Runnable Export |
 |---|---|---|
 | Backend dependency | None | Python 3.11+ backend at `:9849` |
-| Install command | `npx skills add orzcls/PersonaLingo --skill personalingo` | `git clone` + `docker-compose up` |
+| Install command | `npx skills add orzcls/PersonaLingo` | `git clone` + `docker-compose up` |
 | Questionnaire / dialogue / distill | Agent-internal loop | Backend API + Vue UI |
 | Dynamic IELTS topic bank sync | No | Yes (seasonal auto-sync) |
 | QMD RAG retrieval | No | BM25 + TF-IDF + RRF + LLM rerank |

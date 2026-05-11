@@ -13,7 +13,7 @@
     "cli": "vercel-labs/skills",
     "repo": "orzcls/PersonaLingo",
     "subpath": "skills/personalingo",
-    "command": "npx skills add https://github.com/orzcls/PersonaLingo/tree/main/skills/personalingo"
+    "command": "npx skills add orzcls/PersonaLingo"
   },
   "install_only": {
     "backend_required": false,

@@ -13,14 +13,10 @@ mode: install-only
 ## Installation
 
 ```bash
-# 指向仓库里的 skill 子目录（vercel-labs/skills CLI 只复制该子目录）
-npx skills add https://github.com/orzcls/PersonaLingo/tree/main/skills/personalingo
-
-# 等价简写
-npx skills add orzcls/PersonaLingo --skill personalingo
+npx skills add orzcls/PersonaLingo
 ```
 
-安装产物（CLI 只复制 `skills/personalingo/` 子目录的内容）：
+安装产物（CLI 自动发现仓库里的 `skills/personalingo/` 子目录，仅复制该子目录内容；不会拉 backend/frontend/docs）：
 
 ```
 .agents/skills/personalingo/
