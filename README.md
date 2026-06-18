@@ -2,6 +2,10 @@
 
 > AI-Powered Personalized IELTS Speaking Corpus Generator with RAG & Memory System
 
+[![Try PersonaLingo Online](https://socialistic.ai/api/embed/personalingo-0d0e69?lang=en)](https://socialistic.ai/en/skill/personalingo-0d0e69?utm_source=github&utm_medium=readme&utm_campaign=personalingo)
+
+**[🌐 Try it online — no install needed](https://socialistic.ai/en/skill/personalingo-0d0e69?utm_source=github&utm_medium=readme&utm_campaign=personalingo)** | Upload your speaking prep notes, set your target band, and get a personalized IELTS corpus in minutes.
+
 ## ✨ Features
 
 - **Smart Corpus Generation** — 5-step LLM-driven pipeline (Persona → Anchors → Bridges → Vocabulary → Patterns)
@@ -114,9 +118,9 @@ User Query → [Q Layer] Expand into multiple search terms
 ## 📸 Screenshots
 
 <p align="center">
-  <img src="docs/screenshots/v3_06_questionnaire_entry.png" width="260"/>
-  <img src="docs/screenshots/v3_10_chat_extractor.png" width="260"/>
-  <img src="docs/screenshots/v3_11_topics_filter_P1_active.png" width="260"/>
+  <img src="docs/screenshots/v3/v3_06_questionnaire_entry.png" width="260"/>
+  <img src="docs/screenshots/v3/v3_10_chat_extractor.png" width="260"/>
+  <img src="docs/screenshots/v3/v3_11_topics_filter_P1_active.png" width="260"/>
 </p>
 <p align="center">
   <sub>User Profiling Questionnaire &nbsp;|&nbsp; AI Conversation Engine &nbsp;|&nbsp; Topic Browser</sub>
@@ -326,3 +330,18 @@ MIT
 ## 🙏 Acknowledgments
 
 - Distillation pipeline architecture inspired by [nuwa-skill](https://github.com/alchaincyf/nuwa-skill) — the "Deep Research → Mental Framework → Runnable Skill" paradigm for distilling human expertise into AI-native skill packages.
+- Online deployment powered by [@shesl-tinkerland](https://github.com/shesl-tinkerland) via [Socialistic](https://socialistic.ai).
+
+## 🤝 Contributors
+
+<a href="https://github.com/orzcls">
+  <img src="https://avatars.githubusercontent.com/u/152647744?v=4" width="50" height="50" style="border-radius:50%" alt="orzcls"/>
+</a>
+<a href="https://github.com/shesl-tinkerland">
+  <img src="https://avatars.githubusercontent.com/u/267722795?v=4" width="50" height="50" style="border-radius:50%" alt="shesl-tinkerland"/>
+</a>
+
+| Contributor | Contribution |
+|---|---|
+| [@orzcls](https://github.com/orzcls) | Project creator & maintainer |
+| [@shesl-tinkerland](https://github.com/shesl-tinkerland) | Online deployment on Socialistic ([#2](https://github.com/orzcls/PersonaLingo/issues/2)) |
