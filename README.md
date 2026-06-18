@@ -2,10 +2,6 @@
 
 > AI-Powered Personalized IELTS Speaking Corpus Generator with RAG & Memory System
 
-[![Try PersonaLingo Online](https://socialistic.ai/api/embed/personalingo-0d0e69?lang=en)](https://socialistic.ai/en/skill/personalingo-0d0e69?utm_source=github&utm_medium=readme&utm_campaign=personalingo)
-
-**[🌐 Try it online — no install needed](https://socialistic.ai/en/skill/personalingo-0d0e69?utm_source=github&utm_medium=readme&utm_campaign=personalingo)** | Upload your speaking prep notes, set your target band, and get a personalized IELTS corpus in minutes.
-
 ## ✨ Features
 
 - **Smart Corpus Generation** — 5-step LLM-driven pipeline (Persona → Anchors → Bridges → Vocabulary → Patterns)
@@ -137,6 +133,14 @@ One-line install to any skill-compatible agent (Claude / Qoder / Cursor / Cline 
 ```bash
 npx skills add orzcls/PersonaLingo
 ```
+
+#### 🌐 Try the Skill online (no local setup)
+
+Don’t want to install anything? Try the skill pipeline directly in your browser via [Socialistic](https://socialistic.ai) — an online agent platform that hosts PersonaLingo’s install-only skill:
+
+[![Try PersonaLingo Skill Online](https://socialistic.ai/api/embed/personalingo-0d0e69?lang=en)](https://socialistic.ai/en/skill/personalingo-0d0e69?utm_source=github&utm_medium=readme&utm_campaign=personalingo)
+
+This runs the same agent-driven questionnaire → distillation → corpus generation pipeline, without needing a local agent environment or API keys. Contributed by [@shesl-tinkerland](https://github.com/shesl-tinkerland) ([#2](https://github.com/orzcls/PersonaLingo/issues/2)).
 
 What actually lands in `.agents/skills/personalingo/` (the CLI auto-discovers `skills/personalingo/` and copies only that subdirectory — backend/frontend/docs are never pulled):
 
